@@ -9,7 +9,6 @@
   --warm-orange: #ea762a;
   --light-green: #5a8a66;
   --background-light: #f7f4ee;
-  --background-dark: #211711;
 }
 
 @theme inline {
@@ -19,15 +18,7 @@
   --color-forest-green: var(--forest-green);
   --color-cream-beige: var(--cream-beige);
   --color-background-light: var(--background-light);
-  --color-background-dark: var(--background-dark);
   --font-display: var(--font-manrope);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
@@ -40,8 +31,4 @@ body {
   background-color: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-}
-
-.dark .glass-header {
-  background-color: rgba(33, 23, 17, 0.7);
 }
