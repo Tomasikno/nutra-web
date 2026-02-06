@@ -40,6 +40,12 @@ export default function AdminPage() {
   const [recipe, setRecipe] = useState(emptyRecipe);
   const [recipeLoading, setRecipeLoading] = useState(false);
   const [recipeMessage, setRecipeMessage] = useState<string | null>(null);
+  const [recipes, setRecipes] = useState<Record<string, unknown>[]>([]);
+  const [recipesLoading, setRecipesLoading] = useState(false);
+  const [recipesError, setRecipesError] = useState<string | null>(null);
+  const [selectedRecipeId, setSelectedRecipeId] = useState<
+    string | number | null
+  >(null);
 
   const [configRows, setConfigRows] = useState<Record<string, unknown>[]>([]);
   const [configLoading, setConfigLoading] = useState(false);
@@ -73,37 +79,64 @@ export default function AdminPage() {
     fetchSession();
   }, []);
 
+  const fetchConfig = async () => {
+    setConfigLoading(true);
+    setConfigError(null);
+    const response = await fetch("/api/admin/premium-config");
+    const payload = (await response.json()) as {
+      data?: Record<string, unknown>[];
+      message?: string;
+    };
+
+    if (!response.ok) {
+      setConfigError(payload.message ?? "Unable to load config.");
+      setConfigLoading(false);
+      return;
+    }
+
+    const rows = payload.data ?? [];
+    setConfigRows(rows);
+    const draftEntries = rows.reduce<Record<string, string>>((acc, row) => {
+      const identifier = getIdentifier(row);
+      if (!identifier) return acc;
+      acc[String(identifier.value)] = JSON.stringify(row, null, 2);
+      return acc;
+    }, {});
+    setConfigDrafts(draftEntries);
+    setConfigLoading(false);
+  };
+
+  const fetchRecipes = async () => {
+    setRecipesLoading(true);
+    setRecipesError(null);
+    const response = await fetch("/api/admin/recipes");
+    const payload = (await response.json()) as {
+      data?: Record<string, unknown>[];
+      message?: string;
+    };
+
+    if (!response.ok) {
+      setRecipesError(payload.message ?? "Unable to load recipes.");
+      setRecipesLoading(false);
+      return;
+    }
+
+    const rows = payload.data ?? [];
+    setRecipes(rows);
+    if (!selectedRecipeId && rows.length > 0) {
+      const identifier = getIdentifier(rows[0]);
+      if (identifier) {
+        setSelectedRecipeId(identifier.value);
+      }
+    }
+    setRecipesLoading(false);
+  };
+
   useEffect(() => {
     if (!sessionEmail) return;
 
-    const fetchConfig = async () => {
-      setConfigLoading(true);
-      setConfigError(null);
-      const response = await fetch("/api/admin/premium-config");
-      const payload = (await response.json()) as {
-        data?: Record<string, unknown>[];
-        message?: string;
-      };
-
-      if (!response.ok) {
-        setConfigError(payload.message ?? "Unable to load config.");
-        setConfigLoading(false);
-        return;
-      }
-
-      const rows = payload.data ?? [];
-      setConfigRows(rows);
-      const draftEntries = rows.reduce<Record<string, string>>((acc, row) => {
-        const identifier = getIdentifier(row);
-        if (!identifier) return acc;
-        acc[String(identifier.value)] = JSON.stringify(row, null, 2);
-        return acc;
-      }, {});
-      setConfigDrafts(draftEntries);
-      setConfigLoading(false);
-    };
-
     fetchConfig();
+    fetchRecipes();
   }, [sessionEmail]);
 
   const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -169,6 +202,7 @@ export default function AdminPage() {
     setRecipeMessage("Recipe created successfully.");
     setRecipeLoading(false);
     setRecipe(emptyRecipe);
+    fetchRecipes();
   };
 
   const handleConfigDraftChange = (key: string, value: string) => {
@@ -224,6 +258,16 @@ export default function AdminPage() {
       })
     );
   };
+
+  const selectedRecipe = useMemo(() => {
+    if (!selectedRecipeId) return null;
+    return (
+      recipes.find((item) => {
+        const identifier = getIdentifier(item);
+        return identifier?.value === selectedRecipeId;
+      }) ?? null
+    );
+  }, [recipes, selectedRecipeId]);
 
   return (
     <div className="min-h-screen bg-zinc-950 px-6 py-12 text-zinc-100">
@@ -458,6 +502,192 @@ export default function AdminPage() {
                     );
                   })}
                 </div>
+              </div>
+            </section>
+
+            <section className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+              <div className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-8">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <h2 className="text-2xl font-semibold text-white">
+                      Recipes
+                    </h2>
+                    <p className="mt-2 text-sm text-zinc-400">
+                      Browse all recipes in the database.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={fetchRecipes}
+                    className="rounded-full border border-zinc-700 px-4 py-2 text-xs font-semibold text-zinc-200 transition hover:border-emerald-400 hover:text-emerald-200"
+                  >
+                    Refresh
+                  </button>
+                </div>
+                <div className="mt-6 overflow-hidden rounded-2xl border border-zinc-800">
+                  <div className="max-h-[420px] overflow-auto">
+                    <table className="w-full text-left text-sm">
+                      <thead className="sticky top-0 bg-zinc-900/90 text-xs uppercase text-zinc-400">
+                        <tr>
+                          <th className="px-4 py-3 font-semibold">Name</th>
+                          <th className="px-4 py-3 font-semibold">Premium</th>
+                          <th className="px-4 py-3 font-semibold">ID</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-zinc-800">
+                        {recipesLoading && (
+                          <tr>
+                            <td
+                              colSpan={3}
+                              className="px-4 py-6 text-center text-zinc-400"
+                            >
+                              Loading recipes...
+                            </td>
+                          </tr>
+                        )}
+                        {recipesError && (
+                          <tr>
+                            <td
+                              colSpan={3}
+                              className="px-4 py-6 text-center text-rose-200"
+                            >
+                              {recipesError}
+                            </td>
+                          </tr>
+                        )}
+                        {!recipesLoading && !recipesError && recipes.length === 0 && (
+                          <tr>
+                            <td
+                              colSpan={3}
+                              className="px-4 py-6 text-center text-zinc-500"
+                            >
+                              No recipes found yet.
+                            </td>
+                          </tr>
+                        )}
+                        {recipes.map((row) => {
+                          const identifier = getIdentifier(row);
+                          const key = identifier ? String(identifier.value) : JSON.stringify(row);
+                          const isSelected =
+                            identifier?.value === selectedRecipeId;
+                          return (
+                            <tr
+                              key={key}
+                              className={`cursor-pointer transition ${
+                                isSelected
+                                  ? "bg-emerald-500/10"
+                                  : "hover:bg-zinc-900/70"
+                              }`}
+                              onClick={() =>
+                                identifier &&
+                                setSelectedRecipeId(identifier.value)
+                              }
+                            >
+                              <td className="px-4 py-3 font-semibold text-white">
+                                {(row.name as string) ?? "Untitled"}
+                              </td>
+                              <td className="px-4 py-3 text-zinc-300">
+                                {(row.is_premium as boolean) ? "Yes" : "No"}
+                              </td>
+                              <td className="px-4 py-3 text-zinc-400">
+                                {identifier ? key : "—"}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-8">
+                <h2 className="text-2xl font-semibold text-white">
+                  Recipe Details
+                </h2>
+                <p className="mt-2 text-sm text-zinc-400">
+                  Select a recipe to inspect its full details.
+                </p>
+                {!selectedRecipe && (
+                  <p className="mt-6 text-sm text-zinc-500">
+                    No recipe selected.
+                  </p>
+                )}
+                {selectedRecipe && (
+                  <div className="mt-6 space-y-4 text-sm text-zinc-200">
+                    <div>
+                      <p className="text-xs uppercase text-zinc-500">Name</p>
+                      <p className="text-base font-semibold text-white">
+                        {(selectedRecipe.name as string) ?? "Untitled"}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs uppercase text-zinc-500">
+                        Description
+                      </p>
+                      <p className="text-zinc-200">
+                        {(selectedRecipe.description as string) ??
+                          "No description provided."}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs uppercase text-zinc-500">
+                        Ingredients
+                      </p>
+                      <p className="whitespace-pre-line text-zinc-200">
+                        {(selectedRecipe.ingredients as string) ??
+                          "No ingredients listed."}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs uppercase text-zinc-500">
+                        Instructions
+                      </p>
+                      <p className="whitespace-pre-line text-zinc-200">
+                        {(selectedRecipe.instructions as string) ??
+                          "No instructions provided."}
+                      </p>
+                    </div>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <div>
+                        <p className="text-xs uppercase text-zinc-500">
+                          Premium
+                        </p>
+                        <p className="text-zinc-200">
+                          {(selectedRecipe.is_premium as boolean)
+                            ? "Yes"
+                            : "No"}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs uppercase text-zinc-500">ID</p>
+                        <p className="text-zinc-200">
+                          {(getIdentifier(selectedRecipe)?.value as
+                            | string
+                            | number
+                            | undefined) ?? "—"}
+                        </p>
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-xs uppercase text-zinc-500">
+                        Image URL
+                      </p>
+                      {selectedRecipe.image_url ? (
+                        <a
+                          href={selectedRecipe.image_url as string}
+                          className="text-emerald-200 underline underline-offset-4"
+                        >
+                          {selectedRecipe.image_url as string}
+                        </a>
+                      ) : (
+                        <p className="text-zinc-500">
+                          No image URL provided.
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
             </section>
           </div>

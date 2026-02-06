@@ -3,6 +3,33 @@ import { getConfig, getServiceHeaders, requireSession } from "../_supabase";
 
 export const dynamic = "force-dynamic";
 
+export async function GET() {
+  const sessionData = await requireSession();
+  if (!sessionData) {
+    return NextResponse.json({ message: "Unauthorized." }, { status: 401 });
+  }
+
+  const { url } = getConfig();
+
+  const response = await fetch(
+    `${url}/rest/v1/recipes?select=*&order=created_at.desc`,
+    {
+      headers: getServiceHeaders(),
+    }
+  );
+
+  if (!response.ok) {
+    const message = await response.text();
+    return NextResponse.json(
+      { message: message || "Failed to load recipes." },
+      { status: response.status }
+    );
+  }
+
+  const data = await response.json();
+  return NextResponse.json({ data });
+}
+
 export async function POST(request: Request) {
   const sessionData = await requireSession();
   if (!sessionData) {
