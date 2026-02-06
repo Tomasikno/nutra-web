@@ -37,12 +37,12 @@ export default function Home() {
           </nav>
           <div className="flex items-center gap-4">
             <Link
-              className="hidden px-4 py-2 text-sm font-bold text-forest-green dark:text-white sm:block"
+              className="hidden px-4 py-2 text-sm font-semibold text-forest-green/80 transition-colors hover:text-forest-green dark:text-white sm:block"
               href="/admin"
             >
               Log In
             </Link>
-            <button className="rounded-lg bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-all hover:bg-primary/90">
+            <button className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-primary/90">
               Download Now
             </button>
           </div>
@@ -50,8 +50,8 @@ export default function Home() {
       </header>
 
       <section className="relative overflow-hidden bg-cream-beige pb-24 pt-48 dark:bg-background-dark">
-        <div className="absolute left-0 top-1/2 h-64 w-64 -translate-y-1/2 rounded-full bg-forest-green/5 blur-3xl -ml-32"></div>
-        <div className="absolute right-0 top-1/4 h-96 w-96 rounded-full bg-primary/5 blur-3xl -mr-48"></div>
+        <div className="absolute left-0 top-1/2 h-64 w-64 -translate-y-1/2 rounded-full bg-forest-green/10 blur-3xl -ml-32"></div>
+        <div className="absolute right-0 top-1/4 h-96 w-96 rounded-full bg-primary/10 blur-3xl -mr-48"></div>
         <div className="relative z-10 mx-auto max-w-7xl px-6 text-center lg:px-12">
           <h1 className="mb-8 text-5xl font-extrabold leading-[1.05] tracking-tight text-forest-green dark:text-white lg:text-8xl">
             Your Personal Nutritionist{" "}
@@ -63,17 +63,17 @@ export default function Home() {
             food today.
           </p>
           <div className="mb-16 flex flex-col items-center justify-center gap-6 sm:flex-row">
-            <button className="w-full transform rounded-2xl bg-primary px-10 py-5 text-xl font-bold text-white shadow-lg shadow-primary/20 transition-all hover:-translate-y-1 hover:bg-primary/90 sm:w-auto">
+            <button className="w-full transform rounded-2xl bg-primary px-10 py-5 text-xl font-semibold text-white shadow-lg shadow-primary/20 transition-all hover:-translate-y-1 hover:bg-primary/90 sm:w-auto">
               Download Now
             </button>
-            <button className="w-full rounded-2xl border-2 border-forest-green/20 bg-transparent px-10 py-5 text-xl font-bold text-forest-green transition-all hover:bg-forest-green/5 dark:border-white/20 dark:text-white sm:w-auto">
+            <button className="w-full rounded-2xl border border-forest-green/30 bg-white/40 px-10 py-5 text-xl font-semibold text-forest-green transition-all hover:bg-white/70 dark:border-white/20 dark:text-white sm:w-auto">
               Learn More
             </button>
           </div>
         </div>
       </section>
 
-      <section className="border-t border-slate-100 bg-background-light py-24 dark:border-zinc-800 dark:bg-background-dark">
+      <section className="border-t border-cream-beige/60 bg-background-light py-24 dark:border-zinc-800 dark:bg-background-dark">
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
           <div className="mb-16 text-center">
             <h2 className="mb-4 text-4xl font-bold text-forest-green dark:text-white">
@@ -108,10 +108,10 @@ export default function Home() {
             ].map((item) => (
               <div
                 key={item.title}
-                className="group rounded-2xl border border-slate-100 bg-white p-8 shadow-sm transition-all duration-300 hover:shadow-xl dark:border-zinc-800 dark:bg-zinc-900"
+                className="group rounded-2xl border border-cream-beige/70 bg-white p-8 shadow-sm transition-all duration-300 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900"
               >
-                <div className="mb-6 flex size-14 items-center justify-center rounded-xl bg-forest-green/10 transition-colors group-hover:bg-forest-green group-hover:text-white">
-                  <span className="material-symbols-outlined text-3xl">
+                <div className="mb-6 flex size-12 items-center justify-center rounded-xl bg-forest-green/10 text-forest-green transition-colors group-hover:bg-forest-green group-hover:text-white">
+                  <span className="material-symbols-outlined text-2xl">
                     {item.icon}
                   </span>
                 </div>
@@ -128,7 +128,7 @@ export default function Home() {
       </section>
 
       <section
-        className="bg-cream-beige/30 py-24 dark:bg-background-dark"
+        className="bg-cream-beige/40 py-24 dark:bg-background-dark"
         id="pricing"
       >
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
@@ -141,7 +141,7 @@ export default function Home() {
             </p>
           </div>
           <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-3">
-            <div className="flex flex-col rounded-2xl border border-slate-100 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+            <div className="flex flex-col rounded-2xl border border-cream-beige/60 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
               <h3 className="mb-2 text-lg font-bold text-forest-green dark:text-white">
                 Free
               </h3>
@@ -168,12 +168,12 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
-              <button className="w-full rounded-xl border border-forest-green py-3 font-bold text-forest-green transition-colors hover:bg-forest-green/5">
+              <button className="w-full rounded-xl border border-forest-green/40 py-3 font-semibold text-forest-green transition-colors hover:bg-forest-green/5">
                 Start for Free
               </button>
             </div>
             <div className="relative z-10 flex scale-105 flex-col rounded-2xl border-2 border-primary bg-white p-8 shadow-xl dark:bg-zinc-900">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1 text-xs font-bold uppercase tracking-widest text-white">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1 text-xs font-semibold uppercase tracking-widest text-white">
                 Most Popular
               </div>
               <h3 className="mb-2 text-lg font-bold text-forest-green dark:text-white">
@@ -203,11 +203,11 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
-              <button className="w-full rounded-xl bg-primary py-3 font-bold text-white transition-colors hover:bg-primary/90">
+              <button className="w-full rounded-xl bg-primary py-3 font-semibold text-white transition-colors hover:bg-primary/90">
                 Go Pro
               </button>
             </div>
-            <div className="flex flex-col rounded-2xl border border-slate-100 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+            <div className="flex flex-col rounded-2xl border border-cream-beige/60 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
               <h3 className="mb-2 text-lg font-bold text-forest-green dark:text-white">
                 Life
               </h3>
@@ -234,7 +234,7 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
-              <button className="w-full rounded-xl border border-forest-green py-3 font-bold text-forest-green transition-colors hover:bg-forest-green/5">
+              <button className="w-full rounded-xl border border-forest-green/40 py-3 font-semibold text-forest-green transition-colors hover:bg-forest-green/5">
                 One-time Buy
               </button>
             </div>
@@ -242,7 +242,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="px-6 py-20 lg:px-12">
+      <section className="bg-background-light px-6 py-20 lg:px-12 dark:bg-background-dark">
         <div className="mx-auto max-w-7xl">
           <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-forest-green to-emerald-800 px-8 py-16 text-center text-white lg:py-24">
             <div className="relative z-10 mx-auto max-w-3xl">
@@ -253,7 +253,7 @@ export default function Home() {
                 Join thousands of users who have transformed their relationship
                 with food and achieved their fitness goals with Nutra.
               </p>
-              <button className="rounded-xl bg-white px-10 py-4 text-lg font-extrabold text-forest-green shadow-lg transition-all hover:bg-slate-100 active:scale-95 hover:scale-105">
+              <button className="rounded-xl bg-white px-10 py-4 text-lg font-semibold text-forest-green shadow-lg transition-all hover:bg-slate-100 active:scale-95 hover:scale-105">
                 Join for Free
               </button>
             </div>
