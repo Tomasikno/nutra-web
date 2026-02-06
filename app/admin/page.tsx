@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { isSupabaseConfigured, supabaseClient } from "@/lib/supabaseClient";
 
 const emptyRecipe = {
   name: "",
@@ -36,6 +35,7 @@ export default function AdminPage() {
   const [authError, setAuthError] = useState<string | null>(null);
   const [authLoading, setAuthLoading] = useState(false);
   const [sessionEmail, setSessionEmail] = useState<string | null>(null);
+  const [configured, setConfigured] = useState(true);
 
   const [recipe, setRecipe] = useState(emptyRecipe);
   const [recipeLoading, setRecipeLoading] = useState(false);
@@ -46,19 +46,31 @@ export default function AdminPage() {
   const [configError, setConfigError] = useState<string | null>(null);
   const [configDrafts, setConfigDrafts] = useState<Record<string, string>>({});
 
-  const configured = useMemo(() => isSupabaseConfigured, []);
+  const statusMessage = useMemo(
+    () =>
+      configured
+        ? null
+        : "Add SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY to your server environment to enable admin actions.",
+    [configured]
+  );
 
   useEffect(() => {
-    const session = supabaseClient.getSession();
-    setSessionEmail(session?.user.email ?? null);
-
-    const unsubscribe = supabaseClient.onAuthStateChange((currentSession) => {
-      setSessionEmail(currentSession?.user.email ?? null);
-    });
-
-    return () => {
-      unsubscribe();
+    const fetchStatus = async () => {
+      const response = await fetch("/api/admin/status");
+      if (!response.ok) return;
+      const data = (await response.json()) as { configured?: boolean };
+      setConfigured(Boolean(data.configured));
     };
+
+    const fetchSession = async () => {
+      const response = await fetch("/api/admin/session");
+      if (!response.ok) return;
+      const data = (await response.json()) as { email?: string | null };
+      setSessionEmail(data.email ?? null);
+    };
+
+    fetchStatus();
+    fetchSession();
   }, []);
 
   useEffect(() => {
@@ -67,17 +79,19 @@ export default function AdminPage() {
     const fetchConfig = async () => {
       setConfigLoading(true);
       setConfigError(null);
-      const { data, error } = await supabaseClient.select<Record<string, unknown>>(
-        "premium_config"
-      );
+      const response = await fetch("/api/admin/premium-config");
+      const payload = (await response.json()) as {
+        data?: Record<string, unknown>[];
+        message?: string;
+      };
 
-      if (error) {
-        setConfigError(error.message);
+      if (!response.ok) {
+        setConfigError(payload.message ?? "Unable to load config.");
         setConfigLoading(false);
         return;
       }
 
-      const rows = data ?? [];
+      const rows = payload.data ?? [];
       setConfigRows(rows);
       const draftEntries = rows.reduce<Record<string, string>>((acc, row) => {
         const identifier = getIdentifier(row);
@@ -97,20 +111,26 @@ export default function AdminPage() {
     setAuthLoading(true);
     setAuthError(null);
 
-    const { error } = await supabaseClient.signInWithPassword({
-      email,
-      password,
+    const response = await fetch("/api/admin/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
     });
+    const payload = (await response.json()) as { email?: string | null; message?: string };
 
-    if (error) {
-      setAuthError(error.message);
+    if (!response.ok) {
+      setAuthError(payload.message ?? "Login failed.");
+      setAuthLoading(false);
+      return;
     }
 
+    setSessionEmail(payload.email ?? null);
     setAuthLoading(false);
   };
 
   const handleSignOut = async () => {
-    await supabaseClient.signOut();
+    await fetch("/api/admin/logout", { method: "POST" });
+    setSessionEmail(null);
   };
 
   const handleRecipeChange = (field: keyof typeof emptyRecipe, value: string) => {
@@ -125,19 +145,23 @@ export default function AdminPage() {
     setRecipeLoading(true);
     setRecipeMessage(null);
 
-    const { error } = await supabaseClient.insert("recipes", [
-      {
+    const response = await fetch("/api/admin/recipes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
         name: recipe.name,
         description: recipe.description,
         ingredients: recipe.ingredients,
         instructions: recipe.instructions,
         image_url: recipe.imageUrl,
         is_premium: recipe.isPremium,
-      },
-    ]);
+      }),
+    });
 
-    if (error) {
-      setRecipeMessage(error.message);
+    const payload = (await response.json()) as { message?: string };
+
+    if (!response.ok) {
+      setRecipeMessage(payload.message ?? "Failed to create recipe.");
       setRecipeLoading(false);
       return;
     }
@@ -176,14 +200,16 @@ export default function AdminPage() {
       delete payload[identifier.column];
     }
 
-    const { error } = await supabaseClient.update(
-      "premium_config",
-      payload,
-      identifier
-    );
+    const response = await fetch("/api/admin/premium-config", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ identifier, payload }),
+    });
 
-    if (error) {
-      setConfigError(error.message);
+    const result = (await response.json()) as { message?: string };
+
+    if (!response.ok) {
+      setConfigError(result.message ?? "Failed to update config.");
       return;
     }
 
@@ -213,15 +239,14 @@ export default function AdminPage() {
           </p>
         </header>
 
-        {!configured && (
+        {statusMessage && (
           <div className="rounded-2xl border border-amber-400/50 bg-amber-500/10 p-5 text-amber-100">
-            Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to
-            your environment to enable admin actions.
+            {statusMessage}
           </div>
         )}
 
         {!sessionEmail ? (
-          <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
+          <div className="grid gap-6">
             <form
               onSubmit={handleSignIn}
               className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-8"
@@ -265,14 +290,6 @@ export default function AdminPage() {
                 </button>
               </div>
             </form>
-            <div className="rounded-3xl border border-zinc-800 bg-zinc-900/40 p-8">
-              <h3 className="text-xl font-semibold text-white">Quick Tips</h3>
-              <ul className="mt-4 flex list-disc flex-col gap-3 pl-5 text-sm text-zinc-300">
-                <li>Ensure the admin account has access to recipes.</li>
-                <li>Premium configuration updates are saved row by row.</li>
-                <li>Keep your Supabase keys in environment variables.</li>
-              </ul>
-            </div>
           </div>
         ) : (
           <div className="flex flex-col gap-8">
