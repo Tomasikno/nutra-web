@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
@@ -6,10 +7,13 @@ export default function Home() {
       <header className="glass-header fixed left-0 right-0 top-0 z-50 border-b border-white/20">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-12">
           <div className="flex items-center gap-2">
-            <div className="flex items-center justify-center rounded-lg bg-forest-green p-1.5">
-              <span className="material-symbols-outlined text-2xl text-white">
-                nutrition
-              </span>
+            <div className="flex size-10 items-center justify-center rounded-lg bg-cream-beige shadow-sm">
+              <Image
+                src="/logo.svg"
+                alt="Nutra logo"
+                width={32}
+                height={32}
+              />
             </div>
             <h1 className="text-xl font-bold tracking-tight text-forest-green">
               Nutra
@@ -265,10 +269,13 @@ export default function Home() {
           <div className="mb-16 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
             <div>
               <div className="mb-6 flex items-center gap-2">
-                <div className="flex items-center justify-center rounded-lg bg-forest-green p-1.5">
-                  <span className="material-symbols-outlined text-xl text-white">
-                    nutrition
-                  </span>
+                <div className="flex size-10 items-center justify-center rounded-lg bg-cream-beige shadow-sm">
+                  <Image
+                    src="/logo.svg"
+                    alt="Nutra logo"
+                    width={28}
+                    height={28}
+                  />
                 </div>
                 <h2 className="text-xl font-bold tracking-tight text-forest-green">
                   Nutra
