@@ -1,0 +1,162 @@
+{
+  "Nav": {
+    "features": "Funkce",
+    "howItWorks": "Jak to funguje",
+    "pricing": "Ceník",
+    "logIn": "Přihlášení",
+    "downloadNow": "Získat aplikaci"
+  },
+  "Recipe": {
+    "notFound": "Recept nenalezen",
+    "prep": "Příprava",
+    "cook": "Vaření",
+    "servings": "porce",
+    "downloadApp": "Získat aplikaci",
+    "per": "na",
+    "ingredients": "Ingredience",
+    "cookingSteps": "Postup přípravy",
+    "nutrition": {
+      "kcal": "kcal",
+      "protein": "bílkoviny",
+      "carbs": "sacharidy",
+      "fat": "tuky"
+    },
+    "difficulty": {
+      "easy": "lehká",
+      "medium": "střední",
+      "hard": "těžká"
+    }
+  },
+  "Landing": {
+    "logoAlt": "Logo Nutra",
+    "hero": {
+      "titleLine1": "Jezte lépe bez přemýšlení",
+      "titleLine2": "Plán, který sedí vám",
+      "subtitle": "Sestavte si týdenní jídelníček, vytvořte nákupní seznam a získejte AI výživové tipy podle svých cílů, preferencí a režimu.",
+      "ctaPrimary": "Získat Nutra zdarma",
+      "ctaSecondary": "Jak to funguje",
+      "badge": "Plánování jídel pro reálný život",
+      "previewWeekLabel": "Přehled vašeho týdne",
+      "previewReadyLabel": "Naplánováno",
+      "goalProgressLabel": "Postup k týdennímu cíli"
+    },
+    "features": {
+      "title": "Vše, co potřebujete pro lepší plánování jídel",
+      "subtitle": "Od plánování po sledování: Nutra vám pomůže rozhodnout, co jíst a proč.",
+      "items": {
+        "weeklyMealPlan": {
+          "title": "Týdenní jídelníček",
+          "copy": "Získejte týdenní plán podle vašich cílů, stravovacích potřeb a denního režimu."
+        },
+        "shoppingList": {
+          "title": "Nákupní seznam",
+          "copy": "Převeďte plán na nákupní seznam, abyste kupovali jen to, co opravdu využijete."
+        },
+        "mealAnalysis": {
+          "title": "Analýza jídel",
+          "copy": "Zapisujte jídla a hned uvidíte kalorie i makroživiny."
+        },
+        "aiSuggestions": {
+          "title": "AI doporučení",
+          "copy": "Zeptejte se AI na lepší alternativy a vyvážené nápady, když přijde chuť."
+        },
+        "createShareRecipes": {
+          "title": "Tvorba a sdílení receptů",
+          "copy": "Uložte si vlastní recepty a sdílejte je s přáteli, rodinou nebo poradcem."
+        }
+      }
+    },
+    "pricing": {
+      "title": "Vyberte plán podle svých cílů",
+      "subtitle": "Začněte zdarma a přejděte na vyšší plán, až budete chtít pokročilejší AI podporu.",
+      "mostPopular": "Nejoblíbenější",
+      "plans": {
+        "free": {
+          "name": "Zdarma",
+          "priceSuffix": "/měs.",
+          "cta": "Začít zdarma",
+          "perks": {
+            "basicMealPlanning": "Základy plánování jídel",
+            "manualShoppingList": "Ruční nákupní seznamy",
+            "calorieTracking": "Sledování kalorií"
+          }
+        },
+        "pro": {
+          "name": "Pro",
+          "priceSuffix": "/měs.",
+          "cta": "Přejít na Pro",
+          "perks": {
+            "aiMealAnalysis": "AI analýza jídel",
+            "automatedShoppingLists": "Automatické nákupní seznamy",
+            "detailedMacroInsights": "Detailní rozpad makroživin",
+            "customDietPreferences": "Osobní stravovací preference"
+          }
+        },
+        "life": {
+          "name": "Doživotní",
+          "priceSuffix": "/jednorázově",
+          "cta": "Získat doživotní přístup",
+          "perks": {
+            "lifetimeProAccess": "Doživotní Pro přístup",
+            "priorityAiFeatures": "Přednostní přístup k novým AI funkcím",
+            "exclusiveCommunityAccess": "Přístup do exkluzivní komunity"
+          }
+        }
+      }
+    },
+    "finalCta": {
+      "title": "Budujte lepší stravovací návyky",
+      "subtitle": "Plánujte jídla, která zvládnete dlouhodobě, nakupujte s menším stresem a dělejte chytřejší rozhodnutí každý den.",
+      "button": "Začít zdarma ještě dnes"
+    },
+    "footer": {
+      "description": "Nutra vám pomáhá plánovat, sledovat a zlepšovat výživu pomocí praktických nástrojů pro každý den.",
+      "sections": {
+        "product": {
+          "title": "Produkt",
+          "links": {
+            "features": "Funkce",
+            "successStories": "Příběhy úspěchu",
+            "aiCoaching": "AI koučink",
+            "forTeams": "Pro týmy"
+          }
+        },
+        "resources": {
+          "title": "Zdroje",
+          "links": {
+            "helpCenter": "Centrum nápovědy",
+            "blog": "Blog",
+            "community": "Komunita",
+            "nutritionGuide": "Průvodce výživou"
+          }
+        },
+        "company": {
+          "title": "Společnost",
+          "links": {
+            "aboutUs": "O nás",
+            "privacyPolicy": "Zásady ochrany soukromí",
+            "termsOfService": "Obchodní podmínky",
+            "cookiePolicy": "Zásady cookies"
+          }
+        }
+      },
+      "copyright": "© 2026 Nutra. Všechna práva vyhrazena.",
+      "builtWith": "Vytvořeno s Kotlin Multiplatform"
+    },
+    "recipePreview": {
+      "badge": "Ukázka reálného receptu",
+      "title": "Podívejte se, co uživatelé uvidí po sdílení receptu",
+      "subtitle": "Při každém načtení se zobrazí náhodný sdílený recept z Nutry. Otevřete celou stránku a projděte ingredience, výživu i postup krok za krokem.",
+      "cta": "Zobrazit celý recept",
+      "previewLabel": "Náhled sdíleného receptu",
+      "difficultyLabel": "Obtížnost",
+      "fallbackTitle": "Náhled sdíleného receptu",
+      "fallbackSubtitle": "Otevřete stránku receptu a podívejte se na ingredience, výživu i postup.",
+      "liveBadge": "Živá data"
+    },
+    "howItWorks": {
+      "title": "Sestavte si stravovací rutinu ve třech jednoduchých krocích",
+      "subtitle": "Nastavte si cíle jednou a pak už jen sledujte jasný týdenní plán s nákupem i sledováním."
+    }
+  }
+}

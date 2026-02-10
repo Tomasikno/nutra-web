@@ -1,36 +1,130 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nutra Web Admin
+
+Next.js web application for the Nutra app - includes a landing page and admin panel for recipe management.
 
 ## Getting Started
 
-First, run the development server:
+### 1. Install Dependencies
+
+```bash
+npm install
+```
+
+### 2. Configure Environment Variables
+
+Copy `.env.example` to `.env.local`:
+
+```bash
+cp .env.example .env.local
+```
+
+Then fill in your Supabase credentials:
+
+```env
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+```
+
+**Where to find these values:**
+1. Go to [Supabase Dashboard](https://app.supabase.com)
+2. Select your project
+3. Go to Settings → API
+4. Copy the values:
+   - Project URL → `SUPABASE_URL`
+   - `service_role` `secret` key → `SUPABASE_SERVICE_ROLE_KEY`
+
+### 3. Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the landing page.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 4. Access Admin Panel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Navigate to [http://localhost:3000/admin](http://localhost:3000/admin) and sign in with your Supabase user credentials.
 
-## Learn More
+## Features
 
-To learn more about Next.js, take a look at the following resources:
+### Admin Panel (`/admin`)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Recipe Management**: Create and browse recipes
+- **Premium Config**: Update premium configuration settings
+- **Authentication**: Secure login with Supabase Auth
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Tech Stack
 
-## Deploy on Vercel
+- **Framework**: Next.js 16 (App Router)
+- **Database**: Supabase (PostgreSQL)
+- **Auth**: Supabase Auth
+- **Styling**: Tailwind CSS 4
+- **Language**: TypeScript 5
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Project Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+nutra-web/
+├── app/
+│   ├── admin/           # Admin panel page
+│   ├── api/admin/       # API routes for admin operations
+│   ├── page.tsx         # Landing page
+│   └── layout.tsx       # Root layout
+├── lib/
+│   ├── supabase.ts      # Supabase client configuration
+│   └── database.types.ts # TypeScript types for database
+├── .env.local           # Environment variables (git-ignored)
+└── .env.example         # Example environment variables
+```
+
+## Database Schema
+
+The admin panel expects these Supabase tables:
+
+### `recipes`
+- `id` (uuid, primary key)
+- `created_at` (timestamp)
+- `updated_at` (timestamp)
+- `name` (text, required)
+- `description` (text, nullable)
+- `ingredients` (text, nullable)
+- `instructions` (text, nullable)
+- `image_url` (text, nullable)
+- `is_premium` (boolean, default: false)
+
+### `premium_config`
+- `id` (uuid, primary key)
+- `key` (text, unique)
+- `value` (jsonb)
+- `created_at` (timestamp)
+- `updated_at` (timestamp)
+
+## Auto-generating TypeScript Types
+
+To auto-generate database types from your Supabase schema:
+
+```bash
+npx supabase gen types typescript --project-id YOUR_PROJECT_ID > lib/database.types.ts
+```
+
+Find your project ID in the Supabase Dashboard URL: `https://app.supabase.com/project/<project-id>`
+
+## Deployment
+
+### Deploy to Vercel
+
+1. Push your code to GitHub
+2. Import the repository in [Vercel](https://vercel.com)
+3. Add environment variables in Vercel project settings
+4. Deploy!
+
+## Security Notes
+
+- All Supabase communication happens server-side only (API routes)
+- No environment variables are exposed to the client (no `NEXT_PUBLIC_` prefix)
+- The `SUPABASE_SERVICE_ROLE_KEY` bypasses Row Level Security (RLS)
+- The admin panel uses HTTP-only session cookies for authentication
+
+## License
+
+Private - All rights reserved
