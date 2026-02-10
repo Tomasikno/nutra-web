@@ -82,10 +82,11 @@
           }
         },
         "pro": {
-          "name": "Pro",
+          "name": "Monthly",
           "priceSuffix": "/mo",
-          "cta": "Upgrade to Pro",
+          "cta": "Get Monthly",
           "perks": {
+            "unlimitedAiFunctions": "Unlimited AI functions",
             "aiMealAnalysis": "AI meal analysis",
             "automatedShoppingLists": "Auto-generated shopping lists",
             "detailedMacroInsights": "Detailed macro breakdowns",
@@ -93,9 +94,9 @@
           }
         },
         "life": {
-          "name": "Life",
-          "priceSuffix": "/once",
-          "cta": "Get Lifetime Access",
+          "name": "Annual",
+          "priceSuffix": "/year",
+          "cta": "Get Annual Access",
           "perks": {
             "lifetimeProAccess": "Lifetime Pro access",
             "priorityAiFeatures": "Early access to new AI features",

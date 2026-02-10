@@ -82,10 +82,11 @@
           }
         },
         "pro": {
-          "name": "Pro",
+          "name": "Měsíční",
           "priceSuffix": "/měs.",
-          "cta": "Přejít na Pro",
+          "cta": "Přejít na Měsíční",
           "perks": {
+            "unlimitedAiFunctions": "Neomezené AI funkce",
             "aiMealAnalysis": "AI analýza jídel",
             "automatedShoppingLists": "Automatické nákupní seznamy",
             "detailedMacroInsights": "Detailní rozpad makroživin",
@@ -93,9 +94,9 @@
           }
         },
         "life": {
-          "name": "Doživotní",
-          "priceSuffix": "/jednorázově",
-          "cta": "Získat doživotní přístup",
+          "name": "Roční",
+          "priceSuffix": "/rok",
+          "cta": "Získat roční přístup",
           "perks": {
             "lifetimeProAccess": "Doživotní Pro přístup",
             "priorityAiFeatures": "Přednostní přístup k novým AI funkcím",

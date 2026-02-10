@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
+import PublicTopNav from "@/app/components/PublicTopNav";
+import { defaultLocale, locales, type Locale } from "@/i18n/request";
 import type { Recipe } from "@/lib/recipe-types";
 import { supabaseAdmin } from "@/lib/supabase";
-import { defaultLocale, locales, type Locale } from "@/i18n/request";
+import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { unstable_cache } from "next/cache";
-import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import PublicTopNav from "@/app/components/PublicTopNav";
+import { notFound } from "next/navigation";
 
 type RecipePreview = Pick<
   Recipe,
@@ -196,23 +196,20 @@ export default async function Home({ params }: HomePageProps) {
     },
   ];
 
-  const freePlanPerks = [
-    tLanding("pricing.plans.free.perks.basicMealPlanning"),
-    tLanding("pricing.plans.free.perks.manualShoppingList"),
-    tLanding("pricing.plans.free.perks.calorieTracking"),
-  ];
-
-  const proPlanPerks = [
+  const monthlyPlanPerks = [
+    tLanding("pricing.plans.pro.perks.unlimitedAiFunctions"),
     tLanding("pricing.plans.pro.perks.aiMealAnalysis"),
     tLanding("pricing.plans.pro.perks.automatedShoppingLists"),
     tLanding("pricing.plans.pro.perks.detailedMacroInsights"),
     tLanding("pricing.plans.pro.perks.customDietPreferences"),
   ];
 
-  const lifePlanPerks = [
-    tLanding("pricing.plans.life.perks.lifetimeProAccess"),
-    tLanding("pricing.plans.life.perks.priorityAiFeatures"),
-    tLanding("pricing.plans.life.perks.exclusiveCommunityAccess"),
+  const annualPlanPerks = [
+    tLanding("pricing.plans.pro.perks.unlimitedAiFunctions"),
+    tLanding("pricing.plans.pro.perks.aiMealAnalysis"),
+    tLanding("pricing.plans.pro.perks.automatedShoppingLists"),
+    tLanding("pricing.plans.pro.perks.detailedMacroInsights"),
+    tLanding("pricing.plans.pro.perks.customDietPreferences"),
   ];
 
   const footerSections = [
@@ -220,18 +217,6 @@ export default async function Home({ params }: HomePageProps) {
       title: tLanding("footer.sections.product.title"),
       links: [
         tLanding("footer.sections.product.links.features"),
-        tLanding("footer.sections.product.links.successStories"),
-        tLanding("footer.sections.product.links.aiCoaching"),
-        tLanding("footer.sections.product.links.forTeams"),
-      ],
-    },
-    {
-      title: tLanding("footer.sections.resources.title"),
-      links: [
-        tLanding("footer.sections.resources.links.helpCenter"),
-        tLanding("footer.sections.resources.links.blog"),
-        tLanding("footer.sections.resources.links.community"),
-        tLanding("footer.sections.resources.links.nutritionGuide"),
       ],
     },
     {
@@ -315,276 +300,253 @@ export default async function Home({ params }: HomePageProps) {
         </section>
 
         <section className="section-anchor px-6 pb-8 pt-2 lg:px-12">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 rounded-3xl border border-forest-green/15 bg-white/65 p-6 shadow-[0_24px_70px_-45px_rgba(28,51,37,0.8)] backdrop-blur-sm lg:grid-cols-[1fr_520px] lg:p-10">
-          <div>
-            <p className="mb-4 inline-flex rounded-full border border-primary/35 bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-primary">
-              {tLanding("recipePreview.badge")}
-            </p>
-            <h2 className="display-type mb-5 text-4xl font-bold text-forest-green lg:text-5xl">
-              {tLanding("recipePreview.title")}
-            </h2>
-            <p className="mb-7 max-w-xl text-base leading-relaxed text-slate-600 lg:text-lg">
-              {tLanding("recipePreview.subtitle")}
-            </p>
-            <Link
-              href={previewRecipePath}
-              className="inline-flex items-center gap-2 rounded-xl bg-forest-green px-5 py-3 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-forest-green/90"
-            >
-              {tLanding("recipePreview.cta")}
-              <span className="material-symbols-outlined text-base">open_in_new</span>
-            </Link>
-          </div>
-
-          <div className="mx-auto w-full max-w-[620px]">
-            <div className="overflow-hidden rounded-[26px] border border-forest-green/20 bg-white shadow-[0_30px_70px_-45px_rgba(22,47,33,0.95)]">
-              <div className="flex items-center justify-between border-b border-forest-green/10 bg-cream-beige/55 px-4 py-3">
-                <div className="flex items-center gap-2">
-                  <span className="size-2 rounded-full bg-[#ff6d5e]" />
-                  <span className="size-2 rounded-full bg-[#ffbe2e]" />
-                  <span className="size-2 rounded-full bg-[#2eca43]" />
-                </div>
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-forest-green/70">
-                  {tLanding("recipePreview.previewLabel")}
-                </p>
-                <span className="rounded-full bg-forest-green/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.08em] text-forest-green">
-                  {tLanding("recipePreview.liveBadge")}
-                </span>
-              </div>
-
-              <Link href={previewRecipePath} className="group block">
-                <div className="relative h-56 overflow-hidden bg-[#d9d0bf]">
-                  {randomRecipe?.photo_url ? (
-                    <div
-                      className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-                      style={{ backgroundImage: `url(${randomRecipe.photo_url})` }}
-                    />
-                  ) : (
-                    <div className="absolute inset-0 bg-gradient-to-br from-forest-green to-[#2f4e37]" />
-                  )}
-                  <div className="absolute inset-0 bg-black/20" />
-                  <div className="absolute bottom-4 left-4 right-4 rounded-2xl border border-white/45 bg-white/70 p-4 backdrop-blur-sm">
-                    <h3 className="text-lg font-bold leading-tight text-[#1c4c32] sm:text-xl">
-                      {randomRecipe?.recipe_name ?? tLanding("recipePreview.fallbackTitle")}
-                    </h3>
-                    <p className="mt-1 text-sm text-[#355f46]">
-                      {randomRecipe?.description ?? tLanding("recipePreview.fallbackSubtitle")}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="grid gap-3 border-t border-forest-green/10 bg-white p-4 sm:grid-cols-4">
-                  <div className="rounded-xl border border-forest-green/10 bg-cream-beige/25 px-3 py-2 text-center">
-                    <p className="text-[11px] uppercase tracking-[0.09em] text-forest-green/70">
-                      {tRecipe("prep")}
-                    </p>
-                    <p className="text-sm font-bold text-forest-green">
-                      {randomRecipe?.prep_time_minutes ?? 0} min
-                    </p>
-                  </div>
-                  <div className="rounded-xl border border-forest-green/10 bg-cream-beige/25 px-3 py-2 text-center">
-                    <p className="text-[11px] uppercase tracking-[0.09em] text-forest-green/70">
-                      {tRecipe("cook")}
-                    </p>
-                    <p className="text-sm font-bold text-forest-green">
-                      {randomRecipe?.cook_time_minutes ?? 0} min
-                    </p>
-                  </div>
-                  <div className="rounded-xl border border-forest-green/10 bg-cream-beige/25 px-3 py-2 text-center">
-                    <p className="text-[11px] uppercase tracking-[0.09em] text-forest-green/70">
-                      {tRecipe("servings")}
-                    </p>
-                    <p className="text-sm font-bold text-forest-green">
-                      {randomRecipe?.servings ?? 1}
-                    </p>
-                  </div>
-                  <div className="rounded-xl border border-forest-green/10 bg-cream-beige/25 px-3 py-2 text-center">
-                    <p className="text-[11px] uppercase tracking-[0.09em] text-forest-green/70">
-                      {tLanding("recipePreview.difficultyLabel")}
-                    </p>
-                    <p className="text-sm font-bold capitalize text-forest-green">
-                      {previewDifficulty ?? "-"}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap items-center justify-between gap-3 px-4 pb-4">
-                  <div className="flex flex-wrap gap-2">
-                    {previewIngredientsCount != null && (
-                      <span className="rounded-full bg-forest-green/10 px-3 py-1 text-xs font-semibold text-forest-green">
-                        {previewIngredientsCount} {tRecipe("ingredients")}
-                      </span>
-                    )}
-                    {previewCalories != null && (
-                      <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-                        {previewCalories} {tRecipe("nutrition.kcal")}
-                      </span>
-                    )}
-                  </div>
-                  <span className="inline-flex items-center gap-1 text-sm font-semibold text-forest-green">
-                    {tLanding("recipePreview.cta")}
-                    <span className="material-symbols-outlined text-base">arrow_outward</span>
-                  </span>
-                </div>
+          <div className="mx-auto grid max-w-7xl items-center gap-10 rounded-3xl border border-forest-green/15 bg-white/65 p-6 shadow-[0_24px_70px_-45px_rgba(28,51,37,0.8)] backdrop-blur-sm lg:grid-cols-[1fr_520px] lg:p-10">
+            <div>
+              <p className="mb-4 inline-flex rounded-full border border-primary/35 bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-primary">
+                {tLanding("recipePreview.badge")}
+              </p>
+              <h2 className="display-type mb-5 text-4xl font-bold text-forest-green lg:text-5xl">
+                {tLanding("recipePreview.title")}
+              </h2>
+              <p className="mb-7 max-w-xl text-base leading-relaxed text-slate-600 lg:text-lg">
+                {tLanding("recipePreview.subtitle")}
+              </p>
+              <Link
+                href={previewRecipePath}
+                className="inline-flex items-center gap-2 rounded-xl bg-forest-green px-5 py-3 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-forest-green/90"
+              >
+                {tLanding("recipePreview.cta")}
+                <span className="material-symbols-outlined text-base">open_in_new</span>
               </Link>
             </div>
+
+            <div className="mx-auto w-full max-w-[620px]">
+              <div className="overflow-hidden rounded-[26px] border border-forest-green/20 bg-white shadow-[0_30px_70px_-45px_rgba(22,47,33,0.95)]">
+                <div className="flex items-center justify-between border-b border-forest-green/10 bg-cream-beige/55 px-4 py-3">
+                  <div className="flex items-center gap-2">
+                    <span className="size-2 rounded-full bg-[#ff6d5e]" />
+                    <span className="size-2 rounded-full bg-[#ffbe2e]" />
+                    <span className="size-2 rounded-full bg-[#2eca43]" />
+                  </div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-forest-green/70">
+                    {tLanding("recipePreview.previewLabel")}
+                  </p>
+                  <span className="rounded-full bg-forest-green/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.08em] text-forest-green">
+                    {tLanding("recipePreview.liveBadge")}
+                  </span>
+                </div>
+
+                <Link href={previewRecipePath} className="group block">
+                  <div className="relative h-56 overflow-hidden bg-[#d9d0bf]">
+                    {randomRecipe?.photo_url ? (
+                      <div
+                        className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                        style={{ backgroundImage: `url(${randomRecipe.photo_url})` }}
+                      />
+                    ) : (
+                      <div className="absolute inset-0 bg-gradient-to-br from-forest-green to-[#2f4e37]" />
+                    )}
+                    <div className="absolute inset-0 bg-black/20" />
+                    <div className="absolute bottom-4 left-4 right-4 rounded-2xl border border-white/45 bg-white/70 p-4 backdrop-blur-sm">
+                      <h3 className="text-lg font-bold leading-tight text-[#1c4c32] sm:text-xl">
+                        {randomRecipe?.recipe_name ?? tLanding("recipePreview.fallbackTitle")}
+                      </h3>
+                      <p className="mt-1 text-sm text-[#355f46]">
+                        {randomRecipe?.description ?? tLanding("recipePreview.fallbackSubtitle")}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid gap-3 border-t border-forest-green/10 bg-white p-4 sm:grid-cols-4">
+                    <div className="rounded-xl border border-forest-green/10 bg-cream-beige/25 px-3 py-2 text-center">
+                      <p className="text-[11px] uppercase tracking-[0.09em] text-forest-green/70">
+                        {tRecipe("prep")}
+                      </p>
+                      <p className="text-sm font-bold text-forest-green">
+                        {randomRecipe?.prep_time_minutes ?? 0} min
+                      </p>
+                    </div>
+                    <div className="rounded-xl border border-forest-green/10 bg-cream-beige/25 px-3 py-2 text-center">
+                      <p className="text-[11px] uppercase tracking-[0.09em] text-forest-green/70">
+                        {tRecipe("cook")}
+                      </p>
+                      <p className="text-sm font-bold text-forest-green">
+                        {randomRecipe?.cook_time_minutes ?? 0} min
+                      </p>
+                    </div>
+                    <div className="rounded-xl border border-forest-green/10 bg-cream-beige/25 px-3 py-2 text-center">
+                      <p className="text-[11px] uppercase tracking-[0.09em] text-forest-green/70">
+                        {tRecipe("servings")}
+                      </p>
+                      <p className="text-sm font-bold text-forest-green">
+                        {randomRecipe?.servings ?? 1}
+                      </p>
+                    </div>
+                    <div className="rounded-xl border border-forest-green/10 bg-cream-beige/25 px-3 py-2 text-center">
+                      <p className="text-[11px] uppercase tracking-[0.09em] text-forest-green/70">
+                        {tLanding("recipePreview.difficultyLabel")}
+                      </p>
+                      <p className="text-sm font-bold capitalize text-forest-green">
+                        {previewDifficulty ?? "-"}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap items-center justify-between gap-3 px-4 pb-4">
+                    <div className="flex flex-wrap gap-2">
+                      {previewIngredientsCount != null && (
+                        <span className="rounded-full bg-forest-green/10 px-3 py-1 text-xs font-semibold text-forest-green">
+                          {previewIngredientsCount} {tRecipe("ingredients")}
+                        </span>
+                      )}
+                      {previewCalories != null && (
+                        <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                          {previewCalories} {tRecipe("nutrition.kcal")}
+                        </span>
+                      )}
+                    </div>
+                    <span className="inline-flex items-center gap-1 text-sm font-semibold text-forest-green">
+                      {tLanding("recipePreview.cta")}
+                      <span className="material-symbols-outlined text-base">arrow_outward</span>
+                    </span>
+                  </div>
+                </Link>
+              </div>
+            </div>
           </div>
-        </div>
         </section>
 
         <section className="section-anchor bg-background-light/80 py-20" id="features">
-        <div className="mx-auto max-w-7xl px-6 lg:px-12">
-          <div className="mb-14 text-center">
-            <h2 className="display-type mb-4 text-4xl font-bold text-forest-green lg:text-5xl">
-              {tLanding("features.title")}
-            </h2>
-            <p className="mx-auto max-w-2xl text-lg text-slate-600">{tLanding("features.subtitle")}</p>
-          </div>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-6">
-            {features.map((item, index) => {
-              const featurePositionClass =
-                index === 3 ? "lg:col-start-2" : index === 4 ? "lg:col-start-4" : "";
+          <div className="mx-auto max-w-7xl px-6 lg:px-12">
+            <div className="mb-14 text-center">
+              <h2 className="display-type mb-4 text-4xl font-bold text-forest-green lg:text-5xl">
+                {tLanding("features.title")}
+              </h2>
+              <p className="mx-auto max-w-2xl text-lg text-slate-600">{tLanding("features.subtitle")}</p>
+            </div>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-6">
+              {features.map((item, index) => {
+                const featurePositionClass =
+                  index === 3 ? "lg:col-start-2" : index === 4 ? "lg:col-start-4" : "";
 
-              return (
-                <div
-                  key={item.title}
-                  className={`soft-card group rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg lg:col-span-2 ${featurePositionClass}`}
-                >
-                  <div className="mb-5 flex size-11 items-center justify-center rounded-xl bg-forest-green/10 text-forest-green transition-colors group-hover:bg-forest-green group-hover:text-white">
-                    <span className="material-symbols-outlined text-2xl">{item.icon}</span>
+                return (
+                  <div
+                    key={item.title}
+                    className={`soft-card group rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg lg:col-span-2 ${featurePositionClass}`}
+                  >
+                    <div className="mb-5 flex size-11 items-center justify-center rounded-xl bg-forest-green/10 text-forest-green transition-colors group-hover:bg-forest-green group-hover:text-white">
+                      <span className="material-symbols-outlined text-2xl">{item.icon}</span>
+                    </div>
+                    <h3 className="mb-3 text-xl font-bold text-forest-green">{item.title}</h3>
+                    <p className="text-sm leading-relaxed text-slate-600">{item.copy}</p>
                   </div>
-                  <h3 className="mb-3 text-xl font-bold text-forest-green">{item.title}</h3>
-                  <p className="text-sm leading-relaxed text-slate-600">{item.copy}</p>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
-        </div>
         </section>
 
         <section className="section-anchor py-20" id="how-it-works">
-        <div className="mx-auto max-w-7xl px-6 lg:px-12">
-          <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <div>
-              <p className="mb-2 text-sm font-semibold uppercase tracking-[0.16em] text-primary/90">
-                {tNav("howItWorks")}
+          <div className="mx-auto max-w-7xl px-6 lg:px-12">
+            <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+              <div>
+                <p className="mb-2 text-sm font-semibold uppercase tracking-[0.16em] text-primary/90">
+                  {tNav("howItWorks")}
+                </p>
+                <h2 className="display-type text-4xl font-bold text-forest-green lg:text-5xl">
+                  {tLanding("howItWorks.title")}
+                </h2>
+              </div>
+              <p className="max-w-md text-slate-600">
+                {tLanding("howItWorks.subtitle")}
               </p>
-              <h2 className="display-type text-4xl font-bold text-forest-green lg:text-5xl">
-                {tLanding("howItWorks.title")}
-              </h2>
             </div>
-            <p className="max-w-md text-slate-600">
-              {tLanding("howItWorks.subtitle")}
-            </p>
-          </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
-            {howItWorksSteps.map((step) => (
-              <article key={step.number} className="soft-card rounded-2xl p-7">
-                <p className="display-type mb-4 text-4xl font-bold text-primary">{step.number}</p>
-                <h3 className="mb-3 text-xl font-bold text-forest-green">{step.title}</h3>
-                <p className="text-sm leading-relaxed text-slate-600">{step.copy}</p>
-              </article>
-            ))}
+            <div className="grid gap-6 md:grid-cols-3">
+              {howItWorksSteps.map((step) => (
+                <article key={step.number} className="soft-card rounded-2xl p-7">
+                  <p className="display-type mb-4 text-4xl font-bold text-primary">{step.number}</p>
+                  <h3 className="mb-3 text-xl font-bold text-forest-green">{step.title}</h3>
+                  <p className="text-sm leading-relaxed text-slate-600">{step.copy}</p>
+                </article>
+              ))}
+            </div>
           </div>
-        </div>
         </section>
 
         <section className="section-anchor bg-cream-beige/40 py-24" id="pricing">
-        <div className="mx-auto max-w-7xl px-6 lg:px-12">
-          <div className="mb-16 text-center">
-            <h2 className="display-type mb-4 text-4xl font-bold text-forest-green lg:text-5xl">
-              {tLanding("pricing.title")}
-            </h2>
-            <p className="text-lg text-slate-600">{tLanding("pricing.subtitle")}</p>
-          </div>
-          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-3">
-            <div className="soft-card flex flex-col rounded-2xl p-8">
-              <h3 className="mb-2 text-lg font-bold text-forest-green">{tLanding("pricing.plans.free.name")}</h3>
-              <div className="mb-6 text-3xl font-extrabold text-forest-green">
-                $0
-                <span className="text-base font-normal text-slate-500">
-                  {tLanding("pricing.plans.free.priceSuffix")}
-                </span>
-              </div>
-              <ul className="mb-8 flex-grow space-y-4">
-                {freePlanPerks.map((perk) => (
-                  <li key={perk} className="flex items-center gap-2 text-sm text-slate-600">
-                    <span className="material-symbols-outlined text-sm text-forest-green">
-                      check_circle
-                    </span>
-                    {perk}
-                  </li>
-                ))}
-              </ul>
-              <button className="w-full rounded-xl border border-forest-green/35 py-3 font-semibold text-forest-green transition-colors hover:bg-forest-green/5">
-                {tLanding("pricing.plans.free.cta")}
-              </button>
+          <div className="mx-auto max-w-7xl px-6 lg:px-12">
+            <div className="mb-16 text-center">
+              <h2 className="display-type mb-4 text-4xl font-bold text-forest-green lg:text-5xl">
+                {tLanding("pricing.title")}
+              </h2>
+              <p className="text-lg text-slate-600">{tLanding("pricing.subtitle")}</p>
             </div>
+            <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-2">
+              <div className="soft-card flex flex-col rounded-2xl p-8">
+                <h3 className="mb-2 text-lg font-bold text-forest-green">{tLanding("pricing.plans.pro.name")}</h3>
+                <div className="mb-6 text-3xl font-extrabold text-forest-green">
+                  $9.99
+                  <span className="text-base font-normal text-slate-500">
+                    {tLanding("pricing.plans.pro.priceSuffix")}
+                  </span>
+                </div>
+                <ul className="mb-8 flex-grow space-y-4">
+                  {monthlyPlanPerks.map((perk) => (
+                    <li key={perk} className="flex items-center gap-2 text-sm text-slate-600">
+                      <span className="material-symbols-outlined text-sm text-forest-green">
+                        check_circle
+                      </span>
+                      {perk}
+                    </li>
+                  ))}
+                </ul>
+                <button className="w-full rounded-xl border border-forest-green/35 py-3 font-semibold text-forest-green transition-colors hover:bg-forest-green/5">
+                  {tLanding("pricing.plans.pro.cta")}
+                </button>
+              </div>
 
-            <div className="relative z-10 flex scale-105 flex-col rounded-2xl border-2 border-primary bg-white p-8 shadow-xl shadow-primary/20">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1 text-xs font-semibold uppercase tracking-widest text-white">
-                {tLanding("pricing.mostPopular")}
+              <div className="relative z-10 flex scale-105 flex-col rounded-2xl border-2 border-primary bg-white p-8 shadow-xl shadow-primary/20">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1 text-xs font-semibold uppercase tracking-widest text-white">
+                  {tLanding("pricing.mostPopular")}
+                </div>
+                <h3 className="mb-2 text-lg font-bold text-forest-green">{tLanding("pricing.plans.life.name")}</h3>
+                <div className="mb-6 text-3xl font-extrabold text-forest-green">
+                  $79.99
+                  <span className="text-base font-normal text-slate-500">
+                    {tLanding("pricing.plans.life.priceSuffix")}
+                  </span>
+                </div>
+                <ul className="mb-8 flex-grow space-y-4">
+                  {annualPlanPerks.map((perk) => (
+                    <li key={perk} className="flex items-center gap-2 text-sm text-slate-600">
+                      <span className="material-symbols-outlined text-sm text-primary">check_circle</span>
+                      {perk}
+                    </li>
+                  ))}
+                </ul>
+                <button className="w-full rounded-xl bg-primary py-3 font-semibold text-white transition-colors hover:bg-primary/90">
+                  {tLanding("pricing.plans.life.cta")}
+                </button>
               </div>
-              <h3 className="mb-2 text-lg font-bold text-forest-green">{tLanding("pricing.plans.pro.name")}</h3>
-              <div className="mb-6 text-3xl font-extrabold text-forest-green">
-                $9.99
-                <span className="text-base font-normal text-slate-500">
-                  {tLanding("pricing.plans.pro.priceSuffix")}
-                </span>
-              </div>
-              <ul className="mb-8 flex-grow space-y-4">
-                {proPlanPerks.map((perk) => (
-                  <li key={perk} className="flex items-center gap-2 text-sm text-slate-600">
-                    <span className="material-symbols-outlined text-sm text-primary">check_circle</span>
-                    {perk}
-                  </li>
-                ))}
-              </ul>
-              <button className="w-full rounded-xl bg-primary py-3 font-semibold text-white transition-colors hover:bg-primary/90">
-                {tLanding("pricing.plans.pro.cta")}
-              </button>
-            </div>
-
-            <div className="soft-card flex flex-col rounded-2xl p-8">
-              <h3 className="mb-2 text-lg font-bold text-forest-green">{tLanding("pricing.plans.life.name")}</h3>
-              <div className="mb-6 text-3xl font-extrabold text-forest-green">
-                $149
-                <span className="text-base font-normal text-slate-500">
-                  {tLanding("pricing.plans.life.priceSuffix")}
-                </span>
-              </div>
-              <ul className="mb-8 flex-grow space-y-4">
-                {lifePlanPerks.map((perk) => (
-                  <li key={perk} className="flex items-center gap-2 text-sm text-slate-600">
-                    <span className="material-symbols-outlined text-sm text-forest-green">
-                      check_circle
-                    </span>
-                    {perk}
-                  </li>
-                ))}
-              </ul>
-              <button className="w-full rounded-xl border border-forest-green/35 py-3 font-semibold text-forest-green transition-colors hover:bg-forest-green/5">
-                {tLanding("pricing.plans.life.cta")}
-              </button>
             </div>
           </div>
-        </div>
         </section>
 
         <section className="bg-background-light px-6 py-20 lg:px-12">
-        <div className="mx-auto max-w-7xl">
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-forest-green to-emerald-800 px-8 py-16 text-center text-white lg:py-24">
-            <div className="relative z-10 mx-auto max-w-3xl">
-              <h2 className="display-type mb-6 text-4xl font-black lg:text-6xl">{tLanding("finalCta.title")}</h2>
-              <p className="mb-10 text-lg leading-relaxed opacity-90">{tLanding("finalCta.subtitle")}</p>
-              <button className="rounded-xl bg-white px-10 py-4 text-lg font-semibold text-forest-green shadow-lg transition-all hover:scale-105 hover:bg-slate-100 active:scale-95">
-                {tLanding("finalCta.button")}
-              </button>
+          <div className="mx-auto max-w-7xl">
+            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-forest-green to-emerald-800 px-8 py-16 text-center text-white lg:py-24">
+              <div className="relative z-10 mx-auto max-w-3xl">
+                <h2 className="display-type mb-6 text-4xl font-black lg:text-6xl">{tLanding("finalCta.title")}</h2>
+                <p className="mb-10 text-lg leading-relaxed opacity-90">{tLanding("finalCta.subtitle")}</p>
+                <button className="rounded-xl bg-white px-10 py-4 text-lg font-semibold text-forest-green shadow-lg transition-all hover:scale-105 hover:bg-slate-100 active:scale-95">
+                  {tLanding("finalCta.button")}
+                </button>
+              </div>
+              <div className="absolute right-0 top-0 size-96 -translate-y-1/2 translate-x-1/2 rounded-full bg-white/10 blur-3xl" />
+              <div className="absolute bottom-0 left-0 size-96 -translate-x-1/2 translate-y-1/2 rounded-full bg-emerald-400/20 blur-3xl" />
             </div>
-            <div className="absolute right-0 top-0 size-96 -translate-y-1/2 translate-x-1/2 rounded-full bg-white/10 blur-3xl" />
-            <div className="absolute bottom-0 left-0 size-96 -translate-x-1/2 translate-y-1/2 rounded-full bg-emerald-400/20 blur-3xl" />
           </div>
-        </div>
         </section>
       </main>
 
