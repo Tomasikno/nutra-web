@@ -94,7 +94,11 @@ export default function PremiumConfigClient({
 
   useEffect(() => {
     if (!sessionEmail) return;
-    fetchRows();
+    const timeout = window.setTimeout(() => {
+      void fetchRows();
+    }, 0);
+
+    return () => window.clearTimeout(timeout);
   }, [sessionEmail]);
 
   const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {

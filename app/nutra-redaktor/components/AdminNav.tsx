@@ -22,9 +22,9 @@ export default function AdminNav({ sessionEmail, onSignOut }: AdminNavProps) {
         </div>
         <div className="flex flex-wrap gap-2">
           <Link
-            href="/admin"
+            href="/nutra-redaktor"
             className={`rounded-full border px-4 py-2 text-xs font-semibold transition ${
-              isActive("/admin")
+              isActive("/nutra-redaktor")
                 ? "border-emerald-400 text-emerald-100"
                 : "border-zinc-700 text-zinc-300 hover:border-emerald-400 hover:text-emerald-200"
             }`}
@@ -32,9 +32,9 @@ export default function AdminNav({ sessionEmail, onSignOut }: AdminNavProps) {
             Create Recipe
           </Link>
           <Link
-            href="/admin/recipes"
+            href="/nutra-redaktor/recipes"
             className={`rounded-full border px-4 py-2 text-xs font-semibold transition ${
-              isActive("/admin/recipes")
+              isActive("/nutra-redaktor/recipes")
                 ? "border-emerald-400 text-emerald-100"
                 : "border-zinc-700 text-zinc-300 hover:border-emerald-400 hover:text-emerald-200"
             }`}
@@ -42,9 +42,9 @@ export default function AdminNav({ sessionEmail, onSignOut }: AdminNavProps) {
             Recipes
           </Link>
           <Link
-            href="/admin/premium-config"
+            href="/nutra-redaktor/premium-config"
             className={`rounded-full border px-4 py-2 text-xs font-semibold transition ${
-              isActive("/admin/premium-config")
+              isActive("/nutra-redaktor/premium-config")
                 ? "border-emerald-400 text-emerald-100"
                 : "border-zinc-700 text-zinc-300 hover:border-emerald-400 hover:text-emerald-200"
             }`}

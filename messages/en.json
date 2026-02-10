@@ -53,7 +53,7 @@
           "copy": "Turn your plan into a ready-to-shop list so you buy what you need and waste less."
         },
         "mealAnalysis": {
-          "title": "Meal Analysis",
+          "title": "Recipes",
           "copy": "Log meals and instantly see calories and macros to stay on track."
         },
         "aiSuggestions": {
@@ -62,7 +62,7 @@
         },
         "createShareRecipes": {
           "title": "Create & Share Recipes",
-          "copy": "Save your own recipes and share them with friends, family, or your coach."
+          "copy": "Create your own recipes, publish them, and share them with friends, family, or your coach."
         }
       }
     },
@@ -141,18 +141,18 @@
         }
       },
       "copyright": "© 2026 Nutra. All rights reserved.",
-      "builtWith": "Proudly built with Kotlin Multiplatform"
+      "builtWith": "Built with love and ton of coffee"
     },
     "recipePreview": {
-      "badge": "Real Recipe Example",
-      "title": "See Exactly What Users Get When a Recipe Is Shared",
-      "subtitle": "Each page load shows a random shared recipe from Nutra. Open the full page to review ingredients, nutrition, and step-by-step instructions.",
-      "cta": "View Full Recipe",
-      "previewLabel": "Shared Recipe Preview",
+      "badge": "Create & Share Recipes",
+      "title": "Publish your recipe and share it with anyone",
+      "subtitle": "Create your own recipe in Nutra, share it with a link, and let others view ingredients, nutrition, and step-by-step cooking instructions.",
+      "cta": "Open Shared Recipe",
+      "previewLabel": "Shared Recipe Example",
       "difficultyLabel": "Difficulty",
-      "fallbackTitle": "Shared Recipe Preview",
+      "fallbackTitle": "Shared Recipe Example",
       "fallbackSubtitle": "Open this recipe page to view ingredients, nutrition, and cooking steps.",
-      "liveBadge": "Live Data"
+      "liveBadge": "Shared Link"
     },
     "howItWorks": {
       "title": "Build your meal routine in three simple steps",

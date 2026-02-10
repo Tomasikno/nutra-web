@@ -6,7 +6,7 @@ import type { Recipe, RecipeFormData } from "@/lib/recipe-types";
 import { DEFAULT_NUTRITION, EMPTY_RECIPE_FORM } from "@/lib/recipe-types";
 import { buildNutritionPayload, coerceNutritionInfo } from "@/lib/recipe-nutrition";
 import { coerceHealthBenefits, coerceWarnings } from "@/lib/recipe-form";
-import RecipeFormTabs from "@/app/admin/components/RecipeFormTabs";
+import RecipeFormTabs from "@/app/nutra-redaktor/components/RecipeFormTabs";
 
 const createEmptyRecipeForm = (): RecipeFormData => ({
   ...EMPTY_RECIPE_FORM,
@@ -222,7 +222,7 @@ export default function EditRecipePage() {
     }
 
     setSaving(false);
-    router.push("/admin");
+    router.push("/nutra-redaktor");
   };
 
   const handlePhotoSelect = async (file: File) => {
@@ -371,7 +371,7 @@ export default function EditRecipePage() {
           <p className="text-sm text-rose-200">{error}</p>
           <button
             type="button"
-            onClick={() => router.push("/admin")}
+            onClick={() => router.push("/nutra-redaktor")}
             className="mt-4 rounded-full border border-zinc-700 px-5 py-2 text-sm font-semibold text-zinc-200 transition hover:border-emerald-400 hover:text-emerald-200"
           >
             Back to Admin
@@ -393,7 +393,7 @@ export default function EditRecipePage() {
           </div>
           <button
             type="button"
-            onClick={() => router.push("/admin")}
+            onClick={() => router.push("/nutra-redaktor")}
             className="rounded-full border border-zinc-700 px-5 py-2 text-sm font-semibold text-zinc-200 transition hover:border-emerald-400 hover:text-emerald-200"
           >
             Back to Admin
@@ -458,7 +458,7 @@ export default function EditRecipePage() {
             </button>
             <button
               type="button"
-              onClick={() => router.push("/admin")}
+              onClick={() => router.push("/nutra-redaktor")}
               className="rounded-full border border-zinc-700 px-5 py-2 text-sm font-semibold text-zinc-200 transition hover:border-emerald-400 hover:text-emerald-200"
             >
               Cancel

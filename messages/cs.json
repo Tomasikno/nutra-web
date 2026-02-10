@@ -38,7 +38,7 @@
       "badge": "Plánování jídel pro reálný život",
       "previewWeekLabel": "Přehled vašeho týdne",
       "previewReadyLabel": "Naplánováno",
-      "goalProgressLabel": "Postup k týdennímu cíli"
+      "goalProgressLabel": "Recepty vytvo\u0159eny"
     },
     "features": {
       "title": "Vše, co potřebujete pro lepší plánování jídel",
@@ -53,7 +53,7 @@
           "copy": "Převeďte plán na nákupní seznam, abyste kupovali jen to, co opravdu využijete."
         },
         "mealAnalysis": {
-          "title": "Analýza jídel",
+          "title": "Recepty",
           "copy": "Zapisujte jídla a hned uvidíte kalorie i makroživiny."
         },
         "aiSuggestions": {
@@ -62,7 +62,7 @@
         },
         "createShareRecipes": {
           "title": "Tvorba a sdílení receptů",
-          "copy": "Uložte si vlastní recepty a sdílejte je s přáteli, rodinou nebo poradcem."
+          "copy": "Vytvořte vlastní recepty, sdílejte je odkazem a pošlete je přátelům, rodině nebo poradci."
         }
       }
     },
@@ -141,18 +141,18 @@
         }
       },
       "copyright": "© 2026 Nutra. Všechna práva vyhrazena.",
-      "builtWith": "Vytvořeno s Kotlin Multiplatform"
+      "builtWith": "Vytvořeno s láskou a tunou kávy"
     },
     "recipePreview": {
-      "badge": "Ukázka reálného receptu",
-      "title": "Podívejte se, co uživatelé uvidí po sdílení receptu",
-      "subtitle": "Při každém načtení se zobrazí náhodný sdílený recept z Nutry. Otevřete celou stránku a projděte ingredience, výživu i postup krok za krokem.",
-      "cta": "Zobrazit celý recept",
-      "previewLabel": "Náhled sdíleného receptu",
+      "badge": "Tvorba a sdílení receptů",
+      "title": "Vytvořte recept a sdílejte ho jedním odkazem",
+      "subtitle": "V Nutře si vytvoříte vlastní recept, nasdílíte odkaz a ostatní si mohou prohlédnout ingredience, výživu i postup krok za krokem.",
+      "cta": "Otevřít sdílený recept",
+      "previewLabel": "Ukázka sdíleného receptu",
       "difficultyLabel": "Obtížnost",
-      "fallbackTitle": "Náhled sdíleného receptu",
+      "fallbackTitle": "Ukázka sdíleného receptu",
       "fallbackSubtitle": "Otevřete stránku receptu a podívejte se na ingredience, výživu i postup.",
-      "liveBadge": "Živá data"
+      "liveBadge": "Sdílený odkaz"
     },
     "howItWorks": {
       "title": "Sestavte si stravovací rutinu ve třech jednoduchých krocích",

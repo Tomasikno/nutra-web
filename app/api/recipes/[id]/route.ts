@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
+import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
@@ -27,7 +27,7 @@ export async function GET(
     .select(recipeSelect)
     .eq("id", id)
     .is("deleted_at", null)
-    .in("share_visibility", ["PUBLIC", "UNLISTED"])
+    .in("share_visibility", ["PUBLIC"])
     .single();
 
   if (error || !data) {

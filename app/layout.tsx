@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
+import { getSiteOrigin } from "@/lib/seo";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -15,9 +16,47 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Nutra - Meal Planning and Nutrition Coach",
+  metadataBase: getSiteOrigin(),
+  title: {
+    default: "Nutra | Meal Planning and Nutrition Coach",
+    template: "%s | Nutra",
+  },
   description:
     "Plan meals, generate shopping lists, and get AI nutrition guidance tailored to your goals.",
+  applicationName: "Nutra",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    siteName: "Nutra",
+    url: "/",
+    title: "Nutra | Meal Planning and Nutrition Coach",
+    description:
+      "Plan meals, generate shopping lists, and get AI nutrition guidance tailored to your goals.",
+    images: [
+      {
+        url: "/logo.png",
+        alt: "Nutra logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Nutra | Meal Planning and Nutrition Coach",
+    description:
+      "Plan meals, generate shopping lists, and get AI nutrition guidance tailored to your goals.",
+    images: ["/logo.png"],
+  },
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
@@ -26,9 +65,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${plusJakartaSans.variable} ${fraunces.variable}`}>
+    <html lang="cs" className={`${plusJakartaSans.variable} ${fraunces.variable}`}>
       <head>
         <meta name="apple-mobile-web-app-title" content="Nutra" />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"

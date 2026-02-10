@@ -23,6 +23,7 @@ Then fill in your Supabase credentials:
 ```env
 SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+NEXT_PUBLIC_SITE_URL=https://your-production-domain.com
 ```
 
 **Where to find these values:**

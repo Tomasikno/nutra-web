@@ -3,6 +3,7 @@
 
 import type { Recipe } from "@/lib/recipe-types";
 import { coerceHealthBenefits } from "@/lib/recipe-form";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import AdminNav from "../components/AdminNav";
@@ -126,21 +127,49 @@ export default function AdminRecipesClient({
 
     const rows = payload.data ?? [];
     setRecipes(rows);
-    setRecipeTotal(payload.total ?? rows.length);
-    if (rows.length > 0) {
-      const hasSelected = rows.some((row) => row.id === selectedRecipeId);
-      if (!hasSelected) {
-        setSelectedRecipeId(rows[0].id);
+    setSelectedRecipeIds((prev) => {
+      if (prev.size === 0) return prev;
+
+      const allowed = new Set(rows.map((row) => String(row.id)));
+      const next = new Set<string>();
+      prev.forEach((id) => {
+        if (allowed.has(id)) {
+          next.add(id);
+        }
+      });
+
+      if (next.size === prev.size) {
+        let unchanged = true;
+        next.forEach((id) => {
+          if (!prev.has(id)) {
+            unchanged = false;
+          }
+        });
+        if (unchanged) return prev;
       }
-    } else {
-      setSelectedRecipeId(null);
-    }
+
+      return next;
+    });
+    setRecipeTotal(payload.total ?? rows.length);
+    setSelectedRecipeId((prev) => {
+      if (rows.length === 0) return null;
+      return rows.some((row) => row.id === prev) ? prev : rows[0].id;
+    });
     setRecipesLoading(false);
   };
 
+  const fetchRecipesRef = useRef(fetchRecipes);
+  useEffect(() => {
+    fetchRecipesRef.current = fetchRecipes;
+  });
+
   useEffect(() => {
     if (!sessionEmail) return;
-    fetchRecipes();
+    const timeout = window.setTimeout(() => {
+      void fetchRecipesRef.current();
+    }, 0);
+
+    return () => window.clearTimeout(timeout);
   }, [sessionEmail]);
 
   useEffect(() => {
@@ -155,14 +184,18 @@ export default function AdminRecipesClient({
 
   useEffect(() => {
     if (!sessionEmail) return;
-    setRecipePage(1);
-    fetchRecipes({
-      includeDeleted: showDeleted,
-      showMyRecipes,
-      emailFilter: debouncedSearchEmail,
-      nameFilter: debouncedSearchName,
-      page: 1,
-    });
+    const timeout = window.setTimeout(() => {
+      setRecipePage(1);
+      void fetchRecipesRef.current({
+        includeDeleted: showDeleted,
+        showMyRecipes,
+        emailFilter: debouncedSearchEmail,
+        nameFilter: debouncedSearchName,
+        page: 1,
+      });
+    }, 0);
+
+    return () => window.clearTimeout(timeout);
   }, [showDeleted, showMyRecipes, debouncedSearchEmail, debouncedSearchName, sessionEmail]);
 
   const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -210,20 +243,6 @@ export default function AdminRecipesClient({
     if (!selectAllRef.current) return;
     selectAllRef.current.indeterminate = !allVisibleSelected && someVisibleSelected;
   }, [allVisibleSelected, someVisibleSelected]);
-
-  useEffect(() => {
-    if (selectedRecipeIds.size === 0) return;
-    const allowed = new Set(recipes.map((row) => String(row.id)));
-    setSelectedRecipeIds((prev) => {
-      const next = new Set<string>();
-      prev.forEach((id) => {
-        if (allowed.has(id)) {
-          next.add(id);
-        }
-      });
-      return next;
-    });
-  }, [recipes, selectedRecipeIds.size]);
 
   const toggleRecipeSelection = (id: string) => {
     setSelectedRecipeIds((prev) => {
@@ -978,7 +997,7 @@ export default function AdminRecipesClient({
                                     type="button"
                                     onClick={(event) => {
                                       event.stopPropagation();
-                                      router.push(`/admin/recipes/${row.id}/edit`);
+                                      router.push(`/nutra-redaktor/recipes/${row.id}/edit`);
                                     }}
                                     className="rounded-full border border-emerald-400/60 px-3 py-1 text-xs font-semibold text-emerald-100 transition hover:border-emerald-300 hover:text-white"
                                   >
@@ -1326,11 +1345,14 @@ export default function AdminRecipesClient({
                       </div>
                     </div>
                     {selectedRecipe.photo_url && (
-                      <div className="overflow-hidden rounded-2xl border border-zinc-800">
-                        <img
+                      <div className="relative h-48 w-full overflow-hidden rounded-2xl border border-zinc-800">
+                        <Image
                           src={selectedRecipe.photo_url}
                           alt={selectedRecipe.recipe_name}
-                          className="h-48 w-full object-cover"
+                          fill
+                          unoptimized
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-cover"
                         />
                       </div>
                     )}
@@ -1357,7 +1379,9 @@ export default function AdminRecipesClient({
                     <div className="flex flex-wrap gap-3">
                       <button
                         type="button"
-                        onClick={() => router.push(`/admin/recipes/${selectedRecipe.id}/edit`)}
+                        onClick={() =>
+                          router.push(`/nutra-redaktor/recipes/${selectedRecipe.id}/edit`)
+                        }
                         className="rounded-full border border-emerald-400/60 px-4 py-2 text-xs font-semibold text-emerald-100 transition hover:border-emerald-300 hover:text-white"
                       >
                         Edit Recipe
@@ -1379,6 +1403,7 @@ export default function AdminRecipesClient({
       </div>
 
       <DeleteRecipeDialog
+        key={deleteTarget ? String(deleteTarget.id) : "delete-dialog-closed"}
         isOpen={Boolean(deleteTarget)}
         recipeName={deleteTarget?.recipe_name ?? ""}
         onCancel={closeDeleteDialog}

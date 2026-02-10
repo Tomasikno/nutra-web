@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import type { Recipe, RecipeFormData, RecipeShareVisibility } from "@/lib/recipe-types";
+import Image from "next/image";
 import IngredientsList from "./IngredientsList";
 import StepsList from "./StepsList";
 import NutritionInputs from "./NutritionInputs";
@@ -344,9 +345,12 @@ export default function RecipeFormTabs({
             {photoUrl && (
               <div className="grid gap-3 sm:grid-cols-[120px_1fr]">
                 <div className="h-[120px] w-[120px] overflow-hidden rounded-2xl border border-zinc-800">
-                  <img
+                  <Image
                     src={photoUrl}
                     alt="Recipe preview"
+                    width={120}
+                    height={120}
+                    unoptimized
                     className="h-full w-full object-cover"
                   />
                 </div>

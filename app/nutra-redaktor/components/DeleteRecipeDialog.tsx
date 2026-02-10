@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type DeleteRecipeDialogProps = {
   isOpen: boolean;
@@ -18,12 +18,6 @@ export default function DeleteRecipeDialog({
   isLoading = false,
 }: DeleteRecipeDialogProps) {
   const [confirmation, setConfirmation] = useState("");
-
-  useEffect(() => {
-    if (isOpen) {
-      setConfirmation("");
-    }
-  }, [isOpen]);
 
   if (!isOpen) return null;
 
