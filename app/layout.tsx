@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
+<<<<<<< HEAD
 import { getSiteOrigin } from "@/lib/seo";
+=======
+import { Analytics } from "@vercel/analytics/next";
+>>>>>>> 3b58ca09d40d43120b99bbb347ec0d537a6339af
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -74,7 +78,10 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
