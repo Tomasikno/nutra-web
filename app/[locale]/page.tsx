@@ -1,3 +1,4 @@
+import PublicFooter from "@/app/components/PublicFooter";
 import PublicTopNav from "@/app/components/PublicTopNav";
 import { defaultLocale, locales, type Locale } from "@/i18n/request";
 import type { Recipe } from "@/lib/recipe-types";
@@ -6,7 +7,6 @@ import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { unstable_cache } from "next/cache";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -216,16 +216,31 @@ export default async function Home({ params }: HomePageProps) {
     {
       title: tLanding("footer.sections.product.title"),
       links: [
-        tLanding("footer.sections.product.links.features"),
+        {
+          label: tLanding("footer.sections.product.links.features"),
+          href: "#features",
+        },
       ],
     },
     {
       title: tLanding("footer.sections.company.title"),
       links: [
-        tLanding("footer.sections.company.links.aboutUs"),
-        tLanding("footer.sections.company.links.privacyPolicy"),
-        tLanding("footer.sections.company.links.termsOfService"),
-        tLanding("footer.sections.company.links.cookiePolicy"),
+        {
+          label: tLanding("footer.sections.company.links.aboutUs"),
+          href: "#",
+        },
+        {
+          label: tLanding("footer.sections.company.links.privacyPolicy"),
+          href: `/${resolvedLocale}/privacy-policy`,
+        },
+        {
+          label: tLanding("footer.sections.company.links.termsOfService"),
+          href: "#",
+        },
+        {
+          label: tLanding("footer.sections.company.links.cookiePolicy"),
+          href: "#",
+        },
       ],
     },
   ];
@@ -550,42 +565,14 @@ export default async function Home({ params }: HomePageProps) {
         </section>
       </main>
 
-      <footer className="border-t border-slate-200 bg-background-light pb-10 pt-20">
-        <div className="mx-auto max-w-7xl px-6 lg:px-12">
-          <div className="mb-16 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
-            <div>
-              <div className="mb-6 flex items-center gap-2">
-                <div className="flex size-10 items-center justify-center rounded-lg bg-cream-beige shadow-sm">
-                  <Image src="/logo.png" alt={tLanding("logoAlt")} width={32} height={32} />
-                </div>
-                <h2 className="display-type text-2xl font-bold text-forest-green">Nutra</h2>
-              </div>
-              <p className="text-sm leading-relaxed text-slate-500">{tLanding("footer.description")}</p>
-            </div>
-            {footerSections.map((section) => (
-              <div key={section.title}>
-                <h4 className="mb-6 font-bold text-forest-green">{section.title}</h4>
-                <ul className="space-y-4">
-                  {section.links.map((link) => (
-                    <li key={link}>
-                      <a className="text-sm text-slate-500 transition-colors hover:text-primary" href="#">
-                        {link}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-          <div className="flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-8 md:flex-row">
-            <p className="text-xs text-slate-400">{tLanding("footer.copyright")}</p>
-            <div className="flex items-center gap-6">
-              <span className="text-xs text-slate-400">{tLanding("footer.builtWith")}</span>
-              <span className="material-symbols-outlined text-lg text-slate-400">language</span>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <PublicFooter
+        logoAlt={tLanding("logoAlt")}
+        description={tLanding("footer.description")}
+        sections={footerSections}
+        copyright={tLanding("footer.copyright")}
+        builtWith={tLanding("footer.builtWith")}
+      />
     </div>
   );
 }
+
