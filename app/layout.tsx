@@ -1,10 +1,7 @@
+﻿import { getSiteOrigin } from "@/lib/seo";
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
-<<<<<<< HEAD
-import { getSiteOrigin } from "@/lib/seo";
-=======
-import { Analytics } from "@vercel/analytics/next";
->>>>>>> 3b58ca09d40d43120b99bbb347ec0d537a6339af
 import "./globals.css";
 
 const fraunces = Fraunces({
