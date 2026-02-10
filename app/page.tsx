@@ -64,9 +64,10 @@ async function getRandomSharedRecipePreview(): Promise<RecipePreview | null> {
 }
 
 export default async function Home() {
-  const tNav = await getTranslations({ namespace: "Nav" });
-  const tLanding = await getTranslations({ namespace: "Landing" });
-  const tRecipe = await getTranslations({ namespace: "Recipe" });
+  const locale = "cs";
+  const tNav = await getTranslations({ locale, namespace: "Nav" });
+  const tLanding = await getTranslations({ locale, namespace: "Landing" });
+  const tRecipe = await getTranslations({ locale, namespace: "Recipe" });
   const randomRecipe = await getRandomSharedRecipePreview();
   const fallbackRecipePath =
     "/r/d8bd7f2f-c158-4099-8df0-13b9a72db6ae-pagety-s-krtm-masem-a-rajaty";

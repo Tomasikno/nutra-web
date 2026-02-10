@@ -18,23 +18,27 @@ export const coerceHealthBenefits = (raw: unknown): HealthBenefit[] => {
   const parsed = parseMaybeJson(raw);
 
   if (Array.isArray(parsed)) {
-    return parsed
-      .map((item) => {
-        if (typeof item === "string") {
-          return { benefit: item, description: "" };
+    const benefits: HealthBenefit[] = [];
+
+    for (const item of parsed) {
+      if (typeof item === "string") {
+        if (item.trim().length > 0) {
+          benefits.push({ benefit: item, description: "" });
         }
-        if (isObject(item)) {
-          return {
-            benefit: String(item.benefit ?? item.title ?? ""),
-            description: typeof item.description === "string" ? item.description : "",
-          };
+        continue;
+      }
+
+      if (isObject(item)) {
+        const benefit = String(item.benefit ?? item.title ?? "");
+        const description = typeof item.description === "string" ? item.description : "";
+
+        if (benefit.trim().length > 0 || description.trim().length > 0) {
+          benefits.push({ benefit, description });
         }
-        return null;
-      })
-      .filter(
-        (item): item is HealthBenefit =>
-          Boolean(item) && (item.benefit.trim().length > 0 || item.description?.trim())
-      );
+      }
+    }
+
+    return benefits;
   }
 
   if (typeof parsed === "string" && parsed.trim()) {
@@ -56,23 +60,27 @@ export const coerceWarnings = (raw: unknown): Warning[] => {
   const parsed = parseMaybeJson(raw);
 
   if (Array.isArray(parsed)) {
-    return parsed
-      .map((item) => {
-        if (typeof item === "string") {
-          return { type: item, message: "" };
+    const warnings: Warning[] = [];
+
+    for (const item of parsed) {
+      if (typeof item === "string") {
+        if (item.trim().length > 0) {
+          warnings.push({ type: item, message: "" });
         }
-        if (isObject(item)) {
-          return {
-            type: String(item.type ?? item.warning ?? ""),
-            message: typeof item.message === "string" ? item.message : "",
-          };
+        continue;
+      }
+
+      if (isObject(item)) {
+        const type = String(item.type ?? item.warning ?? "");
+        const message = typeof item.message === "string" ? item.message : "";
+
+        if (type.trim().length > 0 || message.trim().length > 0) {
+          warnings.push({ type, message });
         }
-        return null;
-      })
-      .filter(
-        (item): item is Warning =>
-          Boolean(item) && (item.type.trim().length > 0 || item.message.trim().length > 0)
-      );
+      }
+    }
+
+    return warnings;
   }
 
   if (typeof parsed === "string" && parsed.trim()) {
