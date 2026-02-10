@@ -1,16 +1,23 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
+import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
+  weight: ["500", "700", "800"],
+});
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta-sans",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
-  title: "Nutra App - Your Personal Nutritionist",
+  title: "Nutra - Meal Planning and Nutrition Coach",
   description:
-    "Custom meal plans, smart shopping lists, and AI-powered nutritional insights tailored just for you.",
+    "Plan meals, generate shopping lists, and get AI nutrition guidance tailored to your goals.",
 };
 
 export default function RootLayout({
@@ -19,14 +26,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${plusJakartaSans.variable} ${fraunces.variable}`}>
       <head>
+        <meta name="apple-mobile-web-app-title" content="Nutra" />
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         />
       </head>
-      <body className={`${manrope.variable} antialiased`}>{children}</body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

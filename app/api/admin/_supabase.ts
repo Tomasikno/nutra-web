@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { supabaseAdmin, isSupabaseConfigured } from "@/lib/supabase";
 
 const sessionCookieName = "nutra-admin-session";
 
@@ -7,17 +8,17 @@ type AdminSession = {
   email: string | null;
 };
 
-type SupabaseConfig = {
-  url: string;
-  serviceRoleKey: string;
+type AdminUser = {
+  id: string;
+  email: string | null;
 };
 
-const getConfig = (): SupabaseConfig => {
-  const url = process.env.SUPABASE_URL ?? "";
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? "";
-
-  return { url, serviceRoleKey };
-};
+const adminUserIds = new Set(
+  (process.env.ADMIN_USER_IDS ?? "")
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean)
+);
 
 const parseSession = (raw: string | undefined): AdminSession | null => {
   if (!raw) return null;
@@ -31,13 +32,18 @@ const parseSession = (raw: string | undefined): AdminSession | null => {
 };
 
 const isConfigured = () => {
-  const { url, serviceRoleKey } = getConfig();
-  return url.length > 0 && serviceRoleKey.length > 0;
+  return isSupabaseConfigured();
 };
 
 const getSession = async (): Promise<AdminSession | null> => {
   const store = await cookies();
   return parseSession(store.get(sessionCookieName)?.value);
+};
+
+const isAdminUser = (user: AdminUser | null) => {
+  if (!user?.id) return false;
+  if (adminUserIds.size === 0) return false;
+  return adminUserIds.has(user.id);
 };
 
 const setSession = async (session: AdminSession) => {
@@ -56,19 +62,15 @@ const clearSession = async () => {
 };
 
 const getUserFromSession = async (session: AdminSession) => {
-  const { url, serviceRoleKey } = getConfig();
-  const response = await fetch(`${url}/auth/v1/user`, {
-    headers: {
-      apikey: serviceRoleKey,
-      Authorization: `Bearer ${session.accessToken}`,
-    },
-  });
+  if (!supabaseAdmin) return null;
 
-  if (!response.ok) {
+  const { data, error } = await supabaseAdmin.auth.getUser(session.accessToken);
+
+  if (error || !data.user) {
     return null;
   }
 
-  return (await response.json()) as { email: string | null };
+  return { id: data.user.id, email: data.user.email ?? null };
 };
 
 const requireSession = async () => {
@@ -77,30 +79,33 @@ const requireSession = async () => {
 
   const user = await getUserFromSession(session);
   if (!user) {
-    await clearSession();
+    // Don't clear session during rendering - let Server Actions handle it
     return null;
   }
 
   return { session, user };
 };
 
-const getServiceHeaders = () => {
-  const { serviceRoleKey } = getConfig();
-  return {
-    apikey: serviceRoleKey,
-    Authorization: `Bearer ${serviceRoleKey}`,
-    "Content-Type": "application/json",
-  };
+const requireAdmin = async () => {
+  const sessionData = await requireSession();
+  if (!sessionData) return null;
+  if (!isAdminUser(sessionData.user)) {
+    // Don't clear session during rendering - let Server Actions handle it
+    return null;
+  }
+
+  return sessionData;
 };
 
 export {
   clearSession,
-  getConfig,
-  getServiceHeaders,
   getSession,
+  isAdminUser,
   isConfigured,
+  requireAdmin,
   requireSession,
   setSession,
   sessionCookieName,
+  supabaseAdmin,
 };
-export type { AdminSession };
+export type { AdminSession, AdminUser };

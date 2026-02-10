@@ -1,0 +1,162 @@
+{
+  "Nav": {
+    "features": "Features",
+    "howItWorks": "How it Works",
+    "pricing": "Pricing",
+    "logIn": "Log In",
+    "downloadNow": "Get the App"
+  },
+  "Recipe": {
+    "notFound": "Recipe not found",
+    "prep": "Prep",
+    "cook": "Cook",
+    "servings": "servings",
+    "downloadApp": "Get the App",
+    "per": "per",
+    "ingredients": "Ingredients",
+    "cookingSteps": "Cooking steps",
+    "nutrition": {
+      "kcal": "kcal",
+      "protein": "protein",
+      "carbs": "carbs",
+      "fat": "fat"
+    },
+    "difficulty": {
+      "easy": "easy",
+      "medium": "medium",
+      "hard": "hard"
+    }
+  },
+  "Landing": {
+    "logoAlt": "Nutra logo",
+    "hero": {
+      "titleLine1": "Eat Well Without Overthinking",
+      "titleLine2": "Plan Meals That Fit You",
+      "subtitle": "Build weekly meal plans, create shopping lists, and get AI nutrition insights based on your goals, preferences, and routine.",
+      "ctaPrimary": "Get Nutra Free",
+      "ctaSecondary": "See How It Works",
+      "badge": "Meal Planning That Fits Real Life",
+      "previewWeekLabel": "Your Week at a Glance",
+      "previewReadyLabel": "Planned",
+      "goalProgressLabel": "Weekly Goal Progress"
+    },
+    "features": {
+      "title": "Everything You Need to Plan Better Meals",
+      "subtitle": "From planning to tracking, Nutra helps you decide what to eat and why.",
+      "items": {
+        "weeklyMealPlan": {
+          "title": "Weekly Meal Plan",
+          "copy": "Get a weekly plan built around your goals, dietary needs, and schedule."
+        },
+        "shoppingList": {
+          "title": "Shopping List",
+          "copy": "Turn your plan into a ready-to-shop list so you buy what you need and waste less."
+        },
+        "mealAnalysis": {
+          "title": "Meal Analysis",
+          "copy": "Log meals and instantly see calories and macros to stay on track."
+        },
+        "aiSuggestions": {
+          "title": "AI Suggestions",
+          "copy": "Ask AI for better swaps and balanced meal ideas when cravings hit."
+        },
+        "createShareRecipes": {
+          "title": "Create & Share Recipes",
+          "copy": "Save your own recipes and share them with friends, family, or your coach."
+        }
+      }
+    },
+    "pricing": {
+      "title": "Pick the Plan That Fits Your Goals",
+      "subtitle": "Start free, then upgrade when you want deeper AI guidance.",
+      "mostPopular": "Most Popular",
+      "plans": {
+        "free": {
+          "name": "Free",
+          "priceSuffix": "/mo",
+          "cta": "Start Free",
+          "perks": {
+            "basicMealPlanning": "Meal planning essentials",
+            "manualShoppingList": "Manual shopping lists",
+            "calorieTracking": "Calorie tracking"
+          }
+        },
+        "pro": {
+          "name": "Pro",
+          "priceSuffix": "/mo",
+          "cta": "Upgrade to Pro",
+          "perks": {
+            "aiMealAnalysis": "AI meal analysis",
+            "automatedShoppingLists": "Auto-generated shopping lists",
+            "detailedMacroInsights": "Detailed macro breakdowns",
+            "customDietPreferences": "Personal diet preferences"
+          }
+        },
+        "life": {
+          "name": "Life",
+          "priceSuffix": "/once",
+          "cta": "Get Lifetime Access",
+          "perks": {
+            "lifetimeProAccess": "Lifetime Pro access",
+            "priorityAiFeatures": "Early access to new AI features",
+            "exclusiveCommunityAccess": "Exclusive Community Access"
+          }
+        }
+      }
+    },
+    "finalCta": {
+      "title": "Build Better Nutrition Habits",
+      "subtitle": "Plan meals you can stick to, shop with less stress, and make smarter food choices every day with Nutra.",
+      "button": "Start Free Today"
+    },
+    "footer": {
+      "description": "Nutra helps you plan, track, and improve your nutrition with practical daily tools.",
+      "sections": {
+        "product": {
+          "title": "Product",
+          "links": {
+            "features": "Features",
+            "successStories": "Success Stories",
+            "aiCoaching": "AI Coaching",
+            "forTeams": "For Teams"
+          }
+        },
+        "resources": {
+          "title": "Resources",
+          "links": {
+            "helpCenter": "Help Center",
+            "blog": "Blog",
+            "community": "Community",
+            "nutritionGuide": "Nutrition Guide"
+          }
+        },
+        "company": {
+          "title": "Company",
+          "links": {
+            "aboutUs": "About Us",
+            "privacyPolicy": "Privacy Policy",
+            "termsOfService": "Terms of Service",
+            "cookiePolicy": "Cookie Policy"
+          }
+        }
+      },
+      "copyright": "© 2026 Nutra. All rights reserved.",
+      "builtWith": "Proudly built with Kotlin Multiplatform"
+    },
+    "recipePreview": {
+      "badge": "Real Recipe Example",
+      "title": "See Exactly What Users Get When a Recipe Is Shared",
+      "subtitle": "Each page load shows a random shared recipe from Nutra. Open the full page to review ingredients, nutrition, and step-by-step instructions.",
+      "cta": "View Full Recipe",
+      "previewLabel": "Shared Recipe Preview",
+      "difficultyLabel": "Difficulty",
+      "fallbackTitle": "Shared Recipe Preview",
+      "fallbackSubtitle": "Open this recipe page to view ingredients, nutrition, and cooking steps.",
+      "liveBadge": "Live Data"
+    },
+    "howItWorks": {
+      "title": "Build your meal routine in three simple steps",
+      "subtitle": "Set your goals once, then follow a clear weekly plan with shopping and tracking built in."
+    }
+  }
+}

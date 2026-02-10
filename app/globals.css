@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8f4ec;
+  --foreground: #1b2420;
   --cream-beige: #efe4d6;
-  --forest-green: #41644a;
-  --dark-green: #0d4715;
-  --warm-orange: #ea762a;
+  --forest-green: #3f5f48;
+  --dark-green: #1c3325;
+  --warm-orange: #e8742b;
   --light-green: #5a8a66;
-  --background-light: #f7f4ee;
+  --background-light: #fbf8f2;
 }
 
 @theme inline {
@@ -18,17 +18,63 @@
   --color-forest-green: var(--forest-green);
   --color-cream-beige: var(--cream-beige);
   --color-background-light: var(--background-light);
-  --font-display: var(--font-manrope);
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-manrope), Arial, Helvetica, sans-serif;
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  background:
+    radial-gradient(circle at 12% 12%, rgba(232, 116, 43, 0.18), transparent 35%),
+    radial-gradient(circle at 86% 2%, rgba(63, 95, 72, 0.2), transparent 33%),
+    linear-gradient(180deg, #f8f4ec 0%, #fbf8f2 52%, #f5f1ea 100%);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 .glass-header {
-  background-color: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background-color: rgba(251, 248, 242, 0.78);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
+
+.display-type {
+  font-family: var(--font-fraunces), serif;
+  letter-spacing: -0.02em;
+}
+
+.landing-canvas {
+  position: relative;
+  isolation: isolate;
+}
+
+.landing-canvas::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(27, 36, 32, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(27, 36, 32, 0.04) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.45), transparent 68%);
+}
+
+.soft-card {
+  border: 1px solid rgba(63, 95, 72, 0.16);
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 20px 55px -35px rgba(28, 51, 37, 0.65);
+}
+
+.section-anchor {
+  scroll-margin-top: 120px;
+}
+

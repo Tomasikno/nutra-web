@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
-import { getConfig, setSession } from "../_supabase";
+import { isAdminUser, isConfigured, setSession, supabaseAdmin } from "../_supabase";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
-  const { url, serviceRoleKey } = getConfig();
-  if (!url || !serviceRoleKey) {
+  if (!isConfigured() || !supabaseAdmin) {
     return NextResponse.json(
       { message: "Supabase is not configured." },
       { status: 500 }
@@ -20,33 +19,27 @@ export async function POST(request: Request) {
     );
   }
 
-  const response = await fetch(`${url}/auth/v1/token?grant_type=password`, {
-    method: "POST",
-    headers: {
-      apikey: serviceRoleKey,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email: body.email,
-      password: body.password,
-    }),
+  const { data, error } = await supabaseAdmin.auth.signInWithPassword({
+    email: body.email,
+    password: body.password,
   });
 
-  if (!response.ok) {
-    const message = await response.text();
+  if (error || !data.session) {
     return NextResponse.json(
-      { message: message || "Login failed." },
-      { status: response.status }
+      { message: error?.message || "Login failed." },
+      { status: 401 }
     );
   }
 
-  const data = (await response.json()) as {
-    access_token: string;
-    user: { email: string | null };
-  };
+  if (!isAdminUser({ id: data.user.id, email: data.user.email ?? null })) {
+    return NextResponse.json(
+      { message: "Not authorized for admin access." },
+      { status: 403 }
+    );
+  }
 
   await setSession({
-    accessToken: data.access_token,
+    accessToken: data.session.access_token,
     email: data.user?.email ?? null,
   });
 
