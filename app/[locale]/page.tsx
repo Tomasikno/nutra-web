@@ -1,5 +1,6 @@
 import PublicFooter from "@/app/components/PublicFooter";
 import PublicTopNav from "@/app/components/PublicTopNav";
+import WaitlistSection from "@/app/components/WaitlistSection";
 import { defaultLocale, locales, type Locale } from "@/i18n/request";
 import type { Recipe } from "@/lib/recipe-types";
 import { supabaseAdmin } from "@/lib/supabase";
@@ -250,7 +251,7 @@ export default async function Home({ params }: HomePageProps) {
       <PublicTopNav
         homeHref={`/${resolvedLocale}`}
         currentLocale={resolvedLocale}
-        downloadAppUrl="#"
+        downloadAppUrl="#waitlist"
         labels={{
           features: tNav("features"),
           howItWorks: tNav("howItWorks"),
@@ -281,9 +282,12 @@ export default async function Home({ params }: HomePageProps) {
                 {tLanding("hero.subtitle")}
               </p>
               <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start">
-                <button className="w-full rounded-2xl bg-primary px-8 py-4 text-lg font-semibold text-white shadow-lg shadow-primary/30 transition-all hover:-translate-y-0.5 hover:bg-primary/90 sm:w-auto">
+                <Link
+                  href="#waitlist"
+                  className="w-full rounded-2xl bg-primary px-8 py-4 text-center text-lg font-semibold text-white shadow-lg shadow-primary/30 transition-all hover:-translate-y-0.5 hover:bg-primary/90 sm:w-auto"
+                >
                   {tLanding("hero.ctaPrimary")}
-                </button>
+                </Link>
                 <button className="w-full rounded-2xl border border-forest-green/30 bg-white/60 px-8 py-4 text-lg font-semibold text-forest-green transition-all hover:bg-white sm:w-auto">
                   {tLanding("hero.ctaSecondary")}
                 </button>
@@ -313,6 +317,21 @@ export default async function Home({ params }: HomePageProps) {
             </div>
           </div>
         </section>
+
+        <WaitlistSection
+          locale={resolvedLocale}
+          labels={{
+            badge: tLanding("waitlist.badge"),
+            title: tLanding("waitlist.title"),
+            subtitle: tLanding("waitlist.subtitle"),
+            emailPlaceholder: tLanding("waitlist.emailPlaceholder"),
+            submitButton: tLanding("waitlist.submitButton"),
+            successMessage: tLanding("waitlist.successMessage"),
+            invalidEmailMessage: tLanding("waitlist.invalidEmailMessage"),
+            genericErrorMessage: tLanding("waitlist.genericErrorMessage"),
+            rateLimitMessage: tLanding("waitlist.rateLimitMessage"),
+          }}
+        />
 
         <section className="section-anchor px-6 pb-8 pt-2 lg:px-12">
           <div className="mx-auto grid max-w-7xl items-center gap-10 rounded-3xl border border-forest-green/15 bg-white/65 p-6 shadow-[0_24px_70px_-45px_rgba(28,51,37,0.8)] backdrop-blur-sm lg:grid-cols-[1fr_520px] lg:p-10">
@@ -575,4 +594,3 @@ export default async function Home({ params }: HomePageProps) {
     </div>
   );
 }
-
