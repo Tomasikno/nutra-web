@@ -1,4 +1,9 @@
 {
+  "NotFound": {
+    "title": "Page not found",
+    "subtitle": "This page doesn\u2019t exist, has been removed, or is private.",
+    "backHome": "Back to homepage"
+  },
   "Nav": {
     "features": "Features",
     "howItWorks": "How it Works",

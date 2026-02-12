@@ -1,4 +1,9 @@
 {
+  "NotFound": {
+    "title": "Stránka nenalezena",
+    "subtitle": "Tato stránka neexistuje, byla odstraněna nebo je soukromá.",
+    "backHome": "Zpět na hlavní stránku"
+  },
   "Nav": {
     "features": "Funkce",
     "howItWorks": "Jak to funguje",
