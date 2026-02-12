@@ -127,18 +127,21 @@ export interface Database {
           id: string
           email: string
           locale: string | null
+          source: string | null
           created_at: string
         }
         Insert: {
           id?: string
           email: string
           locale?: string | null
+          source?: string | null
           created_at?: string
         }
         Update: {
           id?: string
           email?: string
           locale?: string | null
+          source?: string | null
           created_at?: string
         }
       }

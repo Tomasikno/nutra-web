@@ -99,3 +99,186 @@ html {
     "opsz" 24;
 }
 
+.nutra-admin {
+  --admin-canvas: #f4ede2;
+  --admin-surface-1: #f8f2e9;
+  --admin-surface-2: #fffaf3;
+  --admin-inset: #efe4d6;
+  --admin-ink: #1c3325;
+  --admin-ink-soft: #35503d;
+  --admin-ink-muted: #617866;
+  --admin-border: rgba(28, 51, 37, 0.16);
+  --admin-border-strong: rgba(28, 51, 37, 0.28);
+  --admin-accent: #e8742b;
+  --admin-accent-strong: #cf6323;
+  --admin-success: #3f5f48;
+  --admin-danger: #b5453b;
+  background:
+    radial-gradient(circle at 16% 0%, rgba(232, 116, 43, 0.16), transparent 38%),
+    radial-gradient(circle at 88% 8%, rgba(90, 138, 102, 0.18), transparent 32%),
+    linear-gradient(180deg, #f6efe4 0%, #f4ede2 54%, #efe4d6 100%);
+  color: var(--admin-ink);
+}
+
+.nutra-admin .bg-zinc-950 {
+  background-color: #efe4d6 !important;
+}
+
+.nutra-admin .bg-zinc-950\/40 {
+  background-color: #f2e8dc !important;
+}
+
+.nutra-admin .bg-zinc-900\/60 {
+  background-color: #f8f2e9 !important;
+}
+
+.nutra-admin .bg-zinc-900\/90 {
+  background-color: #e9dcc9 !important;
+}
+
+.nutra-admin .bg-zinc-900 {
+  background-color: #e6d9c5 !important;
+}
+
+.nutra-admin .bg-amber-500\/10 {
+  background-color: rgba(232, 116, 43, 0.12);
+}
+
+.nutra-admin .bg-rose-500\/10 {
+  background-color: rgba(181, 69, 59, 0.14);
+}
+
+.nutra-admin .bg-emerald-500 {
+  background-color: var(--admin-success) !important;
+  color: #fffaf3 !important;
+}
+
+.nutra-admin .bg-emerald-500\/10 {
+  background-color: rgba(63, 95, 72, 0.12) !important;
+}
+
+.nutra-admin .bg-emerald-500\/40 {
+  background-color: rgba(63, 95, 72, 0.36) !important;
+}
+
+.nutra-admin .hover\:bg-emerald-400:hover {
+  background-color: #52785c !important;
+  color: #fffaf3 !important;
+}
+
+.nutra-admin .border-zinc-800 {
+  border-color: var(--admin-border);
+}
+
+.nutra-admin .border-zinc-700 {
+  border-color: rgba(28, 51, 37, 0.26);
+}
+
+.nutra-admin .border-amber-400\/50 {
+  border-color: rgba(232, 116, 43, 0.44);
+}
+
+.nutra-admin .border-rose-500\/40,
+.nutra-admin .border-rose-400\/50 {
+  border-color: rgba(181, 69, 59, 0.4);
+}
+
+.nutra-admin .border-emerald-400,
+.nutra-admin .border-emerald-400\/60,
+.nutra-admin .border-emerald-500\/40 {
+  border-color: rgba(63, 95, 72, 0.52);
+}
+
+.nutra-admin .hover\:border-emerald-400:hover,
+.nutra-admin .hover\:border-emerald-300:hover {
+  border-color: rgba(63, 95, 72, 0.72);
+}
+
+.nutra-admin .hover\:border-rose-300:hover {
+  border-color: rgba(181, 69, 59, 0.58);
+}
+
+.nutra-admin .text-zinc-100,
+.nutra-admin .text-zinc-200 {
+  color: var(--admin-ink);
+}
+
+.nutra-admin .text-white {
+  color: var(--admin-ink);
+}
+
+.nutra-admin .text-zinc-300,
+.nutra-admin .text-zinc-400 {
+  color: var(--admin-ink-soft);
+}
+
+.nutra-admin .bg-zinc-900\/90 .text-zinc-400,
+.nutra-admin .bg-zinc-900\/90.text-zinc-400 {
+  color: var(--admin-ink) !important;
+}
+
+.nutra-admin .text-zinc-500,
+.nutra-admin .placeholder\:text-zinc-600::placeholder {
+  color: var(--admin-ink-muted);
+}
+
+.nutra-admin .text-emerald-400 {
+  color: var(--admin-success);
+}
+
+.nutra-admin .text-emerald-100,
+.nutra-admin .text-emerald-200 {
+  color: var(--admin-success);
+}
+
+.nutra-admin .hover\:text-emerald-200:hover,
+.nutra-admin .hover\:text-white:hover {
+  color: var(--admin-ink);
+}
+
+.nutra-admin .bg-emerald-500 .text-white,
+.nutra-admin .bg-rose-500 .text-white,
+.nutra-admin button.bg-emerald-500,
+.nutra-admin button.bg-rose-500 {
+  color: #fffaf3 !important;
+}
+
+.nutra-admin .text-amber-100 {
+  color: #6a3a18;
+}
+
+.nutra-admin .text-rose-100,
+.nutra-admin .text-rose-200 {
+  color: var(--admin-danger);
+}
+
+.nutra-admin input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+.nutra-admin select,
+.nutra-admin textarea {
+  border-color: var(--admin-border);
+  background-color: var(--admin-surface-2) !important;
+  color: var(--admin-ink);
+}
+
+.nutra-admin input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):focus,
+.nutra-admin select:focus,
+.nutra-admin textarea:focus {
+  border-color: var(--admin-accent);
+  outline: none;
+}
+
+.nutra-admin input[type="file"] {
+  border-color: var(--admin-border);
+  background-color: var(--admin-surface-2) !important;
+  color: var(--admin-ink);
+}
+
+.nutra-admin input[type="file"]::file-selector-button {
+  background-color: var(--admin-accent);
+  color: #fffaf3;
+}
+
+.nutra-admin input[type="file"]:hover::file-selector-button {
+  background-color: var(--admin-accent-strong);
+}
+

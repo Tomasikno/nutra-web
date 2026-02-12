@@ -290,16 +290,38 @@ export default function AdminPageClient({
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 px-6 py-12 text-zinc-100">
+    <div className="nutra-admin min-h-screen px-4 py-8 sm:px-6 lg:px-10">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
-        <header className="flex flex-col gap-3">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-emerald-400">
-            Nutra Admin
+        <header className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 sm:p-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-emerald-400">
+            Nutra Kitchen Pass
           </p>
-          <h1 className="text-4xl font-semibold">Admin Console</h1>
-          <p className="max-w-2xl text-zinc-300">
+          <h1 className="display-type mt-2 text-4xl font-semibold sm:text-5xl">
+            Recipe Editor Console
+          </h1>
+          <p className="mt-3 max-w-2xl text-zinc-300">
             Sign in with your Supabase admin credentials to create new recipes.
           </p>
+          <div className="mt-6 grid gap-3 sm:grid-cols-3">
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-950/40 px-4 py-3">
+              <p className="text-[10px] uppercase tracking-[0.22em] text-zinc-500">
+                Station 01
+              </p>
+              <p className="mt-1 text-sm font-semibold">Draft Core Data</p>
+            </div>
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-950/40 px-4 py-3">
+              <p className="text-[10px] uppercase tracking-[0.22em] text-zinc-500">
+                Station 02
+              </p>
+              <p className="mt-1 text-sm font-semibold">Validate Nutrition</p>
+            </div>
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-950/40 px-4 py-3">
+              <p className="text-[10px] uppercase tracking-[0.22em] text-zinc-500">
+                Station 03
+              </p>
+              <p className="mt-1 text-sm font-semibold">Publish to Supabase</p>
+            </div>
+          </div>
         </header>
 
         {statusMessage && (
@@ -312,14 +334,14 @@ export default function AdminPageClient({
           <div className="grid gap-6">
             <form
               onSubmit={handleSignIn}
-              className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-8"
+              className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 sm:p-8"
             >
-              <h2 className="text-2xl font-semibold text-white">Admin Login</h2>
+              <h2 className="display-type text-3xl font-semibold">Admin Login</h2>
               <p className="mt-2 text-sm text-zinc-400">
                 Use your Supabase admin credentials.
               </p>
               <div className="mt-6 flex flex-col gap-4">
-                <label className="flex flex-col gap-2 text-sm">
+                <label className="flex flex-col gap-2 text-sm text-zinc-400">
                   Email
                   <input
                     type="email"
@@ -329,7 +351,7 @@ export default function AdminPageClient({
                     required
                   />
                 </label>
-                <label className="flex flex-col gap-2 text-sm">
+                <label className="flex flex-col gap-2 text-sm text-zinc-400">
                   Password
                   <input
                     type="password"
@@ -347,7 +369,7 @@ export default function AdminPageClient({
                 <button
                   type="submit"
                   disabled={authLoading || !configured}
-                  className="mt-2 inline-flex items-center justify-center rounded-full bg-emerald-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:bg-emerald-500/40"
+                  className="mt-2 inline-flex items-center justify-center rounded-xl bg-emerald-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:bg-emerald-500/40"
                 >
                   {authLoading ? "Signing in..." : "Sign In"}
                 </button>
@@ -361,11 +383,24 @@ export default function AdminPageClient({
             <section className="grid gap-6 lg:grid-cols-[1.2fr]">
               <form
                 onSubmit={handleCreateRecipe}
-                className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-8"
+                className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 sm:p-8"
               >
-                <h2 className="text-2xl font-semibold text-white">Create Recipe</h2>
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h2 className="display-type text-3xl font-semibold">Create Recipe</h2>
+                    <p className="mt-2 text-sm text-zinc-400">
+                      Add a new recipe to the Supabase recipes table.
+                    </p>
+                  </div>
+                  <div className="rounded-2xl border border-zinc-800 bg-zinc-950/40 px-4 py-3 text-right">
+                    <p className="text-[10px] uppercase tracking-[0.22em] text-zinc-500">
+                      Workflow
+                    </p>
+                    <p className="mt-1 text-sm font-semibold">Draft -&gt; Review -&gt; Save</p>
+                  </div>
+                </div>
                 <p className="mt-2 text-sm text-zinc-400">
-                  Add a new recipe to the Supabase recipes table.
+                  Use tab stations below to complete each content area.
                 </p>
                 {recipeMessage && (
                   <p className="mt-4 rounded-xl border border-emerald-400/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
@@ -392,7 +427,7 @@ export default function AdminPageClient({
                 <button
                   type="submit"
                   disabled={recipeLoading}
-                  className="mt-6 inline-flex items-center justify-center rounded-full bg-emerald-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:bg-emerald-500/40"
+                  className="mt-6 inline-flex items-center justify-center rounded-xl bg-emerald-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:bg-emerald-500/40"
                 >
                   {recipeLoading ? "Saving..." : "Create Recipe"}
                 </button>

@@ -1,4 +1,4 @@
-import { supabaseAdmin } from "@/lib/supabase";
+import { supabasePublic } from "@/lib/supabase";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -15,14 +15,14 @@ export async function GET(
 ) {
   const { id } = await params;
 
-  if (!supabaseAdmin) {
+  if (!supabasePublic) {
     return NextResponse.json(
       { message: "Server not configured." },
       { status: 500 }
     );
   }
 
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await supabasePublic
     .from("recipes")
     .select(recipeSelect)
     .eq("id", id)

@@ -4,7 +4,7 @@ import { requireAdmin, supabaseAdmin } from "../../_supabase";
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-const getSupabaseUrl = () => process.env.SUPABASE_URL;
+const getSupabaseUrl = () => process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
 
 /**
  * GET — returns recipes that have a photo but no thumbnail.

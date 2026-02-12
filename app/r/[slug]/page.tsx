@@ -3,7 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import type { Locale } from "@/i18n/request";
 import { buildCanonicalUrl } from "@/lib/seo";
-import { supabaseAdmin } from "@/lib/supabase";
+import { supabasePublic } from "@/lib/supabase";
 import type { Ingredient, Recipe } from "@/lib/recipe-types";
 import PublicTopNav from "@/app/components/PublicTopNav";
 import RecipeHeroSection from "./components/RecipeHeroSection";
@@ -41,9 +41,9 @@ function getCanonicalRecipePath(slug: string): string {
 }
 
 async function getRecipe(id: string): Promise<Recipe | null> {
-  if (!supabaseAdmin) return null;
+  if (!supabasePublic) return null;
 
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await supabasePublic
     .from("recipes")
     .select(
       "id, recipe_name, description, servings, prep_time_minutes, cook_time_minutes, difficulty, " +
@@ -61,9 +61,9 @@ async function getRecipe(id: string): Promise<Recipe | null> {
 }
 
 async function getRecipeBySlug(slug: string): Promise<Recipe | null> {
-  if (!supabaseAdmin) return null;
+  if (!supabasePublic) return null;
 
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await supabasePublic
     .from("recipes")
     .select(
       "id, recipe_name, description, servings, prep_time_minutes, cook_time_minutes, difficulty, " +
@@ -81,9 +81,9 @@ async function getRecipeBySlug(slug: string): Promise<Recipe | null> {
 }
 
 async function getRecipeBySlugSuffix(slugSuffix: string): Promise<Recipe | null> {
-  if (!supabaseAdmin) return null;
+  if (!supabasePublic) return null;
 
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await supabasePublic
     .from("recipes")
     .select(
       "id, recipe_name, description, servings, prep_time_minutes, cook_time_minutes, difficulty, " +

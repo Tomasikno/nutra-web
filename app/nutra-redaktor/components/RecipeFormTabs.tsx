@@ -70,19 +70,22 @@ export default function RecipeFormTabs({
 
   return (
     <div className="mt-6 flex flex-col gap-6">
-      <div className="flex flex-wrap gap-2">
-        {(Object.keys(tabLabels) as TabKey[]).map((tabKey) => (
+      <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+        {(Object.keys(tabLabels) as TabKey[]).map((tabKey, index) => (
           <button
             key={tabKey}
             type="button"
             onClick={() => setActiveTab(tabKey)}
-            className={`rounded-full border px-4 py-2 text-xs font-semibold transition ${
+            className={`rounded-2xl border px-4 py-3 text-left text-xs font-semibold transition ${
               activeTab === tabKey
                 ? "border-emerald-400 bg-emerald-500/10 text-emerald-100"
-                : "border-zinc-800 text-zinc-400 hover:border-emerald-400/60 hover:text-emerald-200"
+                : "border-zinc-800 bg-zinc-950/40 text-zinc-400 hover:border-emerald-400/60 hover:text-emerald-200"
             }`}
           >
-            {tabLabels[tabKey]}
+            <span className="block text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+              Station {String(index + 1).padStart(2, "0")}
+            </span>
+            <span className="mt-1 block text-xs">{tabLabels[tabKey]}</span>
           </button>
         ))}
       </div>

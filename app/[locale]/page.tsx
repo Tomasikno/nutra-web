@@ -3,7 +3,7 @@ import PublicTopNav from "@/app/components/PublicTopNav";
 import WaitlistSection from "@/app/components/WaitlistSection";
 import { defaultLocale, locales, type Locale } from "@/i18n/request";
 import type { Recipe } from "@/lib/recipe-types";
-import { supabaseAdmin } from "@/lib/supabase";
+import { supabasePublic } from "@/lib/supabase";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations } from "next-intl/server";
@@ -44,9 +44,9 @@ function getCaloriesPerServing(nutrition: Recipe["nutrition"]): number | null {
 }
 
 async function getRandomSharedRecipePreview(): Promise<RecipePreview | null> {
-  if (!supabaseAdmin) return null;
+  if (!supabasePublic) return null;
 
-  const { count, error: countError } = await supabaseAdmin
+  const { count, error: countError } = await supabasePublic
     .from("recipes")
     .select("id", { count: "exact", head: true })
     .is("deleted_at", null)
@@ -56,7 +56,7 @@ async function getRandomSharedRecipePreview(): Promise<RecipePreview | null> {
 
   const randomOffset = Math.floor(Math.random() * count);
 
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await supabasePublic
     .from("recipes")
     .select(
       "id, slug, recipe_name, description, photo_url, prep_time_minutes, cook_time_minutes, servings, difficulty, ingredients, nutrition"

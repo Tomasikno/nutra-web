@@ -21,6 +21,8 @@ cp .env.example .env.local
 Then fill in your Supabase credentials:
 
 ```env
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 NEXT_PUBLIC_SITE_URL=https://your-production-domain.com
@@ -29,10 +31,11 @@ NEXT_PUBLIC_SITE_URL=https://your-production-domain.com
 **Where to find these values:**
 1. Go to [Supabase Dashboard](https://app.supabase.com)
 2. Select your project
-3. Go to Settings → API
+3. Go to Settings > API
 4. Copy the values:
-   - Project URL → `SUPABASE_URL`
-   - `service_role` `secret` key → `SUPABASE_SERVICE_ROLE_KEY`
+   - Project URL -> NEXT_PUBLIC_SUPABASE_URL (and optionally SUPABASE_URL)
+   - anon public key -> NEXT_PUBLIC_SUPABASE_ANON_KEY
+   - service_role secret key -> SUPABASE_SERVICE_ROLE_KEY
 
 ### 3. Run Development Server
 
@@ -121,8 +124,8 @@ Find your project ID in the Supabase Dashboard URL: `https://app.supabase.com/pr
 
 ## Security Notes
 
-- All Supabase communication happens server-side only (API routes)
-- No environment variables are exposed to the client (no `NEXT_PUBLIC_` prefix)
+- Public site flows use the anon key (`NEXT_PUBLIC_SUPABASE_ANON_KEY`) with RLS
+- Only public Supabase credentials are exposed via `NEXT_PUBLIC_` variables
 - The `SUPABASE_SERVICE_ROLE_KEY` bypasses Row Level Security (RLS)
 - The admin panel uses HTTP-only session cookies for authentication
 
