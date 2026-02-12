@@ -62,16 +62,16 @@ export default function MealPlanDemoSection({ labels }: MealPlanDemoSectionProps
   };
 
   return (
-    <section className="section-anchor px-6 pb-8 pt-2 lg:px-12">
+    <section className="section-anchor px-4 pb-8 pt-2 sm:px-6 lg:px-12">
       {/* Container with glass effect */}
-      <div className="mx-auto grid max-w-7xl items-center gap-10 rounded-3xl border border-forest-green/15 bg-white/65 p-6 shadow-[0_24px_70px_-45px_rgba(28,51,37,0.8)] backdrop-blur-sm lg:grid-cols-[1fr_520px] lg:p-10">
+      <div className="mx-auto grid max-w-7xl items-center gap-7 rounded-[28px] border border-forest-green/15 bg-white/65 p-4 shadow-[0_24px_70px_-45px_rgba(28,51,37,0.8)] backdrop-blur-sm sm:gap-10 sm:rounded-3xl sm:p-6 lg:grid-cols-[1fr_520px] lg:p-10">
 
         {/* Left Column: Marketing Copy */}
-        <div className="space-y-6">
+        <div className="space-y-5 sm:space-y-6">
           {/* Badge */}
           <Reveal>
             <div className="inline-block">
-              <p className="inline-flex items-center gap-2 rounded-full border border-primary/35 bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-primary shadow-sm">
+              <p className="inline-flex items-center gap-2 rounded-full border border-primary/35 bg-primary/10 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-primary shadow-sm sm:text-xs">
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
                 {labels.badge}
               </p>
@@ -80,34 +80,34 @@ export default function MealPlanDemoSection({ labels }: MealPlanDemoSectionProps
 
           {/* Title */}
           <Reveal delay={100}>
-            <h2 className="display-type mb-5 text-4xl font-bold text-forest-green lg:text-5xl leading-tight">
+            <h2 className="display-type mb-4 text-[2.05rem] font-bold leading-[1.08] text-balance text-forest-green sm:mb-5 sm:text-4xl lg:text-5xl">
               {labels.title}
             </h2>
           </Reveal>
 
           {/* Subtitle */}
           <Reveal delay={200}>
-            <p className="max-w-xl text-base leading-relaxed text-slate-600 lg:text-lg">
+            <p className="max-w-[34ch] text-sm leading-relaxed text-slate-600 sm:max-w-xl sm:text-base lg:text-lg">
               {labels.subtitle}
             </p>
           </Reveal>
 
           {/* Feature highlights with icons */}
           <Reveal delay={300}>
-            <ul className="space-y-3 pt-2">
-              <li className="flex items-start gap-3 text-sm text-slate-700">
+            <ul className="space-y-2.5 pt-1.5 sm:space-y-3 sm:pt-2">
+              <li className="flex items-start gap-3 text-[15px] text-slate-700 sm:text-sm">
                 <svg className="mt-0.5 h-5 w-5 shrink-0 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <span className="leading-relaxed">{labels.featureAiPlans}</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-slate-700">
+              <li className="flex items-start gap-3 text-[15px] text-slate-700 sm:text-sm">
                 <svg className="mt-0.5 h-5 w-5 shrink-0 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
                 <span className="leading-relaxed">{labels.featureMacroTracking}</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-slate-700">
+              <li className="flex items-start gap-3 text-[15px] text-slate-700 sm:text-sm">
                 <svg className="mt-0.5 h-5 w-5 shrink-0 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                 </svg>
@@ -118,47 +118,47 @@ export default function MealPlanDemoSection({ labels }: MealPlanDemoSectionProps
         </div>
 
         {/* Right Column: Interactive Demo */}
-        <Reveal direction="right" delay={400} className="mx-auto w-full max-w-[520px]">
-          <div className="soft-card overflow-hidden rounded-2xl p-5 shadow-xl transition-all duration-500 hover:shadow-2xl">
+        <Reveal direction="right" delay={400} className="mx-auto w-full max-w-[360px] sm:max-w-[520px]">
+          <div className="soft-card overflow-hidden rounded-2xl p-3.5 shadow-xl transition-all duration-500 hover:shadow-2xl sm:p-5">
 
             {/* Day Header */}
-            <div className="mb-4 flex items-center justify-between border-b border-forest-green/10 pb-3">
-              <h3 className="text-lg font-bold text-forest-green">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-2 border-b border-forest-green/10 pb-3">
+              <h3 className="text-base font-bold text-forest-green sm:text-lg">
                 {sampleDay.dayLabel}
               </h3>
-              <span className="rounded-full bg-gradient-to-r from-primary/15 to-primary/10 px-3 py-1 text-sm font-bold text-primary shadow-sm ring-1 ring-primary/20">
+              <span className="rounded-full bg-gradient-to-r from-primary/15 to-primary/10 px-2.5 py-1 text-xs font-bold text-primary shadow-sm ring-1 ring-primary/20 sm:px-3 sm:text-sm">
                 {sampleDay.totalCalories} {labels.totalCaloriesSuffix}
               </span>
             </div>
 
             {/* Macro Pills */}
-            <div className="mb-5 grid grid-cols-3 gap-2">
+            <div className="mb-4 grid grid-cols-3 gap-1.5 sm:mb-5 sm:gap-2">
               {/* Protein */}
-              <div className="group rounded-xl border border-forest-green/20 bg-gradient-to-br from-forest-green/10 to-forest-green/5 px-3 py-2.5 text-center backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-forest-green/30 hover:shadow-md">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-forest-green/70 transition-colors group-hover:text-forest-green">
+              <div className="group rounded-xl border border-forest-green/20 bg-gradient-to-br from-forest-green/10 to-forest-green/5 px-2 py-2 text-center backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-forest-green/30 hover:shadow-md sm:px-3 sm:py-2.5">
+                <p className="text-[9px] font-bold uppercase tracking-[0.08em] text-forest-green/70 transition-colors group-hover:text-forest-green sm:text-[10px] sm:tracking-wider">
                   {labels.protein}
                 </p>
-                <p className="text-sm font-bold text-forest-green">
+                <p className="text-[15px] font-bold text-forest-green sm:text-sm">
                   {sampleDay.macros.protein}g
                 </p>
               </div>
 
               {/* Carbs */}
-              <div className="group rounded-xl border border-warm-orange/20 bg-gradient-to-br from-warm-orange/10 to-warm-orange/5 px-3 py-2.5 text-center backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-warm-orange/30 hover:shadow-md">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-warm-orange/70 transition-colors group-hover:text-warm-orange">
+              <div className="group rounded-xl border border-warm-orange/20 bg-gradient-to-br from-warm-orange/10 to-warm-orange/5 px-2 py-2 text-center backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-warm-orange/30 hover:shadow-md sm:px-3 sm:py-2.5">
+                <p className="text-[9px] font-bold uppercase tracking-[0.08em] text-warm-orange/70 transition-colors group-hover:text-warm-orange sm:text-[10px] sm:tracking-wider">
                   {labels.carbs}
                 </p>
-                <p className="text-sm font-bold text-warm-orange">
+                <p className="text-[15px] font-bold text-warm-orange sm:text-sm">
                   {sampleDay.macros.carbs}g
                 </p>
               </div>
 
               {/* Fat */}
-              <div className="group rounded-xl border border-amber-500/20 bg-gradient-to-br from-amber-500/10 to-amber-500/5 px-3 py-2.5 text-center backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-amber-500/30 hover:shadow-md">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-amber-700/70 transition-colors group-hover:text-amber-700">
+              <div className="group rounded-xl border border-amber-500/20 bg-gradient-to-br from-amber-500/10 to-amber-500/5 px-2 py-2 text-center backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-amber-500/30 hover:shadow-md sm:px-3 sm:py-2.5">
+                <p className="text-[9px] font-bold uppercase tracking-[0.08em] text-amber-700/70 transition-colors group-hover:text-amber-700 sm:text-[10px] sm:tracking-wider">
                   {labels.fat}
                 </p>
-                <p className="text-sm font-bold text-amber-700">
+                <p className="text-[15px] font-bold text-amber-700 sm:text-sm">
                   {sampleDay.macros.fat}g
                 </p>
               </div>
@@ -168,10 +168,10 @@ export default function MealPlanDemoSection({ labels }: MealPlanDemoSectionProps
             <div className="space-y-3">
               {sampleDay.meals.map((meal, index) => (
                 <Reveal key={index} direction="left" delay={500 + index * 100} distance={16}>
-                  <div className="group flex items-center gap-3 rounded-xl border border-forest-green/10 bg-white p-3 shadow-sm transition-all duration-300 hover:scale-[1.02] hover:border-forest-green/20 hover:shadow-md">
+                  <div className="group flex items-center gap-2.5 rounded-xl border border-forest-green/10 bg-white p-2.5 shadow-sm transition-all duration-300 hover:scale-[1.02] hover:border-forest-green/20 hover:shadow-md sm:gap-3 sm:p-3">
                     {/* Thumbnail with gradient and emoji */}
                     <div
-                      className={`relative flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br ${meal.gradient} text-2xl shadow-sm transition-all duration-300 group-hover:scale-110 group-hover:shadow-md`}
+                      className={`relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br ${meal.gradient} text-xl shadow-sm transition-all duration-300 group-hover:scale-110 group-hover:shadow-md sm:size-12 sm:text-2xl`}
                     >
                       <span className="relative z-10">{meal.emoji}</span>
                       {/* Subtle shine effect */}
@@ -180,13 +180,13 @@ export default function MealPlanDemoSection({ labels }: MealPlanDemoSectionProps
 
                     {/* Content */}
                     <div className="min-w-0 flex-1">
-                      <p className="text-xs font-bold uppercase tracking-wider text-forest-green/60 transition-colors group-hover:text-forest-green/80">
+                      <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-forest-green/60 transition-colors group-hover:text-forest-green/80 sm:text-xs sm:tracking-wider">
                         {meal.slot}
                       </p>
-                      <p className="truncate text-sm font-semibold text-forest-green transition-colors group-hover:text-primary">
+                      <p className="truncate text-[13px] font-semibold text-forest-green transition-colors group-hover:text-primary sm:text-sm">
                         {meal.recipe}
                       </p>
-                      <p className="text-xs text-slate-500 transition-colors group-hover:text-slate-600">
+                      <p className="text-[11px] text-slate-500 transition-colors group-hover:text-slate-600 sm:text-xs">
                         {meal.calories} kcal • {meal.portion}
                       </p>
                     </div>
