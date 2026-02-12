@@ -75,38 +75,74 @@
       "title": "Pick the Plan That Fits Your Goals",
       "subtitle": "Start free, then upgrade when you want deeper AI guidance.",
       "mostPopular": "Most Popular",
+      "recommended": "Recommended",
+      "savePercent": "Save 20%",
       "plans": {
         "free": {
           "name": "Free",
           "priceSuffix": "/mo",
           "cta": "Start Free",
+          "description": "Try basic features",
           "perks": {
-            "basicMealPlanning": "Meal planning essentials",
-            "manualShoppingList": "Manual shopping lists",
-            "calorieTracking": "Calorie tracking"
+            "basicFeatures": "5 AI nutrition analyses/month",
+            "recipeSuggestions": "5 AI recipe suggestions/month",
+            "recipeEnhancement": "5 recipe enhancements/month",
+            "mealPlans": "5 meal plans/month",
+            "photoUploads": "Unlimited photo uploads",
+            "basicTracking": "Basic meal tracking"
+          }
+        },
+        "starter": {
+          "name": "Starter",
+          "priceSuffix": "/mo",
+          "cta": "Get Started",
+          "description": "For casual users",
+          "perks": {
+            "nutritionAnalyses": "15 AI nutrition analyses/month",
+            "recipeSuggestions": "15 AI recipe suggestions/month",
+            "recipeEnhancement": "10 recipe enhancements/month",
+            "mealPlans": "2 meal plans/month",
+            "imageGeneration": "5 AI image generations/month",
+            "photoUploads": "Unlimited photo uploads"
           }
         },
         "pro": {
-          "name": "Monthly",
+          "name": "Pro",
           "priceSuffix": "/mo",
-          "cta": "Get Monthly",
+          "cta": "Go Pro",
+          "description": "Best for weekly meal prep",
           "perks": {
-            "unlimitedAiFunctions": "Unlimited AI functions",
-            "aiMealAnalysis": "AI meal analysis",
-            "automatedShoppingLists": "Auto-generated shopping lists",
-            "detailedMacroInsights": "Detailed macro breakdowns",
-            "customDietPreferences": "Personal diet preferences"
+            "nutritionAnalyses": "50 AI nutrition analyses/month",
+            "recipeSuggestions": "50 AI recipe suggestions/month",
+            "recipeEnhancement": "30 recipe enhancements/month",
+            "weeklyMealPlans": "4 meal plans/month (weekly)",
+            "imageGeneration": "15 AI image generations/month",
+            "exportPlans": "Export meal plans (PDF/CSV)",
+            "prioritySupport": "Priority support"
           }
         },
-        "life": {
-          "name": "Annual",
-          "priceSuffix": "/year",
-          "cta": "Get Annual Access",
+        "premium": {
+          "name": "Premium",
+          "priceSuffix": "/mo",
+          "cta": "Get Premium",
+          "description": "For power users",
           "perks": {
-            "lifetimeProAccess": "Lifetime Pro access",
-            "priorityAiFeatures": "Early access to new AI features",
-            "exclusiveCommunityAccess": "Exclusive Community Access"
+            "unlimitedAnalyses": "Unlimited AI analyses",
+            "unlimitedSuggestions": "Unlimited recipe suggestions",
+            "unlimitedEnhancement": "Unlimited enhancements",
+            "multipleMealPlans": "12 meal plans/month",
+            "moreImages": "50 AI image generations/month",
+            "advancedAnalytics": "Advanced analytics & insights",
+            "earlyAccess": "Early access to new features",
+            "prioritySupport": "Priority support"
           }
+        },
+        "annual": {
+          "starterPrice": "$47.99",
+          "proPrice": "$95.99",
+          "premiumPrice": "$191.99",
+          "priceSuffix": "/year",
+          "monthlyEquivalent": "month"
         }
       }
     },

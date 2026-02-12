@@ -197,20 +197,34 @@ export default async function Home({ params }: HomePageProps) {
     },
   ];
 
-  const monthlyPlanPerks = [
-    tLanding("pricing.plans.pro.perks.unlimitedAiFunctions"),
-    tLanding("pricing.plans.pro.perks.aiMealAnalysis"),
-    tLanding("pricing.plans.pro.perks.automatedShoppingLists"),
-    tLanding("pricing.plans.pro.perks.detailedMacroInsights"),
-    tLanding("pricing.plans.pro.perks.customDietPreferences"),
+  const starterPerks = [
+    tLanding("pricing.plans.starter.perks.nutritionAnalyses"),
+    tLanding("pricing.plans.starter.perks.recipeSuggestions"),
+    tLanding("pricing.plans.starter.perks.recipeEnhancement"),
+    tLanding("pricing.plans.starter.perks.mealPlans"),
+    tLanding("pricing.plans.starter.perks.imageGeneration"),
+    tLanding("pricing.plans.starter.perks.photoUploads"),
   ];
 
-  const annualPlanPerks = [
-    tLanding("pricing.plans.pro.perks.unlimitedAiFunctions"),
-    tLanding("pricing.plans.pro.perks.aiMealAnalysis"),
-    tLanding("pricing.plans.pro.perks.automatedShoppingLists"),
-    tLanding("pricing.plans.pro.perks.detailedMacroInsights"),
-    tLanding("pricing.plans.pro.perks.customDietPreferences"),
+  const proPerks = [
+    tLanding("pricing.plans.pro.perks.nutritionAnalyses"),
+    tLanding("pricing.plans.pro.perks.recipeSuggestions"),
+    tLanding("pricing.plans.pro.perks.recipeEnhancement"),
+    tLanding("pricing.plans.pro.perks.weeklyMealPlans"),
+    tLanding("pricing.plans.pro.perks.imageGeneration"),
+    tLanding("pricing.plans.pro.perks.exportPlans"),
+    tLanding("pricing.plans.pro.perks.prioritySupport"),
+  ];
+
+  const premiumPerks = [
+    tLanding("pricing.plans.premium.perks.unlimitedAnalyses"),
+    tLanding("pricing.plans.premium.perks.unlimitedSuggestions"),
+    tLanding("pricing.plans.premium.perks.unlimitedEnhancement"),
+    tLanding("pricing.plans.premium.perks.multipleMealPlans"),
+    tLanding("pricing.plans.premium.perks.moreImages"),
+    tLanding("pricing.plans.premium.perks.advancedAnalytics"),
+    tLanding("pricing.plans.premium.perks.earlyAccess"),
+    tLanding("pricing.plans.premium.perks.prioritySupport"),
   ];
 
   const footerSections = [
@@ -288,9 +302,12 @@ export default async function Home({ params }: HomePageProps) {
                 >
                   {tLanding("hero.ctaPrimary")}
                 </Link>
-                <button className="w-full rounded-2xl border border-forest-green/30 bg-white/60 px-8 py-4 text-lg font-semibold text-forest-green transition-all hover:bg-white sm:w-auto">
+                <Link
+                  href="#how-it-works"
+                  className="w-full rounded-2xl border border-forest-green/30 bg-white/60 px-8 py-4 text-center text-lg font-semibold text-forest-green transition-all hover:bg-white sm:w-auto"
+                >
                   {tLanding("hero.ctaSecondary")}
-                </button>
+                </Link>
               </div>
             </div>
 
@@ -516,52 +533,90 @@ export default async function Home({ params }: HomePageProps) {
               </h2>
               <p className="text-lg text-slate-600">{tLanding("pricing.subtitle")}</p>
             </div>
-            <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-2">
+            <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-3">
+              {/* Starter Plan */}
               <div className="soft-card flex flex-col rounded-2xl p-8">
+                <h3 className="mb-2 text-lg font-bold text-forest-green">{tLanding("pricing.plans.starter.name")}</h3>
+                <p className="mb-4 text-sm text-slate-500">{tLanding("pricing.plans.starter.description")}</p>
+                <div className="mb-6 text-3xl font-extrabold text-forest-green">
+                  $4.99
+                  <span className="text-base font-normal text-slate-500">
+                    {tLanding("pricing.plans.starter.priceSuffix")}
+                  </span>
+                </div>
+                <ul className="mb-8 flex-grow space-y-3">
+                  {starterPerks.map((perk) => (
+                    <li key={perk} className="flex items-start gap-2 text-sm text-slate-600">
+                      <span className="material-symbols-outlined mt-0.5 text-base text-forest-green">
+                        check_circle
+                      </span>
+                      <span className="flex-1">{perk}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href="#waitlist"
+                  className="block w-full rounded-xl border border-forest-green/35 py-3 text-center font-semibold text-forest-green transition-colors hover:bg-forest-green/5"
+                >
+                  {tLanding("pricing.plans.starter.cta")}
+                </Link>
+              </div>
+
+              {/* Pro Plan - Most Popular */}
+              <div className="relative z-10 flex flex-col rounded-2xl border-2 border-primary bg-white p-8 shadow-xl shadow-primary/20 md:scale-105">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1 text-xs font-semibold uppercase tracking-widest text-white">
+                  {tLanding("pricing.recommended")}
+                </div>
                 <h3 className="mb-2 text-lg font-bold text-forest-green">{tLanding("pricing.plans.pro.name")}</h3>
+                <p className="mb-4 text-sm text-slate-500">{tLanding("pricing.plans.pro.description")}</p>
                 <div className="mb-6 text-3xl font-extrabold text-forest-green">
                   $9.99
                   <span className="text-base font-normal text-slate-500">
                     {tLanding("pricing.plans.pro.priceSuffix")}
                   </span>
                 </div>
-                <ul className="mb-8 flex-grow space-y-4">
-                  {monthlyPlanPerks.map((perk) => (
-                    <li key={perk} className="flex items-center gap-2 text-sm text-slate-600">
-                      <span className="material-symbols-outlined text-sm text-forest-green">
-                        check_circle
-                      </span>
-                      {perk}
+                <ul className="mb-8 flex-grow space-y-3">
+                  {proPerks.map((perk) => (
+                    <li key={perk} className="flex items-start gap-2 text-sm text-slate-600">
+                      <span className="material-symbols-outlined mt-0.5 text-base text-primary">check_circle</span>
+                      <span className="flex-1">{perk}</span>
                     </li>
                   ))}
                 </ul>
-                <button className="w-full rounded-xl border border-forest-green/35 py-3 font-semibold text-forest-green transition-colors hover:bg-forest-green/5">
+                <Link
+                  href="#waitlist"
+                  className="block w-full rounded-xl bg-primary py-3 text-center font-semibold text-white transition-colors hover:bg-primary/90"
+                >
                   {tLanding("pricing.plans.pro.cta")}
-                </button>
+                </Link>
               </div>
 
-              <div className="relative z-10 flex scale-105 flex-col rounded-2xl border-2 border-primary bg-white p-8 shadow-xl shadow-primary/20">
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1 text-xs font-semibold uppercase tracking-widest text-white">
-                  {tLanding("pricing.mostPopular")}
-                </div>
-                <h3 className="mb-2 text-lg font-bold text-forest-green">{tLanding("pricing.plans.life.name")}</h3>
+              {/* Premium Plan */}
+              <div className="soft-card flex flex-col rounded-2xl p-8">
+                <h3 className="mb-2 text-lg font-bold text-forest-green">{tLanding("pricing.plans.premium.name")}</h3>
+                <p className="mb-4 text-sm text-slate-500">{tLanding("pricing.plans.premium.description")}</p>
                 <div className="mb-6 text-3xl font-extrabold text-forest-green">
-                  $79.99
+                  $19.99
                   <span className="text-base font-normal text-slate-500">
-                    {tLanding("pricing.plans.life.priceSuffix")}
+                    {tLanding("pricing.plans.premium.priceSuffix")}
                   </span>
                 </div>
-                <ul className="mb-8 flex-grow space-y-4">
-                  {annualPlanPerks.map((perk) => (
-                    <li key={perk} className="flex items-center gap-2 text-sm text-slate-600">
-                      <span className="material-symbols-outlined text-sm text-primary">check_circle</span>
-                      {perk}
+                <ul className="mb-8 flex-grow space-y-3">
+                  {premiumPerks.map((perk) => (
+                    <li key={perk} className="flex items-start gap-2 text-sm text-slate-600">
+                      <span className="material-symbols-outlined mt-0.5 text-base text-forest-green">
+                        check_circle
+                      </span>
+                      <span className="flex-1">{perk}</span>
                     </li>
                   ))}
                 </ul>
-                <button className="w-full rounded-xl bg-primary py-3 font-semibold text-white transition-colors hover:bg-primary/90">
-                  {tLanding("pricing.plans.life.cta")}
-                </button>
+                <Link
+                  href="#waitlist"
+                  className="block w-full rounded-xl border border-forest-green/35 py-3 text-center font-semibold text-forest-green transition-colors hover:bg-forest-green/5"
+                >
+                  {tLanding("pricing.plans.premium.cta")}
+                </Link>
               </div>
             </div>
           </div>

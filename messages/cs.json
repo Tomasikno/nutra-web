@@ -75,38 +75,74 @@
       "title": "Vyberte plán podle svých cílů",
       "subtitle": "Začněte zdarma a přejděte na vyšší plán, až budete chtít pokročilejší AI podporu.",
       "mostPopular": "Nejoblíbenější",
+      "recommended": "Doporučeno",
+      "savePercent": "Ušetřete 20%",
       "plans": {
         "free": {
           "name": "Zdarma",
           "priceSuffix": "/měs.",
           "cta": "Začít zdarma",
+          "description": "Vyzkoušejte základní funkce",
           "perks": {
-            "basicMealPlanning": "Základy plánování jídel",
-            "manualShoppingList": "Ruční nákupní seznamy",
-            "calorieTracking": "Sledování kalorií"
+            "basicFeatures": "5 AI analýz výživy/měsíc",
+            "recipeSuggestions": "5 AI návrhů receptů/měsíc",
+            "recipeEnhancement": "5 vylepšení receptů/měsíc",
+            "mealPlans": "5 jídelníčků/měsíc",
+            "photoUploads": "Neomezené nahrávání fotek",
+            "basicTracking": "Základní sledování jídel"
+          }
+        },
+        "starter": {
+          "name": "Starter",
+          "priceSuffix": "/měs.",
+          "cta": "Začít",
+          "description": "Pro příležitostné uživatele",
+          "perks": {
+            "nutritionAnalyses": "15 AI analýz výživy/měsíc",
+            "recipeSuggestions": "15 AI návrhů receptů/měsíc",
+            "recipeEnhancement": "10 vylepšení receptů/měsíc",
+            "mealPlans": "2 jídelníčky/měsíc",
+            "imageGeneration": "5 AI generování obrázků/měsíc",
+            "photoUploads": "Neomezené nahrávání fotek"
           }
         },
         "pro": {
-          "name": "Měsíční",
+          "name": "Pro",
           "priceSuffix": "/měs.",
-          "cta": "Přejít na Měsíční",
+          "cta": "Přejít na Pro",
+          "description": "Ideální pro týdenní přípravu jídel",
           "perks": {
-            "unlimitedAiFunctions": "Neomezené AI funkce",
-            "aiMealAnalysis": "AI analýza jídel",
-            "automatedShoppingLists": "Automatické nákupní seznamy",
-            "detailedMacroInsights": "Detailní rozpad makroživin",
-            "customDietPreferences": "Osobní stravovací preference"
+            "nutritionAnalyses": "50 AI analýz výživy/měsíc",
+            "recipeSuggestions": "50 AI návrhů receptů/měsíc",
+            "recipeEnhancement": "30 vylepšení receptů/měsíc",
+            "weeklyMealPlans": "4 jídelníčky/měsíc (týdenní)",
+            "imageGeneration": "15 AI generování obrázků/měsíc",
+            "exportPlans": "Export jídelníčků (PDF/CSV)",
+            "prioritySupport": "Prioritní podpora"
           }
         },
-        "life": {
-          "name": "Roční",
-          "priceSuffix": "/rok",
-          "cta": "Získat roční přístup",
+        "premium": {
+          "name": "Premium",
+          "priceSuffix": "/měs.",
+          "cta": "Získat Premium",
+          "description": "Pro pokročilé uživatele",
           "perks": {
-            "lifetimeProAccess": "Doživotní Pro přístup",
-            "priorityAiFeatures": "Přednostní přístup k novým AI funkcím",
-            "exclusiveCommunityAccess": "Přístup do exkluzivní komunity"
+            "unlimitedAnalyses": "Neomezené AI analýzy",
+            "unlimitedSuggestions": "Neomezené návrhy receptů",
+            "unlimitedEnhancement": "Neomezená vylepšení",
+            "multipleMealPlans": "12 jídelníčků/měsíc",
+            "moreImages": "50 AI generování obrázků/měsíc",
+            "advancedAnalytics": "Pokročilé analýzy a přehledy",
+            "earlyAccess": "Přednostní přístup k novinkám",
+            "prioritySupport": "Prioritní podpora"
           }
+        },
+        "annual": {
+          "starterPrice": "$47.99",
+          "proPrice": "$95.99",
+          "premiumPrice": "$191.99",
+          "priceSuffix": "/rok",
+          "monthlyEquivalent": "měsíc"
         }
       }
     },
