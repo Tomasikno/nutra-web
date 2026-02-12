@@ -17,7 +17,7 @@ type GenerateImageRequest = {
 const isStringArray = (value: unknown): value is string[] =>
   Array.isArray(value) && value.every((item) => typeof item === "string");
 
-const getSupabaseUrl = () => process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
+const getSupabaseUrl = () => process.env.SUPABASE_URL;
 
 function validateRequest(body: GenerateImageRequest) {
   const errors: string[] = [];

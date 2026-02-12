@@ -1,5 +1,8 @@
+import MealPlanDemoSection from "@/app/components/MealPlanDemoSection";
 import PublicFooter from "@/app/components/PublicFooter";
 import PublicTopNav from "@/app/components/PublicTopNav";
+import Reveal from "@/app/components/Reveal";
+import ShoppingListShowcaseSection from "@/app/components/ShoppingListShowcaseSection";
 import WaitlistSection from "@/app/components/WaitlistSection";
 import { defaultLocale, locales, type Locale } from "@/i18n/request";
 import type { Recipe } from "@/lib/recipe-types";
@@ -260,6 +263,61 @@ export default async function Home({ params }: HomePageProps) {
     },
   ];
 
+  const mealPlanDemoLabels = {
+    badge: tLanding("mealPlanDemo.badge"),
+    title: tLanding("mealPlanDemo.title"),
+    subtitle: tLanding("mealPlanDemo.subtitle"),
+    dayLabel: tLanding("mealPlanDemo.dayLabel"),
+    totalCaloriesSuffix: tLanding("mealPlanDemo.totalCaloriesSuffix"),
+    protein: tLanding("mealPlanDemo.protein"),
+    carbs: tLanding("mealPlanDemo.carbs"),
+    fat: tLanding("mealPlanDemo.fat"),
+    breakfast: tLanding("mealPlanDemo.breakfast"),
+    lunch: tLanding("mealPlanDemo.lunch"),
+    dinner: tLanding("mealPlanDemo.dinner"),
+    featureAiPlans: tLanding("mealPlanDemo.featureAiPlans"),
+    featureMacroTracking: tLanding("mealPlanDemo.featureMacroTracking"),
+    featureSwapRecipes: tLanding("mealPlanDemo.featureSwapRecipes"),
+    recipeBreakfast: tLanding("mealPlanDemo.recipeBreakfast"),
+    recipeLunch: tLanding("mealPlanDemo.recipeLunch"),
+    recipeDinner: tLanding("mealPlanDemo.recipeDinner"),
+    hoverHint: tLanding("mealPlanDemo.hoverHint"),
+  };
+
+  const shoppingListShowcaseLabels = {
+    badge: tLanding("shoppingListShowcase.badge"),
+    title: tLanding("shoppingListShowcase.title"),
+    subtitle: tLanding("shoppingListShowcase.subtitle"),
+    totalItemsLabel: tLanding("shoppingListShowcase.totalItemsLabel"),
+    estimatedCostLabel: tLanding("shoppingListShowcase.estimatedCostLabel"),
+    estimatedCostValue: tLanding("shoppingListShowcase.estimatedCostValue"),
+    featureAutoGrouped: tLanding("shoppingListShowcase.featureAutoGrouped"),
+    featureQuickCheckoff: tLanding("shoppingListShowcase.featureQuickCheckoff"),
+    featureRealtimeUpdates: tLanding("shoppingListShowcase.featureRealtimeUpdates"),
+    categoryProduce: tLanding("shoppingListShowcase.categoryProduce"),
+    categoryDairyEggs: tLanding("shoppingListShowcase.categoryDairyEggs"),
+    categoryMeatFish: tLanding("shoppingListShowcase.categoryMeatFish"),
+    categoryPantry: tLanding("shoppingListShowcase.categoryPantry"),
+    itemRipeAvocado: tLanding("shoppingListShowcase.itemRipeAvocado"),
+    itemRedOnion: tLanding("shoppingListShowcase.itemRedOnion"),
+    itemCherryTomatoes: tLanding("shoppingListShowcase.itemCherryTomatoes"),
+    itemFreeRangeEggs: tLanding("shoppingListShowcase.itemFreeRangeEggs"),
+    itemGreekYogurt: tLanding("shoppingListShowcase.itemGreekYogurt"),
+    itemChickenBreast: tLanding("shoppingListShowcase.itemChickenBreast"),
+    itemSalmonFillet: tLanding("shoppingListShowcase.itemSalmonFillet"),
+    itemOats: tLanding("shoppingListShowcase.itemOats"),
+    itemOliveOil: tLanding("shoppingListShowcase.itemOliveOil"),
+    qty2pcs: tLanding("shoppingListShowcase.qty2pcs"),
+    qty1pc: tLanding("shoppingListShowcase.qty1pc"),
+    qty250g: tLanding("shoppingListShowcase.qty250g"),
+    qty10pcs: tLanding("shoppingListShowcase.qty10pcs"),
+    qty500g: tLanding("shoppingListShowcase.qty500g"),
+    qty800g: tLanding("shoppingListShowcase.qty800g"),
+    qty300g: tLanding("shoppingListShowcase.qty300g"),
+    qty1pack: tLanding("shoppingListShowcase.qty1pack"),
+    qty1bottle: tLanding("shoppingListShowcase.qty1bottle"),
+  };
+
   return (
     <div className="landing-canvas text-slate-900 antialiased">
       <PublicTopNav
@@ -285,33 +343,41 @@ export default async function Home({ params }: HomePageProps) {
           <div className="absolute right-0 top-1/4 h-96 w-96 -mr-48 rounded-full bg-primary/10 blur-3xl" />
           <div className="relative z-10 mx-auto grid max-w-7xl gap-14 px-6 lg:grid-cols-2 lg:items-center lg:px-12">
             <div>
-              <p className="mb-6 inline-flex rounded-full border border-forest-green/20 bg-white/70 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-forest-green/80">
-                {tLanding("hero.badge")}
-              </p>
-              <h1 className="display-type mb-8 text-5xl font-extrabold leading-[1.02] text-forest-green lg:text-7xl">
-                {tLanding("hero.titleLine1")}<br />
-                {tLanding("hero.titleLine2")}
-              </h1>
-              <p className="mb-10 max-w-xl text-lg leading-relaxed text-forest-green/75 lg:text-xl">
-                {tLanding("hero.subtitle")}
-              </p>
-              <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start">
-                <Link
-                  href="#waitlist"
-                  className="w-full rounded-2xl bg-primary px-8 py-4 text-center text-lg font-semibold text-white shadow-lg shadow-primary/30 transition-all hover:-translate-y-0.5 hover:bg-primary/90 sm:w-auto"
-                >
-                  {tLanding("hero.ctaPrimary")}
-                </Link>
-                <Link
-                  href="#how-it-works"
-                  className="w-full rounded-2xl border border-forest-green/30 bg-white/60 px-8 py-4 text-center text-lg font-semibold text-forest-green transition-all hover:bg-white sm:w-auto"
-                >
-                  {tLanding("hero.ctaSecondary")}
-                </Link>
-              </div>
+              <Reveal delay={0}>
+                <p className="mb-6 inline-flex rounded-full border border-forest-green/20 bg-white/70 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-forest-green/80">
+                  {tLanding("hero.badge")}
+                </p>
+              </Reveal>
+              <Reveal delay={100}>
+                <h1 className="display-type mb-8 text-5xl font-extrabold leading-[1.02] text-forest-green lg:text-7xl">
+                  {tLanding("hero.titleLine1")}<br />
+                  {tLanding("hero.titleLine2")}
+                </h1>
+              </Reveal>
+              <Reveal delay={200}>
+                <p className="mb-10 max-w-xl text-lg leading-relaxed text-forest-green/75 lg:text-xl">
+                  {tLanding("hero.subtitle")}
+                </p>
+              </Reveal>
+              <Reveal delay={300}>
+                <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start">
+                  <Link
+                    href="#waitlist"
+                    className="w-full rounded-2xl bg-primary px-8 py-4 text-center text-lg font-semibold text-white shadow-lg shadow-primary/30 transition-all hover:-translate-y-0.5 hover:bg-primary/90 sm:w-auto"
+                  >
+                    {tLanding("hero.ctaPrimary")}
+                  </Link>
+                  <Link
+                    href="#how-it-works"
+                    className="w-full rounded-2xl border border-forest-green/30 bg-white/60 px-8 py-4 text-center text-lg font-semibold text-forest-green transition-all hover:bg-white sm:w-auto"
+                  >
+                    {tLanding("hero.ctaSecondary")}
+                  </Link>
+                </div>
+              </Reveal>
             </div>
 
-            <div className="relative">
+            <Reveal direction="right" delay={400} className="relative">
               <div className="soft-card rounded-3xl p-6 sm:p-8">
                 <p className="mb-4 text-sm font-semibold text-forest-green/70">{tLanding("hero.previewWeekLabel")}</p>
                 <div className="space-y-3">
@@ -331,7 +397,7 @@ export default async function Home({ params }: HomePageProps) {
                   ))}
                 </div>
               </div>
-            </div>
+            </Reveal>
           </div>
         </section>
 
@@ -350,28 +416,45 @@ export default async function Home({ params }: HomePageProps) {
           }}
         />
 
+        {/* Meal Plan Demo Section */}
+        <MealPlanDemoSection
+          labels={mealPlanDemoLabels}
+        />
+
+        {/* Shopping List Showcase Section */}
+        <ShoppingListShowcaseSection labels={shoppingListShowcaseLabels} />
+
+        {/* Recipe Preview Section */}
         <section className="section-anchor px-6 pb-8 pt-2 lg:px-12">
           <div className="mx-auto grid max-w-7xl items-center gap-10 rounded-3xl border border-forest-green/15 bg-white/65 p-6 shadow-[0_24px_70px_-45px_rgba(28,51,37,0.8)] backdrop-blur-sm lg:grid-cols-[1fr_520px] lg:p-10">
             <div>
-              <p className="mb-4 inline-flex rounded-full border border-primary/35 bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-primary">
-                {tLanding("recipePreview.badge")}
-              </p>
-              <h2 className="display-type mb-5 text-4xl font-bold text-forest-green lg:text-5xl">
-                {tLanding("recipePreview.title")}
-              </h2>
-              <p className="mb-7 max-w-xl text-base leading-relaxed text-slate-600 lg:text-lg">
-                {tLanding("recipePreview.subtitle")}
-              </p>
-              <Link
-                href={previewRecipePath}
-                className="inline-flex items-center gap-2 rounded-xl bg-forest-green px-5 py-3 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-forest-green/90"
-              >
-                {tLanding("recipePreview.cta")}
-                <span className="material-symbols-outlined text-base">open_in_new</span>
-              </Link>
+              <Reveal>
+                <p className="mb-4 inline-flex rounded-full border border-primary/35 bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-primary">
+                  {tLanding("recipePreview.badge")}
+                </p>
+              </Reveal>
+              <Reveal delay={100}>
+                <h2 className="display-type mb-5 text-4xl font-bold text-forest-green lg:text-5xl">
+                  {tLanding("recipePreview.title")}
+                </h2>
+              </Reveal>
+              <Reveal delay={200}>
+                <p className="mb-7 max-w-xl text-base leading-relaxed text-slate-600 lg:text-lg">
+                  {tLanding("recipePreview.subtitle")}
+                </p>
+              </Reveal>
+              <Reveal delay={300}>
+                <Link
+                  href={previewRecipePath}
+                  className="inline-flex items-center gap-2 rounded-xl bg-forest-green px-5 py-3 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-forest-green/90"
+                >
+                  {tLanding("recipePreview.cta")}
+                  <span className="material-symbols-outlined text-base">open_in_new</span>
+                </Link>
+              </Reveal>
             </div>
 
-            <div className="mx-auto w-full max-w-[620px]">
+            <Reveal direction="right" delay={200} className="mx-auto w-full max-w-[620px]">
               <div className="overflow-hidden rounded-[26px] border border-forest-green/20 bg-white shadow-[0_30px_70px_-45px_rgba(22,47,33,0.95)]">
                 <div className="flex items-center justify-between border-b border-forest-green/10 bg-cream-beige/55 px-4 py-3">
                   <div className="flex items-center gap-2">
@@ -463,26 +546,27 @@ export default async function Home({ params }: HomePageProps) {
                   </div>
                 </Link>
               </div>
-            </div>
+            </Reveal>
           </div>
         </section>
 
         <section className="section-anchor bg-background-light/80 py-20" id="features">
           <div className="mx-auto max-w-7xl px-6 lg:px-12">
-            <div className="mb-14 text-center">
+            <Reveal className="mb-14 text-center">
               <h2 className="display-type mb-4 text-4xl font-bold text-forest-green lg:text-5xl">
                 {tLanding("features.title")}
               </h2>
               <p className="mx-auto max-w-2xl text-lg text-slate-600">{tLanding("features.subtitle")}</p>
-            </div>
+            </Reveal>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-6">
               {features.map((item, index) => {
                 const featurePositionClass =
                   index === 3 ? "lg:col-start-2" : index === 4 ? "lg:col-start-4" : "";
 
                 return (
-                  <div
+                  <Reveal
                     key={item.title}
+                    delay={index * 100}
                     className={`soft-card group rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg lg:col-span-2 ${featurePositionClass}`}
                   >
                     <div className="mb-5 flex size-11 items-center justify-center rounded-xl bg-forest-green/10 text-forest-green transition-colors group-hover:bg-forest-green group-hover:text-white">
@@ -490,7 +574,7 @@ export default async function Home({ params }: HomePageProps) {
                     </div>
                     <h3 className="mb-3 text-xl font-bold text-forest-green">{item.title}</h3>
                     <p className="text-sm leading-relaxed text-slate-600">{item.copy}</p>
-                  </div>
+                  </Reveal>
                 );
               })}
             </div>
@@ -499,7 +583,7 @@ export default async function Home({ params }: HomePageProps) {
 
         <section className="section-anchor py-20" id="how-it-works">
           <div className="mx-auto max-w-7xl px-6 lg:px-12">
-            <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <Reveal className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
               <div>
                 <p className="mb-2 text-sm font-semibold uppercase tracking-[0.16em] text-primary/90">
                   {tNav("howItWorks")}
@@ -511,15 +595,17 @@ export default async function Home({ params }: HomePageProps) {
               <p className="max-w-md text-slate-600">
                 {tLanding("howItWorks.subtitle")}
               </p>
-            </div>
+            </Reveal>
 
             <div className="grid gap-6 md:grid-cols-3">
-              {howItWorksSteps.map((step) => (
-                <article key={step.number} className="soft-card rounded-2xl p-7">
-                  <p className="display-type mb-4 text-4xl font-bold text-primary">{step.number}</p>
-                  <h3 className="mb-3 text-xl font-bold text-forest-green">{step.title}</h3>
-                  <p className="text-sm leading-relaxed text-slate-600">{step.copy}</p>
-                </article>
+              {howItWorksSteps.map((step, index) => (
+                <Reveal key={step.number} delay={index * 120} className="h-full">
+                  <article className="soft-card h-full rounded-2xl p-7">
+                    <p className="display-type mb-4 text-4xl font-bold text-primary">{step.number}</p>
+                    <h3 className="mb-3 text-xl font-bold text-forest-green">{step.title}</h3>
+                    <p className="text-sm leading-relaxed text-slate-600">{step.copy}</p>
+                  </article>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -527,15 +613,16 @@ export default async function Home({ params }: HomePageProps) {
 
         <section className="section-anchor bg-cream-beige/40 py-24" id="pricing">
           <div className="mx-auto max-w-7xl px-6 lg:px-12">
-            <div className="mb-16 text-center">
+            <Reveal className="mb-16 text-center">
               <h2 className="display-type mb-4 text-4xl font-bold text-forest-green lg:text-5xl">
                 {tLanding("pricing.title")}
               </h2>
               <p className="text-lg text-slate-600">{tLanding("pricing.subtitle")}</p>
-            </div>
+            </Reveal>
             <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-3">
               {/* Starter Plan */}
-              <div className="soft-card flex flex-col rounded-2xl p-8">
+              {/* Starter Plan */}
+              <Reveal delay={0} className="soft-card flex flex-col rounded-2xl p-8">
                 <h3 className="mb-2 text-lg font-bold text-forest-green">{tLanding("pricing.plans.starter.name")}</h3>
                 <p className="mb-4 text-sm text-slate-500">{tLanding("pricing.plans.starter.description")}</p>
                 <div className="mb-6 text-3xl font-extrabold text-forest-green">
@@ -560,10 +647,10 @@ export default async function Home({ params }: HomePageProps) {
                 >
                   {tLanding("pricing.plans.starter.cta")}
                 </Link>
-              </div>
+              </Reveal>
 
               {/* Pro Plan - Most Popular */}
-              <div className="relative z-10 flex flex-col rounded-2xl border-2 border-primary bg-white p-8 shadow-xl shadow-primary/20 md:scale-105">
+              <Reveal delay={120} className="relative z-10 flex flex-col rounded-2xl border-2 border-primary bg-white p-8 shadow-xl shadow-primary/20 md:scale-105">
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1 text-xs font-semibold uppercase tracking-widest text-white">
                   {tLanding("pricing.recommended")}
                 </div>
@@ -589,10 +676,10 @@ export default async function Home({ params }: HomePageProps) {
                 >
                   {tLanding("pricing.plans.pro.cta")}
                 </Link>
-              </div>
+              </Reveal>
 
               {/* Premium Plan */}
-              <div className="soft-card flex flex-col rounded-2xl p-8">
+              <Reveal delay={240} className="soft-card flex flex-col rounded-2xl p-8">
                 <h3 className="mb-2 text-lg font-bold text-forest-green">{tLanding("pricing.plans.premium.name")}</h3>
                 <p className="mb-4 text-sm text-slate-500">{tLanding("pricing.plans.premium.description")}</p>
                 <div className="mb-6 text-3xl font-extrabold text-forest-green">
@@ -617,13 +704,13 @@ export default async function Home({ params }: HomePageProps) {
                 >
                   {tLanding("pricing.plans.premium.cta")}
                 </Link>
-              </div>
+              </Reveal>
             </div>
           </div>
         </section>
 
         <section className="bg-background-light px-6 py-20 lg:px-12">
-          <div className="mx-auto max-w-7xl">
+          <Reveal className="mx-auto max-w-7xl">
             <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-forest-green to-emerald-800 px-8 py-16 text-center text-white lg:py-24">
               <div className="relative z-10 mx-auto max-w-3xl">
                 <h2 className="display-type mb-6 text-4xl font-black lg:text-6xl">{tLanding("finalCta.title")}</h2>
@@ -635,7 +722,7 @@ export default async function Home({ params }: HomePageProps) {
               <div className="absolute right-0 top-0 size-96 -translate-y-1/2 translate-x-1/2 rounded-full bg-white/10 blur-3xl" />
               <div className="absolute bottom-0 left-0 size-96 -translate-x-1/2 translate-y-1/2 rounded-full bg-emerald-400/20 blur-3xl" />
             </div>
-          </div>
+          </Reveal>
         </section>
       </main>
 

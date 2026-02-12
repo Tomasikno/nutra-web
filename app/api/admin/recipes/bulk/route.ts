@@ -18,7 +18,7 @@ const isStringArray = (value: unknown): value is string[] =>
 const MAX_INGREDIENTS = 50;
 const MAX_INGREDIENT_LENGTH = 80;
 
-const getSupabaseUrl = () => process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
+const getSupabaseUrl = () => process.env.SUPABASE_URL;
 
 const ingredientStringsFromRaw = (raw: unknown): string[] => {
   if (!Array.isArray(raw)) return [];

@@ -1,5 +1,6 @@
 "use client";
 
+import Reveal from "@/app/components/Reveal";
 import { FormEvent, useMemo, useState } from "react";
 
 type WaitlistLabels = {
@@ -108,37 +109,39 @@ export default function WaitlistSection({ locale, labels }: WaitlistSectionProps
 
   return (
     <section className="px-6 pb-8 lg:px-12" id="waitlist">
-      <div className="mx-auto max-w-4xl rounded-3xl border border-forest-green/15 bg-[#e5dccd] p-8 text-center shadow-[0_24px_70px_-45px_rgba(28,51,37,0.8)] sm:p-10">
-        <p className="mb-4 inline-flex rounded-full border border-forest-green/15 bg-white/60 px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-forest-green/80">
-          {labels.badge}
-        </p>
-        <h2 className="display-type mb-5 text-4xl font-bold text-forest-green lg:text-5xl">{labels.title}</h2>
-        <p className="mx-auto mb-8 max-w-2xl text-lg text-forest-green/70">{labels.subtitle}</p>
-
-        <form className="mx-auto flex max-w-2xl flex-col gap-4 sm:flex-row" onSubmit={handleSubmit}>
-          <input
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            placeholder={labels.emailPlaceholder}
-            className="h-16 w-full rounded-2xl border border-forest-green/15 bg-white px-6 text-lg text-forest-green placeholder:text-slate-500 focus:border-primary focus:outline-none"
-            required
-          />
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="h-16 rounded-2xl bg-primary px-8 text-lg font-semibold text-white shadow-lg shadow-primary/25 transition-all hover:-translate-y-0.5 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-70"
-          >
-            {labels.submitButton}
-          </button>
-        </form>
-
-        {statusMessage ? (
-          <p className={`mt-4 text-sm font-medium ${statusClassName}`} role="status">
-            {statusMessage}
+      <Reveal>
+        <div className="mx-auto max-w-4xl rounded-3xl border border-forest-green/15 bg-[#e5dccd] p-8 text-center shadow-[0_24px_70px_-45px_rgba(28,51,37,0.8)] sm:p-10">
+          <p className="mb-4 inline-flex rounded-full border border-forest-green/15 bg-white/60 px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-forest-green/80">
+            {labels.badge}
           </p>
-        ) : null}
-      </div>
+          <h2 className="display-type mb-5 text-4xl font-bold text-forest-green lg:text-5xl">{labels.title}</h2>
+          <p className="mx-auto mb-8 max-w-2xl text-lg text-forest-green/70">{labels.subtitle}</p>
+
+          <form className="mx-auto flex max-w-2xl flex-col gap-4 sm:flex-row" onSubmit={handleSubmit}>
+            <input
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder={labels.emailPlaceholder}
+              className="h-16 w-full rounded-2xl border border-forest-green/15 bg-white px-6 text-lg text-forest-green placeholder:text-slate-500 focus:border-primary focus:outline-none"
+              required
+            />
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="h-16 rounded-2xl bg-primary px-8 text-lg font-semibold text-white shadow-lg shadow-primary/25 transition-all hover:-translate-y-0.5 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-70"
+            >
+              {labels.submitButton}
+            </button>
+          </form>
+
+          {statusMessage ? (
+            <p className={`mt-4 text-sm font-medium ${statusClassName}`} role="status">
+              {statusMessage}
+            </p>
+          ) : null}
+        </div>
+      </Reveal>
     </section>
   );
 }
