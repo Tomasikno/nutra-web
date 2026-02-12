@@ -4,7 +4,7 @@
     "howItWorks": "Jak to funguje",
     "pricing": "Ceník",
     "logIn": "Přihlášení",
-    "downloadNow": "Získat aplikaci"
+    "downloadNow": "Přidat se na čekací listinu"
   },
   "Recipe": {
     "notFound": "Recept nenalezen",
@@ -33,12 +33,12 @@
       "titleLine1": "Jezte lépe bez přemýšlení",
       "titleLine2": "Plán, který sedí vám",
       "subtitle": "Sestavte si týdenní jídelníček, vytvořte nákupní seznam a získejte AI výživové tipy podle svých cílů, preferencí a režimu.",
-      "ctaPrimary": "Získat Nutra zdarma",
+      "ctaPrimary": "Přidat se na čekací listinu",
       "ctaSecondary": "Jak to funguje",
       "badge": "Plánování jídel pro reálný život",
       "previewWeekLabel": "Přehled vašeho týdne",
       "previewReadyLabel": "Naplánováno",
-      "goalProgressLabel": "Recepty vytvo\u0159eny"
+      "goalProgressLabel": "Recepty vytvořeny"
     },
     "features": {
       "title": "Vše, co potřebujete pro lepší plánování jídel",
@@ -158,6 +158,17 @@
     "howItWorks": {
       "title": "Sestavte si stravovací rutinu ve třech jednoduchých krocích",
       "subtitle": "Nastavte si cíle jednou a pak už jen sledujte jasný týdenní plán s nákupem i sledováním."
+    },
+    "waitlist": {
+      "badge": "Buďte první, kdo se to dozví",
+      "title": "Přidejte se na čekací listinu Nutra",
+      "subtitle": "Získejte dřívější přístup k novým funkcím, exkluzivní tipy na výživu a novinky o spuštění. Přidejte se k naší rostoucí komunitě ještě dnes.",
+      "emailPlaceholder": "Zadejte svůj e-mail",
+      "submitButton": "Přidat se",
+      "successMessage": "Děkujeme! Jste na čekací listině.",
+      "invalidEmailMessage": "Zadejte prosím platnou e-mailovou adresu.",
+      "genericErrorMessage": "Něco se pokazilo. Zkuste to prosím znovu.",
+      "rateLimitMessage": "Můžete odeslat maximálně 2 e-maily za 10 minut. Zkuste to prosím později."
     }
   }
 }

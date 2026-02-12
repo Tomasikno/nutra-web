@@ -4,7 +4,7 @@
     "howItWorks": "How it Works",
     "pricing": "Pricing",
     "logIn": "Log In",
-    "downloadNow": "Get the App"
+    "downloadNow": "Join Waitlist"
   },
   "Recipe": {
     "notFound": "Recipe not found",
@@ -33,7 +33,7 @@
       "titleLine1": "Eat Well Without Overthinking",
       "titleLine2": "Plan Meals That Fit You",
       "subtitle": "Build weekly meal plans, create shopping lists, and get AI nutrition insights based on your goals, preferences, and routine.",
-      "ctaPrimary": "Get Nutra Free",
+      "ctaPrimary": "Join Waitlist",
       "ctaSecondary": "See How It Works",
       "badge": "Meal Planning That Fits Real Life",
       "previewWeekLabel": "Your Week at a Glance",
@@ -158,6 +158,17 @@
     "howItWorks": {
       "title": "Build your meal routine in three simple steps",
       "subtitle": "Set your goals once, then follow a clear weekly plan with shopping and tracking built in."
+    },
+    "waitlist": {
+      "badge": "Be the First to Know",
+      "title": "Join the Nutra Waitlist",
+      "subtitle": "Get early access to new features, exclusive nutrition tips, and launch updates. Join our growing community today.",
+      "emailPlaceholder": "Enter your email",
+      "submitButton": "Join Waitlist",
+      "successMessage": "Thanks! You're on the waitlist.",
+      "invalidEmailMessage": "Please enter a valid email address.",
+      "genericErrorMessage": "Something went wrong. Please try again.",
+      "rateLimitMessage": "You can submit up to 2 emails every 10 minutes. Please try again later."
     }
   }
 }

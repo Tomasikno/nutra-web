@@ -231,14 +231,14 @@ export default function PremiumConfigClient({
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 px-6 py-12 text-zinc-100">
+    <div className="nutra-admin min-h-screen px-4 py-8 sm:px-6 lg:px-10">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
-        <header className="flex flex-col gap-3">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-emerald-400">
-            Nutra Admin
+        <header className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 sm:p-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-emerald-400">
+            Nutra Kitchen Pass
           </p>
-          <h1 className="text-4xl font-semibold">Premium Config</h1>
-          <p className="max-w-2xl text-zinc-300">
+          <h1 className="display-type mt-2 text-4xl font-semibold sm:text-5xl">Premium Console</h1>
+          <p className="mt-3 max-w-2xl text-zinc-300">
             Manage premium feature limits and access rules.
           </p>
         </header>

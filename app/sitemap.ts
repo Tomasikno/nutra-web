@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { buildCanonicalUrl } from "@/lib/seo";
-import { supabaseAdmin } from "@/lib/supabase";
+import { supabasePublic } from "@/lib/supabase";
 
 type SitemapRecipeRow = {
   slug: string | null;
@@ -8,9 +8,9 @@ type SitemapRecipeRow = {
 };
 
 async function getPublicRecipeRows(): Promise<SitemapRecipeRow[]> {
-  if (!supabaseAdmin) return [];
+  if (!supabasePublic) return [];
 
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await supabasePublic
     .from("recipes")
     .select("slug,updated_at")
     .is("deleted_at", null)

@@ -606,14 +606,14 @@ export default function AdminRecipesClient({
   const canGoNext = recipePage < totalPages;
 
   return (
-    <div className="min-h-screen bg-zinc-950 px-6 py-12 text-zinc-100">
+    <div className="nutra-admin min-h-screen px-4 py-8 sm:px-6 lg:px-10">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
-        <header className="flex flex-col gap-3">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-emerald-400">
-            Nutra Admin
+        <header className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 sm:p-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-emerald-400">
+            Nutra Kitchen Pass
           </p>
-          <h1 className="text-4xl font-semibold">Recipes</h1>
-          <p className="max-w-2xl text-zinc-300">
+          <h1 className="display-type mt-2 text-4xl font-semibold sm:text-5xl">Recipe Library</h1>
+          <p className="mt-3 max-w-2xl text-zinc-300">
             Browse recipes, view details, and manage existing content.
           </p>
         </header>
@@ -962,7 +962,7 @@ export default function AdminRecipesClient({
                           return (
                             <tr
                               key={key}
-                              className={`cursor-pointer transition ${isSelected ? "bg-emerald-500/10" : "hover:bg-zinc-900/70"
+                              className={`cursor-pointer transition ${isSelected ? "bg-emerald-500/10" : "hover:bg-zinc-950/40"
                                 }`}
                               onClick={() => setSelectedRecipeId(row.id)}
                             >
