@@ -5,6 +5,7 @@ import Reveal from "@/app/components/Reveal";
 import ShoppingListShowcaseSection from "@/app/components/ShoppingListShowcaseSection";
 import WaitlistSection from "@/app/components/WaitlistSection";
 import { defaultLocale, locales, type Locale } from "@/i18n/request";
+import { buildRecipePath } from "@/lib/recipe-route";
 import type { Recipe } from "@/lib/recipe-types";
 import { supabasePublic } from "@/lib/supabase";
 import type { Metadata } from "next";
@@ -147,7 +148,9 @@ export default async function Home({ params }: HomePageProps) {
   const randomRecipe = await getCachedRandomSharedRecipePreview();
   const fallbackRecipePath =
     "/r/d8bd7f2f-c158-4099-8df0-13b9a72db6ae-pagety-s-krtm-masem-a-rajaty";
-  const previewRecipePath = randomRecipe ? `/r/${randomRecipe.slug}` : fallbackRecipePath;
+  const previewRecipePath = randomRecipe
+    ? buildRecipePath(randomRecipe.id, randomRecipe.slug)
+    : fallbackRecipePath;
   const previewIngredientsCount = randomRecipe ? getIngredientsCount(randomRecipe.ingredients) : null;
   const previewCalories = randomRecipe ? getCaloriesPerServing(randomRecipe.nutrition) : null;
   const previewDifficulty = randomRecipe

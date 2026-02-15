@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import type { Locale } from "@/i18n/request";
+import { buildRecipePath, buildRecipeRouteSlug, extractRecipeIdFromRouteSlug } from "@/lib/recipe-route";
 import { buildCanonicalUrl } from "@/lib/seo";
 import { supabasePublic } from "@/lib/supabase";
 import type { Ingredient, Recipe } from "@/lib/recipe-types";
@@ -12,13 +13,6 @@ import RecipeNutritionSection from "./components/RecipeNutritionSection";
 import RecipeStepsSection from "./components/RecipeStepsSection";
 
 type PageParams = { slug: string };
-
-/** Extract recipe UUID from the URL slug (format: {uuid}-{name-slug}) */
-function extractRecipeId(slug: string): string | null {
-  const uuidPattern = /^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/i;
-  const match = slug.match(uuidPattern);
-  return match ? match[1] : null;
-}
 
 function resolveLocale(recipeLanguage: Recipe["language"]): Locale {
   return recipeLanguage === "en" ? "en" : "cs";
@@ -36,8 +30,8 @@ function toIsoDuration(minutes: number | null): string | undefined {
   return `PT${minutes}M`;
 }
 
-function getCanonicalRecipePath(slug: string): string {
-  return `/r/${slug}`;
+function getCanonicalRecipePath(recipeId: string, slug: string | null | undefined): string {
+  return buildRecipePath(recipeId, slug);
 }
 
 async function getRecipe(id: string): Promise<Recipe | null> {
@@ -103,7 +97,7 @@ async function getRecipeBySlugSuffix(slugSuffix: string): Promise<Recipe | null>
 }
 
 async function getRecipeFromRouteSlug(routeSlug: string): Promise<Recipe | null> {
-  const recipeId = extractRecipeId(routeSlug);
+  const recipeId = extractRecipeIdFromRouteSlug(routeSlug);
   if (recipeId) {
     const byId = await getRecipe(recipeId);
     if (byId) return byId;
@@ -128,7 +122,7 @@ export async function generateMetadata({
   }
 
   const isPublic = recipe.share_visibility === "PUBLIC";
-  const canonicalPath = getCanonicalRecipePath(recipe.slug);
+  const canonicalPath = getCanonicalRecipePath(recipe.id, recipe.slug);
   const resolvedLocale = resolveLocale(recipe.language);
   const description =
     recipe.description?.trim() ||
@@ -181,8 +175,9 @@ export default async function RecipePage({
   const { slug } = await params;
   const recipe = await getRecipeFromRouteSlug(slug);
   if (!recipe) notFound();
-  const canonicalPath = getCanonicalRecipePath(recipe.slug);
-  if (slug !== recipe.slug) {
+  const canonicalRouteSlug = buildRecipeRouteSlug(recipe.id, recipe.slug);
+  const canonicalPath = getCanonicalRecipePath(recipe.id, recipe.slug);
+  if (slug !== canonicalRouteSlug) {
     redirect(canonicalPath);
   }
 
