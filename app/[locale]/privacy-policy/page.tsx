@@ -1,5 +1,11 @@
 import { defaultLocale, locales, type Locale } from "@/i18n/request";
-import { buildCanonicalUrl } from "@/lib/seo";
+import {
+  buildCanonicalUrl,
+  getDefaultOgImage,
+  getDefaultTwitterImage,
+  resolveOgAlternateLocales,
+  resolveOgLocale,
+} from "@/lib/seo";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import Link from "next/link";
@@ -163,13 +169,19 @@ export async function generateMetadata({
       },
     },
     openGraph: {
+      type: "article",
       url: buildCanonicalUrl(canonicalPath),
       title: content.title,
       description: content.description,
+      locale: resolveOgLocale(resolvedLocale),
+      alternateLocale: resolveOgAlternateLocales(resolvedLocale),
+      images: [getDefaultOgImage()],
     },
     twitter: {
+      card: "summary_large_image",
       title: content.title,
       description: content.description,
+      images: [getDefaultTwitterImage()],
     },
   };
 }
@@ -182,7 +194,7 @@ export default async function PrivacyPolicyPage({ params }: PrivacyPolicyPagePro
   const content = privacyPolicyContent[resolvedLocale];
 
   return (
-    <main className="mx-auto max-w-5xl px-6 py-14 text-foreground lg:px-10 lg:py-20">
+    <main id="main-content" tabIndex={-1} className="mx-auto max-w-5xl px-6 py-14 text-foreground lg:px-10 lg:py-20">
       <div className="rounded-3xl border border-forest-green/20 bg-white/85 p-7 shadow-[0_20px_55px_-35px_rgba(28,51,37,0.65)] backdrop-blur-sm sm:p-10">
         <p className="mb-4 inline-flex rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-primary">
           Nutra

@@ -3,7 +3,13 @@ import { notFound, redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import type { Locale } from "@/i18n/request";
 import { buildRecipePath, buildRecipeRouteSlug, extractRecipeIdFromRouteSlug } from "@/lib/recipe-route";
-import { buildCanonicalUrl } from "@/lib/seo";
+import {
+  buildCanonicalUrl,
+  getDefaultOgImage,
+  getDefaultTwitterImage,
+  resolveOgAlternateLocales,
+  resolveOgLocale,
+} from "@/lib/seo";
 import { supabasePublic } from "@/lib/supabase";
 import type { Ingredient, Recipe } from "@/lib/recipe-types";
 import PublicTopNav from "@/app/components/PublicTopNav";
@@ -127,6 +133,12 @@ export async function generateMetadata({
   const description =
     recipe.description?.trim() ||
     "View ingredients, nutrition, and step-by-step instructions.";
+  const ogImages = recipe.photo_url
+    ? [{ url: recipe.photo_url, alt: recipe.recipe_name }, getDefaultOgImage()]
+    : [getDefaultOgImage()];
+  const twitterImages = recipe.photo_url
+    ? [{ url: recipe.photo_url, alt: recipe.recipe_name }, getDefaultTwitterImage()]
+    : [getDefaultTwitterImage()];
 
   return {
     title: recipe.recipe_name,
@@ -144,14 +156,15 @@ export async function generateMetadata({
       type: "article",
       siteName: "Nutra",
       url: canonicalPath,
-      locale: resolvedLocale === "cs" ? "cs_CZ" : "en_US",
-      ...(recipe.photo_url ? { images: [recipe.photo_url] } : {}),
+      locale: resolveOgLocale(resolvedLocale),
+      alternateLocale: resolveOgAlternateLocales(resolvedLocale),
+      images: ogImages,
     },
     twitter: {
       card: "summary_large_image",
       title: recipe.recipe_name,
       description,
-      ...(recipe.photo_url ? { images: [recipe.photo_url] } : {}),
+      images: twitterImages,
     },
   };
 }
@@ -302,7 +315,7 @@ export default async function RecipePage({
         }}
       />
 
-      <main className="min-h-screen bg-[#EBE1D1] px-4 pb-8 pt-28 text-[#0D4715] md:px-8 md:pt-32">
+      <main id="main-content" tabIndex={-1} className="min-h-screen bg-[#EBE1D1] px-4 pb-8 pt-28 text-[#0D4715] md:px-8 md:pt-32">
         <div className="mx-auto w-full max-w-[1180px] space-y-8">
           <RecipeHeroSection
             recipeName={recipe.recipe_name}

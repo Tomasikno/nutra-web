@@ -133,7 +133,7 @@ export default function ShoppingListShowcaseSection({ labels }: ShoppingListShow
                           <span
                             className={`inline-flex size-5 shrink-0 items-center justify-center rounded-full border-2 transition-colors sm:size-6 ${checkedItemIds.has(item.id) ? "border-[#4f725a] bg-[#edf4ed] text-[#4f725a]" : "border-[#9caf9d] bg-transparent text-transparent hover:border-[#7b8f7f]"}`}
                           >
-                            <span className="material-symbols-outlined text-xs sm:text-sm">done</span>
+                            <span aria-hidden="true" className="material-symbols-outlined text-xs sm:text-sm">done</span>
                           </span>
                           <span
                             className={`truncate text-[15px] font-semibold sm:text-[17px] ${checkedItemIds.has(item.id) ? "text-[#8f8b84] line-through" : "text-[#23492f]"}`}
@@ -144,10 +144,10 @@ export default function ShoppingListShowcaseSection({ labels }: ShoppingListShow
 
                         <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
                           <span className="inline-flex size-6 items-center justify-center rounded-full bg-[#dce4d7] text-[#5f8167] sm:size-7">
-                            <span className="material-symbols-outlined text-[13px] sm:text-[15px]">shopping_bag</span>
+                            <span aria-hidden="true" className="material-symbols-outlined text-[13px] sm:text-[15px]">shopping_bag</span>
                           </span>
                           <span className="inline-flex size-6 items-center justify-center rounded-full bg-[#f7e3d2] sm:size-7">
-                            <span className="inline-block size-2 rounded-full bg-[#ea7e2a] sm:size-2.5" />
+                            <span aria-hidden="true" className="inline-block size-2 rounded-full bg-[#ea7e2a] sm:size-2.5" />
                           </span>
                           <span className="text-xs font-semibold text-[#8b867e] sm:text-sm">{item.quantity}</span>
                         </div>
@@ -163,7 +163,7 @@ export default function ShoppingListShowcaseSection({ labels }: ShoppingListShow
         <div className="order-1 space-y-6 rounded-2xl border border-forest-green/15 bg-white/65 p-5 shadow-lg backdrop-blur-sm sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-none lg:pt-2">
           <Reveal>
             <p className="inline-flex items-center gap-2 rounded-full border border-primary/35 bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-primary shadow-sm">
-              <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
+              <span aria-hidden="true" className="inline-block h-1.5 w-1.5 rounded-full bg-primary" />
               {labels.badge}
             </p>
           </Reveal>
@@ -183,15 +183,15 @@ export default function ShoppingListShowcaseSection({ labels }: ShoppingListShow
           <Reveal delay={300}>
             <ul className="space-y-3 pt-2">
               <li className="flex items-start gap-3 text-sm text-slate-700">
-                <span className="material-symbols-outlined mt-0.5 text-lg text-primary">category</span>
+                <span aria-hidden="true" className="material-symbols-outlined mt-0.5 text-lg text-primary">category</span>
                 <span className="leading-relaxed">{labels.featureAutoGrouped}</span>
               </li>
               <li className="flex items-start gap-3 text-sm text-slate-700">
-                <span className="material-symbols-outlined mt-0.5 text-lg text-primary">done_all</span>
+                <span aria-hidden="true" className="material-symbols-outlined mt-0.5 text-lg text-primary">done_all</span>
                 <span className="leading-relaxed">{labels.featureQuickCheckoff}</span>
               </li>
               <li className="flex items-start gap-3 text-sm text-slate-700">
-                <span className="material-symbols-outlined mt-0.5 text-lg text-primary">sync</span>
+                <span aria-hidden="true" className="material-symbols-outlined mt-0.5 text-lg text-primary">sync</span>
                 <span className="leading-relaxed">{labels.featureRealtimeUpdates}</span>
               </li>
             </ul>
@@ -201,3 +201,4 @@ export default function ShoppingListShowcaseSection({ labels }: ShoppingListShow
     </section>
   );
 }
+

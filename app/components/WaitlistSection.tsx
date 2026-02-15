@@ -1,12 +1,13 @@
 "use client";
 
 import Reveal from "@/app/components/Reveal";
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useId, useMemo, useState } from "react";
 
 type WaitlistLabels = {
   badge: string;
   title: string;
   subtitle: string;
+  emailLabel: string;
   emailPlaceholder: string;
   submitButton: string;
   successMessage: string;
@@ -48,6 +49,8 @@ function isValidEmail(email: string): boolean {
 }
 
 export default function WaitlistSection({ locale, labels }: WaitlistSectionProps) {
+  const emailInputId = useId();
+  const statusMessageId = useId();
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
@@ -117,17 +120,29 @@ export default function WaitlistSection({ locale, labels }: WaitlistSectionProps
           <h2 className="display-type mb-5 text-4xl font-bold text-forest-green lg:text-5xl">{labels.title}</h2>
           <p className="mx-auto mb-8 max-w-2xl text-lg text-forest-green/70">{labels.subtitle}</p>
 
-          <form className="mx-auto flex max-w-2xl flex-col gap-4 sm:flex-row" onSubmit={handleSubmit}>
+          <form
+            aria-busy={isSubmitting}
+            className="mx-auto flex max-w-2xl flex-col gap-4 sm:flex-row"
+            onSubmit={handleSubmit}
+          >
+            <label className="sr-only" htmlFor={emailInputId}>
+              {labels.emailLabel}
+            </label>
             <input
+              id={emailInputId}
+              name="email"
               type="email"
+              autoComplete="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder={labels.emailPlaceholder}
+              aria-describedby={statusMessage ? statusMessageId : undefined}
               className="h-16 w-full rounded-2xl border border-forest-green/15 bg-white px-6 text-lg text-forest-green placeholder:text-slate-500 focus:border-primary focus:outline-none"
               required
             />
             <button
               type="submit"
+              aria-disabled={isSubmitting}
               disabled={isSubmitting}
               className="h-16 rounded-2xl bg-primary px-8 text-lg font-semibold text-white shadow-lg shadow-primary/25 transition-all hover:-translate-y-0.5 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-70"
             >
@@ -136,7 +151,12 @@ export default function WaitlistSection({ locale, labels }: WaitlistSectionProps
           </form>
 
           {statusMessage ? (
-            <p className={`mt-4 text-sm font-medium ${statusClassName}`} role="status">
+            <p
+              id={statusMessageId}
+              aria-live={statusType === "error" ? "assertive" : "polite"}
+              className={`mt-4 text-sm font-medium ${statusClassName}`}
+              role={statusType === "error" ? "alert" : "status"}
+            >
               {statusMessage}
             </p>
           ) : null}

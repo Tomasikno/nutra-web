@@ -1,27 +1,44 @@
-import { buildCanonicalUrl } from "@/lib/seo";
+import {
+  buildCanonicalUrl,
+  getDefaultOgImage,
+  getDefaultTwitterImage,
+  resolveOgAlternateLocales,
+  resolveOgLocale,
+} from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 
 const effectiveDate = "10. února 2026";
 
 export const metadata: Metadata = {
-  title: "Nutra - Smazání účtu",
+  title: "Nutra - Smazani uctu",
   description:
-    "Postup, jak požádat o smazání účtu Nutra a přidružených dat, včetně informací o retenci.",
+    "Postup, jak pozadat o smazani uctu Nutra a pridruzenych dat, vcetne informaci o retenci.",
   alternates: {
     canonical: buildCanonicalUrl("/account-deletion"),
   },
   openGraph: {
+    type: "article",
     url: buildCanonicalUrl("/account-deletion"),
-    title: "Nutra - Smazání účtu",
+    title: "Nutra - Smazani uctu",
     description:
-      "Postup, jak požádat o smazání účtu Nutra a přidružených dat, včetně informací o retenci.",
+      "Postup, jak pozadat o smazani uctu Nutra a pridruzenych dat, vcetne informaci o retenci.",
+    locale: resolveOgLocale("cs"),
+    alternateLocale: resolveOgAlternateLocales("cs"),
+    images: [getDefaultOgImage()],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Nutra - Smazani uctu",
+    description:
+      "Postup, jak pozadat o smazani uctu Nutra a pridruzenych dat, vcetne informaci o retenci.",
+    images: [getDefaultTwitterImage()],
   },
 };
 
 export default function AccountDeletionPage() {
   return (
-    <main className="mx-auto max-w-4xl px-6 py-14 text-foreground lg:px-10 lg:py-20">
+    <main id="main-content" tabIndex={-1} className="mx-auto max-w-4xl px-6 py-14 text-foreground lg:px-10 lg:py-20">
       <div className="rounded-3xl border border-forest-green/20 bg-white/85 p-7 shadow-[0_20px_55px_-35px_rgba(28,51,37,0.65)] backdrop-blur-sm sm:p-10">
         <p className="mb-4 inline-flex rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-primary">
           Nutra

@@ -6,6 +6,12 @@ import ShoppingListShowcaseSection from "@/app/components/ShoppingListShowcaseSe
 import WaitlistSection from "@/app/components/WaitlistSection";
 import { defaultLocale, locales, type Locale } from "@/i18n/request";
 import { buildRecipePath } from "@/lib/recipe-route";
+import {
+  getDefaultOgImage,
+  getDefaultTwitterImage,
+  resolveOgAlternateLocales,
+  resolveOgLocale,
+} from "@/lib/seo";
 import type { Recipe } from "@/lib/recipe-types";
 import { supabasePublic } from "@/lib/supabase";
 import type { Metadata } from "next";
@@ -54,7 +60,7 @@ async function getRandomSharedRecipePreview(): Promise<RecipePreview | null> {
     .from("recipes")
     .select("id", { count: "exact", head: true })
     .is("deleted_at", null)
-    .in("share_visibility", ["PUBLIC", "UNLISTED"]);
+    .eq("share_visibility", "PUBLIC");
 
   if (countError || !count || count <= 0) return null;
 
@@ -66,7 +72,7 @@ async function getRandomSharedRecipePreview(): Promise<RecipePreview | null> {
       "id, slug, recipe_name, description, photo_url, prep_time_minutes, cook_time_minutes, servings, difficulty, ingredients, nutrition"
     )
     .is("deleted_at", null)
-    .in("share_visibility", ["PUBLIC", "UNLISTED"])
+    .eq("share_visibility", "PUBLIC")
     .order("created_at", { ascending: false })
     .range(randomOffset, randomOffset);
 
@@ -90,12 +96,12 @@ type HomePageProps = {
 
 const localeMetadata: Record<Locale, { title: string; description: string }> = {
   cs: {
-    title: "Nutra | Planovani jidel a vyzivovy kouc",
+    title: "Planovani jidel a vyzivovy kouc",
     description:
       "Planujte jidla, tvorte nakupni seznamy a ziskejte AI vyzivove tipy podle svych cilu.",
   },
   en: {
-    title: "Nutra | Meal Planning and Nutrition Coach",
+    title: "Meal Planning and Nutrition Coach",
     description:
       "Plan meals, generate shopping lists, and get AI nutrition guidance tailored to your goals.",
   },
@@ -126,13 +132,19 @@ export async function generateMetadata({
       },
     },
     openGraph: {
+      type: "website",
       url: `/${resolvedLocale}`,
       title: seo.title,
       description: seo.description,
+      locale: resolveOgLocale(resolvedLocale),
+      alternateLocale: resolveOgAlternateLocales(resolvedLocale),
+      images: [getDefaultOgImage()],
     },
     twitter: {
+      card: "summary_large_image",
       title: seo.title,
       description: seo.description,
+      images: [getDefaultTwitterImage()],
     },
   };
 }
@@ -340,10 +352,16 @@ export default async function Home({ params }: HomePageProps) {
         }}
       />
 
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <section className="relative overflow-hidden pb-20 pt-40 lg:pb-24 lg:pt-44">
-          <div className="absolute left-0 top-1/2 h-64 w-64 -ml-32 -translate-y-1/2 rounded-full bg-forest-green/10 blur-3xl" />
-          <div className="absolute right-0 top-1/4 h-96 w-96 -mr-48 rounded-full bg-primary/10 blur-3xl" />
+          <div
+            aria-hidden="true"
+            className="absolute left-0 top-1/2 h-64 w-64 -ml-32 -translate-y-1/2 rounded-full bg-forest-green/10 blur-3xl"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute right-0 top-1/4 h-96 w-96 -mr-48 rounded-full bg-primary/10 blur-3xl"
+          />
           <div className="relative z-10 mx-auto grid max-w-7xl gap-14 px-6 lg:grid-cols-2 lg:items-center lg:px-12">
             <div>
               <Reveal delay={0}>
@@ -390,12 +408,12 @@ export default async function Home({ params }: HomePageProps) {
                       className="flex items-center justify-between rounded-2xl border border-forest-green/10 bg-white px-4 py-3"
                     >
                       <div className="flex items-center gap-3">
-                        <span className="material-symbols-outlined text-lg text-forest-green">
+                        <span aria-hidden="true" className="material-symbols-outlined text-lg text-forest-green">
                           {item.icon}
                         </span>
                         <span className="text-sm font-semibold text-forest-green">{item.title}</span>
                       </div>
-                      <span className="text-xs text-slate-500">{tLanding("hero.previewReadyLabel")}</span>
+                      <span className="text-xs text-slate-600">{tLanding("hero.previewReadyLabel")}</span>
                     </div>
                   ))}
                 </div>
@@ -410,6 +428,7 @@ export default async function Home({ params }: HomePageProps) {
             badge: tLanding("waitlist.badge"),
             title: tLanding("waitlist.title"),
             subtitle: tLanding("waitlist.subtitle"),
+            emailLabel: tLanding("waitlist.emailLabel"),
             emailPlaceholder: tLanding("waitlist.emailPlaceholder"),
             submitButton: tLanding("waitlist.submitButton"),
             successMessage: tLanding("waitlist.successMessage"),
@@ -432,7 +451,8 @@ export default async function Home({ params }: HomePageProps) {
           <div className="mx-auto grid max-w-7xl items-center gap-10 rounded-3xl border border-forest-green/15 bg-white/65 p-6 shadow-[0_24px_70px_-45px_rgba(28,51,37,0.8)] backdrop-blur-sm lg:grid-cols-[1fr_520px] lg:p-10">
             <div>
               <Reveal>
-                <p className="mb-4 inline-flex rounded-full border border-primary/35 bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-primary">
+                <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/35 bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-primary">
+                  <span aria-hidden="true" className="inline-block h-1.5 w-1.5 rounded-full bg-primary" />
                   {tLanding("recipePreview.badge")}
                 </p>
               </Reveal>
@@ -452,7 +472,7 @@ export default async function Home({ params }: HomePageProps) {
                   className="inline-flex items-center gap-2 rounded-xl bg-forest-green px-5 py-3 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-forest-green/90"
                 >
                   {tLanding("recipePreview.cta")}
-                  <span className="material-symbols-outlined text-base">open_in_new</span>
+                  <span aria-hidden="true" className="material-symbols-outlined text-base">open_in_new</span>
                 </Link>
               </Reveal>
             </div>
@@ -461,9 +481,9 @@ export default async function Home({ params }: HomePageProps) {
               <div className="overflow-hidden rounded-[26px] border border-forest-green/20 bg-white shadow-[0_30px_70px_-45px_rgba(22,47,33,0.95)]">
                 <div className="flex items-center justify-between border-b border-forest-green/10 bg-cream-beige/55 px-4 py-3">
                   <div className="flex items-center gap-2">
-                    <span className="size-2 rounded-full bg-[#ff6d5e]" />
-                    <span className="size-2 rounded-full bg-[#ffbe2e]" />
-                    <span className="size-2 rounded-full bg-[#2eca43]" />
+                    <span aria-hidden="true" className="size-2 rounded-full bg-[#ff6d5e]" />
+                    <span aria-hidden="true" className="size-2 rounded-full bg-[#ffbe2e]" />
+                    <span aria-hidden="true" className="size-2 rounded-full bg-[#2eca43]" />
                   </div>
                   <p className="text-xs font-semibold uppercase tracking-[0.12em] text-forest-green/70">
                     {tLanding("recipePreview.previewLabel")}
@@ -544,7 +564,7 @@ export default async function Home({ params }: HomePageProps) {
                     </div>
                     <span className="inline-flex items-center gap-1 text-sm font-semibold text-forest-green">
                       {tLanding("recipePreview.cta")}
-                      <span className="material-symbols-outlined text-base">arrow_outward</span>
+                      <span aria-hidden="true" className="material-symbols-outlined text-base">arrow_outward</span>
                     </span>
                   </div>
                 </Link>
@@ -573,7 +593,7 @@ export default async function Home({ params }: HomePageProps) {
                     className={`soft-card group rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg lg:col-span-2 ${featurePositionClass}`}
                   >
                     <div className="mb-5 flex size-11 items-center justify-center rounded-xl bg-forest-green/10 text-forest-green transition-colors group-hover:bg-forest-green group-hover:text-white">
-                      <span className="material-symbols-outlined text-2xl">{item.icon}</span>
+                      <span aria-hidden="true" className="material-symbols-outlined text-2xl">{item.icon}</span>
                     </div>
                     <h3 className="mb-3 text-xl font-bold text-forest-green">{item.title}</h3>
                     <p className="text-sm leading-relaxed text-slate-600">{item.copy}</p>
@@ -637,7 +657,7 @@ export default async function Home({ params }: HomePageProps) {
                 <ul className="mb-8 flex-grow space-y-3">
                   {starterPerks.map((perk) => (
                     <li key={perk} className="flex items-start gap-2 text-sm text-slate-600">
-                      <span className="material-symbols-outlined mt-0.5 text-base text-forest-green">
+                      <span aria-hidden="true" className="material-symbols-outlined mt-0.5 text-base text-forest-green">
                         check_circle
                       </span>
                       <span className="flex-1">{perk}</span>
@@ -668,7 +688,7 @@ export default async function Home({ params }: HomePageProps) {
                 <ul className="mb-8 flex-grow space-y-3">
                   {proPerks.map((perk) => (
                     <li key={perk} className="flex items-start gap-2 text-sm text-slate-600">
-                      <span className="material-symbols-outlined mt-0.5 text-base text-primary">check_circle</span>
+                      <span aria-hidden="true" className="material-symbols-outlined mt-0.5 text-base text-primary">check_circle</span>
                       <span className="flex-1">{perk}</span>
                     </li>
                   ))}
@@ -694,7 +714,7 @@ export default async function Home({ params }: HomePageProps) {
                 <ul className="mb-8 flex-grow space-y-3">
                   {premiumPerks.map((perk) => (
                     <li key={perk} className="flex items-start gap-2 text-sm text-slate-600">
-                      <span className="material-symbols-outlined mt-0.5 text-base text-forest-green">
+                      <span aria-hidden="true" className="material-symbols-outlined mt-0.5 text-base text-forest-green">
                         check_circle
                       </span>
                       <span className="flex-1">{perk}</span>
@@ -718,12 +738,21 @@ export default async function Home({ params }: HomePageProps) {
               <div className="relative z-10 mx-auto max-w-3xl">
                 <h2 className="display-type mb-6 text-4xl font-black lg:text-6xl">{tLanding("finalCta.title")}</h2>
                 <p className="mb-10 text-lg leading-relaxed opacity-90">{tLanding("finalCta.subtitle")}</p>
-                <button className="rounded-xl bg-white px-10 py-4 text-lg font-semibold text-forest-green shadow-lg transition-all hover:scale-105 hover:bg-slate-100 active:scale-95">
+                <Link
+                  href="#waitlist"
+                  className="inline-flex rounded-xl bg-white px-10 py-4 text-lg font-semibold text-forest-green shadow-lg transition-all hover:scale-105 hover:bg-slate-100 active:scale-95"
+                >
                   {tLanding("finalCta.button")}
-                </button>
+                </Link>
               </div>
-              <div className="absolute right-0 top-0 size-96 -translate-y-1/2 translate-x-1/2 rounded-full bg-white/10 blur-3xl" />
-              <div className="absolute bottom-0 left-0 size-96 -translate-x-1/2 translate-y-1/2 rounded-full bg-emerald-400/20 blur-3xl" />
+              <div
+                aria-hidden="true"
+                className="absolute right-0 top-0 size-96 -translate-y-1/2 translate-x-1/2 rounded-full bg-white/10 blur-3xl"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute bottom-0 left-0 size-96 -translate-x-1/2 translate-y-1/2 rounded-full bg-emerald-400/20 blur-3xl"
+              />
             </div>
           </Reveal>
         </section>

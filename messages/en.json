@@ -204,6 +204,7 @@
       "badge": "Be the First to Know",
       "title": "Join the Nutra Waitlist",
       "subtitle": "Get early access to new features, exclusive nutrition tips, and launch updates. Join our growing community today.",
+      "emailLabel": "Email address",
       "emailPlaceholder": "Enter your email",
       "submitButton": "Join Waitlist",
       "successMessage": "Thanks! You're on the waitlist.",

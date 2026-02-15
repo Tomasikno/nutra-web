@@ -39,6 +39,32 @@ html {
   }
 }
 
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 60;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(63, 95, 72, 0.3);
+  background: #fbf8f2;
+  color: #1c3325;
+  font-size: 0.875rem;
+  font-weight: 700;
+  padding: 0.625rem 0.875rem;
+  transition: top 160ms ease-in-out;
+}
+
+.skip-link:focus-visible {
+  top: 1rem;
+  outline: 2px solid var(--warm-orange);
+  outline-offset: 3px;
+}
+
+:where(a, button, input, textarea, select, summary, [role="button"]):focus-visible {
+  outline: 2px solid var(--warm-orange);
+  outline-offset: 3px;
+}
+
 .glass-header {
   background-color: rgba(251, 248, 242, 0.78);
   backdrop-filter: blur(18px);

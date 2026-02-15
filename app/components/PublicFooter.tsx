@@ -39,31 +39,33 @@ export default function PublicFooter({
                 </div>
                 <h2 className="display-type text-2xl font-bold text-forest-green">Nutra</h2>
               </div>
-              <p className="text-sm leading-relaxed text-slate-500">{description}</p>
+              <p className="text-sm leading-relaxed text-slate-600">{description}</p>
             </div>
 
             {sections.map((section) => (
               <div key={section.title}>
                 <h4 className="mb-6 font-bold text-forest-green">{section.title}</h4>
-                <ul className="space-y-4">
-                  {section.links.map((link) => (
-                    <li key={`${section.title}-${link.label}`}>
-                      <Link className="text-sm text-slate-500 transition-colors hover:text-primary" href={link.href}>
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+                <nav aria-label={section.title}>
+                  <ul className="space-y-4">
+                    {section.links.map((link) => (
+                      <li key={`${section.title}-${link.label}`}>
+                        <Link className="text-sm text-slate-600 transition-colors hover:text-primary" href={link.href}>
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
               </div>
             ))}
           </div>
         </Reveal>
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-8 md:flex-row">
-          <p className="text-xs text-slate-400">{copyright}</p>
+          <p className="text-xs text-slate-600">{copyright}</p>
           <div className="flex items-center gap-6">
-            <span className="text-xs text-slate-400">{builtWith}</span>
-            <span className="material-symbols-outlined text-lg text-slate-400">language</span>
+            <span className="text-xs text-slate-600">{builtWith}</span>
+            <span aria-hidden="true" className="material-symbols-outlined text-lg text-slate-600">language</span>
           </div>
         </div>
       </div>

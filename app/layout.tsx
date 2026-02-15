@@ -1,6 +1,8 @@
-﻿import { getSiteOrigin } from "@/lib/seo";
+import { defaultLocale, locales, type Locale } from "@/i18n/request";
+import { getDefaultOgImage, getDefaultTwitterImage, getSiteOrigin } from "@/lib/seo";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
+import { getLocale } from "next-intl/server";
 import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
@@ -43,30 +45,30 @@ export const metadata: Metadata = {
     title: "Nutra | Meal Planning and Nutrition Coach",
     description:
       "Plan meals, generate shopping lists, and get AI nutrition guidance tailored to your goals.",
-    images: [
-      {
-        url: "/logo.png",
-        alt: "Nutra logo",
-      },
-    ],
+    images: [getDefaultOgImage()],
   },
   twitter: {
     card: "summary_large_image",
     title: "Nutra | Meal Planning and Nutrition Coach",
     description:
       "Plan meals, generate shopping lists, and get AI nutrition guidance tailored to your goals.",
-    images: ["/logo.png"],
+    images: [getDefaultTwitterImage()],
   },
   manifest: "/manifest.json",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const requestLocale = await getLocale().catch(() => defaultLocale);
+  const htmlLang = locales.includes(requestLocale as Locale) ? requestLocale : defaultLocale;
+  const skipToMainContentLabel =
+    htmlLang === "cs" ? "Přejít na hlavní obsah" : "Skip to main content";
+
   return (
-    <html lang="cs" className={`${plusJakartaSans.variable} ${fraunces.variable}`}>
+    <html lang={htmlLang} className={`${plusJakartaSans.variable} ${fraunces.variable}`}>
       <head>
         <meta name="apple-mobile-web-app-title" content="Nutra" />
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
@@ -76,6 +78,9 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
+        <a className="skip-link" href="#main-content">
+          {skipToMainContentLabel}
+        </a>
         {children}
         <Analytics />
       </body>
