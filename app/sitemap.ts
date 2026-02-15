@@ -48,6 +48,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     },
     {
+      url: buildCanonicalUrl("/cs/cookie-policy"),
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
+      url: buildCanonicalUrl("/en/cookie-policy"),
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
       url: buildCanonicalUrl("/account-deletion"),
       lastModified: new Date(),
       changeFrequency: "monthly",

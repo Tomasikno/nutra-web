@@ -92,9 +92,9 @@ export default function ShoppingListShowcaseSection({ labels }: ShoppingListShow
   };
 
   return (
-    <section className="section-anchor px-6 pb-10 pt-2 lg:px-12">
-      <div className="mx-auto grid max-w-7xl items-center gap-10 rounded-3xl border border-forest-green/15 bg-white/65 p-6 shadow-[0_24px_70px_-45px_rgba(28,51,37,0.8)] backdrop-blur-sm lg:grid-cols-[1fr_520px] lg:items-start lg:gap-14 lg:p-10">
-        <Reveal direction="right" delay={250} className="order-2 mx-auto w-full max-w-[340px] sm:max-w-[370px] lg:max-w-[520px]">
+    <section className="section-anchor px-2 pb-10 pt-2 sm:px-6 lg:px-12">
+      <div className="mx-auto grid max-w-7xl items-center gap-10 sm:rounded-3xl sm:border sm:border-forest-green/15 sm:bg-white/65 sm:p-6 sm:shadow-[0_24px_70px_-45px_rgba(28,51,37,0.8)] sm:backdrop-blur-sm lg:grid-cols-[1fr_520px] lg:items-start lg:gap-14 lg:p-10">
+        <Reveal direction="right" delay={250} className="order-2 mx-auto w-full sm:max-w-[370px] lg:max-w-[520px]">
           <div className="overflow-hidden rounded-[28px] border border-[#c6c0b2] bg-[#dbd4c8] p-3 shadow-[0_30px_80px_-40px_rgba(57,67,52,0.85)] sm:p-4">
             <div className="mb-4 grid grid-cols-2 gap-2.5 sm:gap-3">
               <div className="rounded-xl bg-[#d1cdc2] px-3 py-2.5 sm:rounded-2xl sm:px-4 sm:py-3">
@@ -160,7 +160,7 @@ export default function ShoppingListShowcaseSection({ labels }: ShoppingListShow
           </div>
         </Reveal>
 
-        <div className="order-1 space-y-6 lg:pt-2">
+        <div className="order-1 space-y-6 rounded-2xl border border-forest-green/15 bg-white/65 p-5 shadow-lg backdrop-blur-sm sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-none lg:pt-2">
           <Reveal>
             <p className="inline-flex items-center gap-2 rounded-full border border-primary/35 bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-primary shadow-sm">
               <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />

@@ -62,12 +62,12 @@ export default function MealPlanDemoSection({ labels }: MealPlanDemoSectionProps
   };
 
   return (
-    <section className="section-anchor px-4 pb-8 pt-2 sm:px-6 lg:px-12">
-      {/* Container with glass effect */}
-      <div className="mx-auto grid max-w-7xl items-center gap-7 rounded-[28px] border border-forest-green/15 bg-white/65 p-4 shadow-[0_24px_70px_-45px_rgba(28,51,37,0.8)] backdrop-blur-sm sm:gap-10 sm:rounded-3xl sm:p-6 lg:grid-cols-[1fr_520px] lg:p-10">
+    <section className="section-anchor px-2 pb-8 pt-2 sm:px-6 lg:px-12">
+      {/* Container with glass effect – removed on very small screens */}
+      <div className="mx-auto grid max-w-7xl items-center gap-7 sm:gap-10 sm:rounded-3xl sm:border sm:border-forest-green/15 sm:bg-white/65 sm:p-6 sm:shadow-[0_24px_70px_-45px_rgba(28,51,37,0.8)] sm:backdrop-blur-sm lg:grid-cols-[1fr_520px] lg:p-10">
 
-        {/* Left Column: Marketing Copy */}
-        <div className="space-y-5 sm:space-y-6">
+        {/* Left Column: Marketing Copy – own card on mobile, transparent on desktop */}
+        <div className="space-y-5 rounded-2xl border border-forest-green/15 bg-white/65 p-5 shadow-lg backdrop-blur-sm sm:space-y-6 sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-none">
           {/* Badge */}
           <Reveal>
             <div className="inline-block">
@@ -118,7 +118,7 @@ export default function MealPlanDemoSection({ labels }: MealPlanDemoSectionProps
         </div>
 
         {/* Right Column: Interactive Demo */}
-        <Reveal direction="right" delay={400} className="mx-auto w-full max-w-[360px] sm:max-w-[520px]">
+        <Reveal direction="right" delay={400} className="mx-auto w-full sm:max-w-[520px]">
           <div className="soft-card overflow-hidden rounded-2xl p-3.5 shadow-xl transition-all duration-500 hover:shadow-2xl sm:p-5">
 
             {/* Day Header */}

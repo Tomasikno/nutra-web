@@ -257,7 +257,7 @@ export default async function Home({ params }: HomePageProps) {
         },
         {
           label: tLanding("footer.sections.company.links.cookiePolicy"),
-          href: "#",
+          href: `/${resolvedLocale}/cookie-policy`,
         },
       ],
     },
