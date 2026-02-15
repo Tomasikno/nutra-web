@@ -24,7 +24,7 @@ export default async function NotFound() {
           </Link>
 
           <a
-            className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-primary/90"
+            className="rounded-lg bg-forest-green px-5 py-2.5 text-sm font-semibold text-cream-beige shadow-sm transition-all hover:bg-[#35503d]"
             href={downloadAppUrl}
           >
             {tNav("downloadNow")}
@@ -59,9 +59,10 @@ export default async function NotFound() {
           {/* CTA */}
           <Link
             href={landingPath}
-            className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-primary/90"
+            className="inline-flex items-center gap-2 rounded-lg bg-forest-green px-6 py-3 text-sm font-semibold text-cream-beige shadow-sm transition-all hover:bg-[#35503d]"
           >
             <span
+              aria-hidden="true"
               className="material-symbols-outlined"
               style={{ fontSize: 18, fontVariationSettings: "'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 20" }}
             >
