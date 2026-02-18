@@ -6,15 +6,20 @@ import { supabasePublic } from "@/lib/supabase";
 type SitemapRecipeRow = {
   id: string;
   slug: string | null;
+  language: string | null;
   updated_at: string | null;
 };
+
+function resolveRecipeLocale(language: string | null): string {
+  return language === "en" ? "en" : "cs";
+}
 
 async function getPublicRecipeRows(): Promise<SitemapRecipeRow[]> {
   if (!supabasePublic) return [];
 
   const { data, error } = await supabasePublic
     .from("recipes")
-    .select("id,slug,updated_at")
+    .select("id,slug,language,updated_at")
     .is("deleted_at", null)
     .eq("share_visibility", "PUBLIC")
     .order("updated_at", { ascending: false });
@@ -66,7 +71,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const recipeRoutes: MetadataRoute.Sitemap = recipes
     .filter((recipe) => Boolean(recipe.slug))
     .map((recipe) => ({
-      url: buildCanonicalUrl(buildRecipePath(recipe.id, recipe.slug)),
+      url: buildCanonicalUrl(buildRecipePath(resolveRecipeLocale(recipe.language), recipe.id, recipe.slug)),
       ...(recipe.updated_at ? { lastModified: new Date(recipe.updated_at) } : {}),
       changeFrequency: "weekly",
       priority: 0.7,

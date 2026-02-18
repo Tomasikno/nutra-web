@@ -20,6 +20,6 @@ export function buildRecipeRouteSlug(recipeId: string, slug: string | null | und
   return `${normalizedRecipeId}-${slugSuffix}`;
 }
 
-export function buildRecipePath(recipeId: string, slug: string | null | undefined): string {
-  return `/r/${buildRecipeRouteSlug(recipeId, slug)}`;
+export function buildRecipePath(locale: string, recipeId: string, slug: string | null | undefined): string {
+  return `/${locale}/r/${buildRecipeRouteSlug(recipeId, slug)}`;
 }

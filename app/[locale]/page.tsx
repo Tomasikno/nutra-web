@@ -25,6 +25,7 @@ type RecipePreview = Pick<
   Recipe,
   | "id"
   | "slug"
+  | "language"
   | "recipe_name"
   | "description"
   | "photo_url"
@@ -69,7 +70,7 @@ async function getRandomSharedRecipePreview(): Promise<RecipePreview | null> {
   const { data, error } = await supabasePublic
     .from("recipes")
     .select(
-      "id, slug, recipe_name, description, photo_url, prep_time_minutes, cook_time_minutes, servings, difficulty, ingredients, nutrition"
+      "id, slug, language, recipe_name, description, photo_url, prep_time_minutes, cook_time_minutes, servings, difficulty, ingredients, nutrition"
     )
     .is("deleted_at", null)
     .eq("share_visibility", "PUBLIC")
@@ -159,9 +160,9 @@ export default async function Home({ params }: HomePageProps) {
   const tRecipe = await getTranslations({ locale, namespace: "Recipe" });
   const randomRecipe = await getCachedRandomSharedRecipePreview();
   const fallbackRecipePath =
-    "/r/d8bd7f2f-c158-4099-8df0-13b9a72db6ae-pagety-s-krtm-masem-a-rajaty";
+    "/cs/r/d8bd7f2f-c158-4099-8df0-13b9a72db6ae-pagety-s-krtm-masem-a-rajaty";
   const previewRecipePath = randomRecipe
-    ? buildRecipePath(randomRecipe.id, randomRecipe.slug)
+    ? buildRecipePath(randomRecipe.language === "en" ? "en" : "cs", randomRecipe.id, randomRecipe.slug)
     : fallbackRecipePath;
   const previewIngredientsCount = randomRecipe ? getIngredientsCount(randomRecipe.ingredients) : null;
   const previewCalories = randomRecipe ? getCaloriesPerServing(randomRecipe.nutrition) : null;
