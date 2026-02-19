@@ -1122,7 +1122,7 @@ export default function AdminRecipesClient({
                       <div>
                         <p className="text-xs uppercase text-zinc-500">Time of Day</p>
                         <p className="text-zinc-200">
-                          {selectedRecipe.time_of_day ?? "Unspecified"}
+                          {selectedRecipe.time_of_day?.length ? selectedRecipe.time_of_day.join(", ") : "Unspecified"}
                         </p>
                       </div>
                       <div>
@@ -1318,14 +1318,6 @@ export default function AdminRecipesClient({
                         <p className="text-zinc-200">
                           {selectedRecipe.dietary_tags?.length
                             ? selectedRecipe.dietary_tags.join(", ")
-                            : "None"}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-xs uppercase text-zinc-500">Meal Categories</p>
-                        <p className="text-zinc-200">
-                          {selectedRecipe.meal_categories?.length
-                            ? selectedRecipe.meal_categories.join(", ")
                             : "None"}
                         </p>
                       </div>

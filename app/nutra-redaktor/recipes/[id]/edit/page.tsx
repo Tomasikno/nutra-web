@@ -8,6 +8,8 @@ import { buildNutritionPayload, coerceNutritionInfo } from "@/lib/recipe-nutriti
 import { coerceHealthBenefits, coerceWarnings } from "@/lib/recipe-form";
 import RecipeFormTabs from "@/app/nutra-redaktor/components/RecipeFormTabs";
 
+const timeOfDayOptions = new Set(["BREAKFAST", "LUNCH", "DINNER", "SNACK"]);
+
 const createEmptyRecipeForm = (): RecipeFormData => ({
   ...EMPTY_RECIPE_FORM,
   nutrition: { ...DEFAULT_NUTRITION },
@@ -16,7 +18,6 @@ const createEmptyRecipeForm = (): RecipeFormData => ({
   health_benefits: [],
   warnings: [],
   dietary_tags: [],
-  meal_categories: [],
 });
 
 const normalizeRecipeForm = (form: RecipeFormData) => {
@@ -61,7 +62,7 @@ const normalizeRecipeForm = (form: RecipeFormData) => {
     health_benefits,
     warnings,
     dietary_tags: form.dietary_tags.map((tag) => tag.trim()).filter(Boolean),
-    meal_categories: form.meal_categories.map((tag) => tag.trim()).filter(Boolean),
+    time_of_day: Array.from(new Set(form.time_of_day.filter((value) => timeOfDayOptions.has(value)))),
   };
 };
 
@@ -110,6 +111,12 @@ const validateRecipeForm = (form: RecipeFormData) => {
     errors.health_score = "Health score must be between 0 and 100.";
   }
 
+  if (!Array.isArray(form.time_of_day) || form.time_of_day.length === 0) {
+    errors.time_of_day = "Select at least one time of day.";
+  } else if (form.time_of_day.some((value) => !timeOfDayOptions.has(value))) {
+    errors.time_of_day = "Time of day contains invalid values.";
+  }
+
   return errors;
 };
 
@@ -131,8 +138,7 @@ const toFormData = (recipe: Recipe): RecipeFormData => {
   warnings: coerceWarnings(recipe.warnings),
   health_score: recipe.health_score,
   dietary_tags: recipe.dietary_tags ?? [],
-    meal_categories: recipe.meal_categories ?? [],
-    time_of_day: recipe.time_of_day ?? null,
+    time_of_day: recipe.time_of_day ?? [],
     share_visibility: recipe.share_visibility,
     language,
   };

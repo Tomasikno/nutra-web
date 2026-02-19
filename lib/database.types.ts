@@ -35,8 +35,8 @@ export interface Database {
           warnings: Json | null
           health_score: number
           dietary_tags: string[]
-          meal_categories: string[]
-          time_of_day: Database['public']['Enums']['recipe_time_of_day'] | null
+
+          time_of_day: Database['public']['Enums']['recipe_time_of_day'][]
           share_visibility: Database['public']['Enums']['recipe_share_visibility']
           slug: string
           language: string | null
@@ -69,8 +69,8 @@ export interface Database {
           warnings?: Json | null
           health_score: number
           dietary_tags?: string[]
-          meal_categories?: string[]
-          time_of_day?: Database['public']['Enums']['recipe_time_of_day'] | null
+
+          time_of_day?: Database['public']['Enums']['recipe_time_of_day'][]
           share_visibility?: Database['public']['Enums']['recipe_share_visibility']
           slug?: string
           language?: string | null
@@ -103,8 +103,8 @@ export interface Database {
           warnings?: Json | null
           health_score?: number
           dietary_tags?: string[]
-          meal_categories?: string[]
-          time_of_day?: Database['public']['Enums']['recipe_time_of_day'] | null
+
+          time_of_day?: Database['public']['Enums']['recipe_time_of_day'][]
           share_visibility?: Database['public']['Enums']['recipe_share_visibility']
           slug?: string
           language?: string | null

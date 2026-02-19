@@ -17,6 +17,12 @@ const timeOfDayOptions = new Set(["BREAKFAST", "LUNCH", "DINNER", "SNACK"]);
 const isStringArray = (value: unknown): value is string[] =>
   Array.isArray(value) && value.every((item) => typeof item === "string");
 
+const isTimeOfDayArray = (
+  value: unknown
+): value is NonNullable<RecipeInsert["time_of_day"]> =>
+  Array.isArray(value) &&
+  value.length > 0 &&
+  value.every((item) => typeof item === "string" && timeOfDayOptions.has(item));
 const isNumber = (value: unknown): value is number =>
   typeof value === "number" && !Number.isNaN(value);
 
@@ -96,18 +102,7 @@ const validateRecipePayload = (
   required("nutrition", (value) => validateNutrition(value));
   required("health_score", (value) => isNumber(value) && value >= 0 && value <= 100);
   required("dietary_tags", (value) => isStringArray(value));
-  required("meal_categories", (value) => isStringArray(value));
-
-  if ("time_of_day" in body) {
-    const value = body.time_of_day;
-    if (value !== null && typeof value !== "string") {
-      errors.push("time_of_day is invalid.");
-    } else if (typeof value === "string" && !timeOfDayOptions.has(value)) {
-      errors.push("time_of_day is invalid.");
-    } else {
-      payload.time_of_day = value as RecipeInsert["time_of_day"];
-    }
-  }
+  required("time_of_day", (value) => isTimeOfDayArray(value));
 
   if ("portion_size" in body) {
     const value = body.portion_size;
@@ -164,7 +159,7 @@ const validateRecipePayload = (
 };
 
 const recipeListSelect =
-  "id, recipe_name, description, servings, prep_time_minutes, cook_time_minutes, difficulty, portion_size, ingredients, steps, nutrition, health_benefits, warnings, health_score, dietary_tags, meal_categories, time_of_day, share_visibility, slug, language, photo_path, photo_url, photo_width, photo_height, photo_size_bytes, photo_moderation_status, photo_moderated_at, created_by, created_at, updated_at, deleted_at";
+  "id, recipe_name, description, servings, prep_time_minutes, cook_time_minutes, difficulty, portion_size, ingredients, steps, nutrition, health_benefits, warnings, health_score, dietary_tags, time_of_day, share_visibility, slug, language, photo_path, photo_url, photo_width, photo_height, photo_size_bytes, photo_moderation_status, photo_moderated_at, created_by, created_at, updated_at, deleted_at";
 
 export async function GET(request: Request) {
   const sessionData = await requireAdmin();

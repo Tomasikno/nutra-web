@@ -13,6 +13,12 @@ const timeOfDayOptions = new Set(["BREAKFAST", "LUNCH", "DINNER", "SNACK"]);
 const isStringArray = (value: unknown): value is string[] =>
   Array.isArray(value) && value.every((item) => typeof item === "string");
 
+const isTimeOfDayArray = (
+  value: unknown
+): value is NonNullable<RecipeUpdate["time_of_day"]> =>
+  Array.isArray(value) &&
+  value.length > 0 &&
+  value.every((item) => typeof item === "string" && timeOfDayOptions.has(item));
 const isNumber = (value: unknown): value is number =>
   typeof value === "number" && !Number.isNaN(value);
 
@@ -151,22 +157,11 @@ const sanitizeRecipeUpdate = (body: Record<string, unknown>) => {
     }
   }
 
-  if ("meal_categories" in body) {
-    if (!isStringArray(body.meal_categories)) {
-      errors.push("meal_categories is invalid.");
-    } else {
-      payload.meal_categories = body.meal_categories as string[];
-    }
-  }
-
   if ("time_of_day" in body) {
-    const value = body.time_of_day;
-    if (value !== null && typeof value !== "string") {
-      errors.push("time_of_day is invalid.");
-    } else if (typeof value === "string" && !timeOfDayOptions.has(value)) {
-      errors.push("time_of_day is invalid.");
+    if (!isTimeOfDayArray(body.time_of_day)) {
+      errors.push("time_of_day must be a non-empty array of valid values.");
     } else {
-      payload.time_of_day = value as RecipeUpdate["time_of_day"];
+      payload.time_of_day = body.time_of_day;
     }
   }
 
@@ -225,7 +220,7 @@ const sanitizeRecipeUpdate = (body: Record<string, unknown>) => {
 };
 
 const recipeSelect =
-  "id, recipe_name, description, servings, prep_time_minutes, cook_time_minutes, difficulty, portion_size, ingredients, steps, nutrition, health_benefits, warnings, health_score, dietary_tags, meal_categories, time_of_day, share_visibility, slug, language, photo_path, photo_url, photo_width, photo_height, photo_size_bytes, photo_moderation_status, photo_moderated_at, created_by, created_at, updated_at, deleted_at, embedding";
+  "id, recipe_name, description, servings, prep_time_minutes, cook_time_minutes, difficulty, portion_size, ingredients, steps, nutrition, health_benefits, warnings, health_score, dietary_tags, time_of_day, share_visibility, slug, language, photo_path, photo_url, photo_width, photo_height, photo_size_bytes, photo_moderation_status, photo_moderated_at, created_by, created_at, updated_at, deleted_at, embedding";
 
 export async function GET(_request: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

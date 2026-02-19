@@ -47,8 +47,7 @@ export type RecipeFormData = {
   warnings: Warning[]
   health_score: number
   dietary_tags: string[]
-  meal_categories: string[]
-  time_of_day: RecipeTimeOfDay | null
+  time_of_day: RecipeTimeOfDay[]
   share_visibility: RecipeShareVisibility
   language: RecipeLanguage | null
 }
@@ -77,8 +76,7 @@ export const EMPTY_RECIPE_FORM: RecipeFormData = {
   warnings: [],
   health_score: 50,
   dietary_tags: [],
-  meal_categories: [],
-  time_of_day: null,
+  time_of_day: [],
   share_visibility: 'UNLISTED',
   language: 'en',
 }

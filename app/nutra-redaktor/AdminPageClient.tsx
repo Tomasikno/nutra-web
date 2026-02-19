@@ -7,6 +7,8 @@ import { buildNutritionPayload } from "@/lib/recipe-nutrition";
 import AdminNav from "./components/AdminNav";
 import RecipeFormTabs from "./components/RecipeFormTabs";
 
+const timeOfDayOptions = new Set(["BREAKFAST", "LUNCH", "DINNER", "SNACK"]);
+
 const createEmptyRecipeForm = (): RecipeFormData => ({
   ...EMPTY_RECIPE_FORM,
   nutrition: { ...DEFAULT_NUTRITION },
@@ -15,7 +17,6 @@ const createEmptyRecipeForm = (): RecipeFormData => ({
   health_benefits: [],
   warnings: [],
   dietary_tags: [],
-  meal_categories: [],
 });
 
 const normalizeRecipeForm = (form: RecipeFormData) => {
@@ -60,7 +61,7 @@ const normalizeRecipeForm = (form: RecipeFormData) => {
     health_benefits,
     warnings,
     dietary_tags: form.dietary_tags.map((tag) => tag.trim()).filter(Boolean),
-    meal_categories: form.meal_categories.map((tag) => tag.trim()).filter(Boolean),
+    time_of_day: Array.from(new Set(form.time_of_day.filter((value) => timeOfDayOptions.has(value)))),
   };
 };
 
@@ -113,8 +114,10 @@ const validateRecipeForm = (form: RecipeFormData) => {
     errors.dietary_tags = "Dietary tags must be an array.";
   }
 
-  if (!Array.isArray(form.meal_categories)) {
-    errors.meal_categories = "Meal categories must be an array.";
+  if (!Array.isArray(form.time_of_day) || form.time_of_day.length === 0) {
+    errors.time_of_day = "Select at least one time of day.";
+  } else if (form.time_of_day.some((value) => !timeOfDayOptions.has(value))) {
+    errors.time_of_day = "Time of day contains invalid values.";
   }
 
   return errors;

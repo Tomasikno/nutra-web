@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 const recipeSelect =
   "id, recipe_name, description, servings, prep_time_minutes, cook_time_minutes, difficulty, " +
   "portion_size, ingredients, steps, nutrition, health_benefits, warnings, health_score, " +
-  "dietary_tags, meal_categories, time_of_day, share_visibility, slug, language, " +
+  "dietary_tags, time_of_day, share_visibility, slug, language, " +
   "photo_url, created_at, updated_at";
 
 export async function GET(

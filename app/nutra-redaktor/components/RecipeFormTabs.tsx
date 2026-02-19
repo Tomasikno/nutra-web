@@ -213,26 +213,42 @@ export default function RecipeFormTabs({
               )}
             </label>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <label className="flex flex-col gap-2 text-sm">
-              Time of Day
-              <select
-                value={value.time_of_day ?? ""}
-                onChange={(event) =>
-                  updateField(
-                    "time_of_day",
-                    event.target.value ? (event.target.value as RecipeFormData["time_of_day"]) : null
-                  )
-                }
-                className="rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-sm text-white focus:border-emerald-400 focus:outline-none"
-              >
-                <option value="">Unspecified</option>
-                <option value="BREAKFAST">Breakfast</option>
-                <option value="LUNCH">Lunch</option>
-                <option value="DINNER">Dinner</option>
-                <option value="SNACK">Snack</option>
-              </select>
-            </label>
+          <div className="grid gap-3">
+            <p className="text-sm">Time of Day</p>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {([
+                ["BREAKFAST", "Breakfast"],
+                ["LUNCH", "Lunch"],
+                ["DINNER", "Dinner"],
+                ["SNACK", "Snack"],
+              ] as const).map(([option, label]) => {
+                const selected = value.time_of_day.includes(option);
+                return (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() =>
+                      updateField(
+                        "time_of_day",
+                        selected
+                          ? value.time_of_day.filter((item) => item !== option)
+                          : [...value.time_of_day, option]
+                      )
+                    }
+                    className={`rounded-xl border px-4 py-3 text-left text-sm transition ${
+                      selected
+                        ? "border-emerald-400 bg-emerald-500/10 text-emerald-100"
+                        : "border-zinc-800 bg-zinc-950 text-zinc-300 hover:border-emerald-400/60"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
+            {fieldErrors.time_of_day && (
+              <span className="text-xs text-rose-200">{fieldErrors.time_of_day}</span>
+            )}
           </div>
         </div>
       )}
@@ -295,14 +311,6 @@ export default function RecipeFormTabs({
             placeholder="Add tag and press Enter"
             helperText="Examples: keto, gluten-free, vegan"
             error={fieldErrors.dietary_tags}
-          />
-          <TagInput
-            label="Meal Categories"
-            value={value.meal_categories}
-            onChange={(next) => updateField("meal_categories", next)}
-            placeholder="Add category and press Enter"
-            helperText="Examples: lunch, quick, meal-prep"
-            error={fieldErrors.meal_categories}
           />
           <label className="flex flex-col gap-2 text-sm">
             Portion Size
