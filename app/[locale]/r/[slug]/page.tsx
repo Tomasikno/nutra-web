@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
+import { headers } from "next/headers";
 import { locales, type Locale } from "@/i18n/request";
 import { buildRecipePath, buildRecipeRouteSlug, extractRecipeIdFromRouteSlug } from "@/lib/recipe-route";
 import {
@@ -209,6 +210,7 @@ export default async function RecipePage({
   const landingPath = `/${locale}`;
   const t = await getTranslations({ locale, namespace: "Recipe" });
   const tNav = await getTranslations({ locale, namespace: "Nav" });
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
 
   const ingredients = (recipe.ingredients ?? []) as unknown as Ingredient[];
   const steps = (recipe.steps ?? []) as unknown as string[];
@@ -304,6 +306,7 @@ export default async function RecipePage({
     <div className="bg-background-light text-slate-900 antialiased">
       {recipeSchema && (
         <script
+          nonce={nonce}
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(recipeSchema) }}
         />
