@@ -7,33 +7,60 @@ function createNonce(): string {
   return crypto.randomUUID().replace(/-/g, "");
 }
 
-function buildContentSecurityPolicy(nonce: string): string {
-  const scriptSrc = isProduction
-    ? `script-src 'self' 'nonce-${nonce}'`
-    : `script-src 'self' 'nonce-${nonce}' 'unsafe-inline' 'unsafe-eval'`;
+function usesNonceCsp(pathname: string): boolean {
+  return /^\/(?:cs|en)\/r\/[^/]+$/.test(pathname) || /^\/r\/[^/]+$/.test(pathname);
+}
 
+function buildNonceContentSecurityPolicy(nonce: string): string {
   return [
     "default-src 'self'",
     "base-uri 'self'",
     "form-action 'self'",
     "frame-ancestors 'self'",
     "object-src 'none'",
-    scriptSrc,
+    isProduction
+      ? `script-src 'self' 'nonce-${nonce}'`
+      : `script-src 'self' 'nonce-${nonce}' 'unsafe-inline' 'unsafe-eval' https://vercel.live`,
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com data:",
     "img-src 'self' data: blob: https:",
-    "connect-src 'self' https://vitals.vercel-insights.com",
+    isProduction
+      ? "connect-src 'self' https://vitals.vercel-insights.com"
+      : "connect-src 'self' ws: wss: https://vitals.vercel-insights.com https://vercel.live",
+    "frame-src 'self'",
+    ...(isProduction ? ["upgrade-insecure-requests"] : []),
+  ].join("; ");
+}
+
+function buildStaticContentSecurityPolicy(): string {
+  return [
+    "default-src 'self'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "frame-ancestors 'self'",
+    "object-src 'none'",
+    isProduction
+      ? "script-src 'self' 'unsafe-inline'"
+      : "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "font-src 'self' https://fonts.gstatic.com data:",
+    "img-src 'self' data: blob: https:",
+    isProduction
+      ? "connect-src 'self' https://vitals.vercel-insights.com"
+      : "connect-src 'self' ws: wss: https://vitals.vercel-insights.com https://vercel.live",
     "frame-src 'self'",
     ...(isProduction ? ["upgrade-insecure-requests"] : []),
   ].join("; ");
 }
 
 export function proxy(request: NextRequest) {
-  const nonce = createNonce();
-  const csp = buildContentSecurityPolicy(nonce);
-
   const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-nonce", nonce);
+  const nonceEnabled = usesNonceCsp(request.nextUrl.pathname);
+  const nonce = nonceEnabled ? createNonce() : undefined;
+
+  if (nonce) {
+    requestHeaders.set("x-nonce", nonce);
+  }
 
   const response = NextResponse.next({
     request: {
@@ -41,6 +68,7 @@ export function proxy(request: NextRequest) {
     },
   });
 
+  const csp = nonce ? buildNonceContentSecurityPolicy(nonce) : buildStaticContentSecurityPolicy();
   response.headers.set("Content-Security-Policy", csp);
 
   return response;
@@ -49,4 +77,3 @@ export function proxy(request: NextRequest) {
 export const proxyConfig = {
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };
-
