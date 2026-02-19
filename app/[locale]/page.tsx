@@ -97,9 +97,9 @@ type HomePageProps = {
 
 const localeMetadata: Record<Locale, { title: string; description: string }> = {
   cs: {
-    title: "Planovani jidel a vyzivovy kouc",
+    title: "Plánování jídel a výživový kouč",
     description:
-      "Planujte jidla, tvorte nakupni seznamy a ziskejte AI vyzivove tipy podle svych cilu.",
+      "Plánujte jídla, tvořte nákupní seznamy a získejte AI výživové tipy podle svých cílů.",
   },
   en: {
     title: "Meal Planning and Nutrition Coach",
