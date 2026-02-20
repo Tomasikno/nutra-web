@@ -14,6 +14,7 @@ import {
 } from "@/lib/seo";
 import { supabasePublic } from "@/lib/supabase";
 import type { Ingredient, Recipe } from "@/lib/recipe-types";
+import PublicFooter from "@/app/components/PublicFooter";
 import PublicTopNav from "@/app/components/PublicTopNav";
 import RecipeHeroSection from "./components/RecipeHeroSection";
 import RecipeIngredientsSection from "./components/RecipeIngredientsSection";
@@ -210,6 +211,7 @@ export default async function RecipePage({
   const landingPath = `/${locale}`;
   const t = await getTranslations({ locale, namespace: "Recipe" });
   const tNav = await getTranslations({ locale, namespace: "Nav" });
+  const tLanding = await getTranslations({ locale, namespace: "Landing" });
   const nonce = (await headers()).get("x-nonce") ?? undefined;
 
   const ingredients = (recipe.ingredients ?? []) as unknown as Ingredient[];
@@ -302,8 +304,42 @@ export default async function RecipePage({
         }
       : null;
 
+  const footerSections = [
+    {
+      title: tLanding("footer.sections.product.title"),
+      links: [
+        {
+          label: tLanding("footer.sections.product.links.features"),
+          href: `${landingPath}#features`,
+        },
+      ],
+    },
+    {
+      title: tLanding("footer.sections.company.title"),
+      links: [
+        {
+          label: tLanding("footer.sections.company.links.aboutUs"),
+          href: "#",
+        },
+        {
+          label: tLanding("footer.sections.company.links.privacyPolicy"),
+          href: `/${locale}/privacy-policy`,
+        },
+        {
+          label: tLanding("footer.sections.company.links.termsOfService"),
+          href: "#",
+        },
+        {
+          label: tLanding("footer.sections.company.links.cookiePolicy"),
+          href: `/${locale}/cookie-policy`,
+        },
+      ],
+    },
+  ];
+
+  // recipeSchema is built from trusted DB data and JSON.stringify ensures safe serialization
   return (
-    <div className="bg-background-light text-slate-900 antialiased">
+    <div className="landing-canvas text-slate-900 antialiased">
       {recipeSchema && (
         <script
           nonce={nonce}
@@ -329,7 +365,7 @@ export default async function RecipePage({
         }}
       />
 
-      <main id="main-content" tabIndex={-1} className="min-h-screen bg-[#EBE1D1] px-4 pb-8 pt-28 text-[#0D4715] md:px-8 md:pt-32">
+      <main id="main-content" tabIndex={-1} className="min-h-screen px-4 pb-16 pt-28 md:px-8 md:pt-32">
         <div className="mx-auto w-full max-w-[1180px] space-y-8">
           <RecipeHeroSection
             recipeName={recipe.recipe_name}
@@ -364,6 +400,14 @@ export default async function RecipePage({
           )}
         </div>
       </main>
+
+      <PublicFooter
+        logoAlt={tLanding("logoAlt")}
+        description={tLanding("footer.description")}
+        sections={footerSections}
+        copyright={tLanding("footer.copyright")}
+        builtWith={tLanding("footer.builtWith")}
+      />
     </div>
   );
 }

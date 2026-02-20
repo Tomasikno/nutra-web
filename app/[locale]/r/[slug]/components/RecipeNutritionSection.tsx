@@ -15,8 +15,8 @@ export default function RecipeNutritionSection({
   items,
 }: RecipeNutritionSectionProps) {
   return (
-    <section className="relative rounded-[28px] bg-[#2e5a3b] px-3 pb-6 pt-7 text-white shadow-[0_10px_30px_rgba(46,90,59,0.35)] md:px-6">
-      <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full border border-[#d4c9b5] bg-[#EBE1D1] px-4 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#2e5a3b]">
+    <section className="relative rounded-[28px] bg-forest-green px-3 pb-6 pt-7 text-white shadow-[0_20px_55px_-35px_rgba(28,51,37,0.65)] md:px-6">
+      <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full border border-forest-green/20 bg-cream-beige px-4 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-forest-green">
         {perLabel} {portionLabel}
       </span>
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-0">
