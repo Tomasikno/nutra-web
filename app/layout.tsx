@@ -1,6 +1,7 @@
 import { defaultLocale, locales, type Locale } from "@/i18n/request";
 import { getDefaultOgImage, getDefaultTwitterImage, getSiteOrigin } from "@/lib/seo";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
@@ -83,6 +84,7 @@ export default async function RootLayout({
         </a>
         {children}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
