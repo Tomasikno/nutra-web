@@ -123,18 +123,24 @@ type RelatedRecipe = {
   slug: string;
 };
 
-async function getRelatedPublicRecipes(currentRecipeId: string, language: Recipe["language"]): Promise<RelatedRecipe[]> {
+async function getRelatedPublicRecipes(
+  currentRecipeId: string,
+  language: Recipe["language"]
+): Promise<RelatedRecipe[]> {
   if (!supabasePublic) return [];
 
-  const { data, error } = await supabasePublic
+  let query = supabasePublic
     .from("recipes")
     .select("id, recipe_name, description, photo_url, slug")
-    .eq("language", language)
     .eq("share_visibility", "PUBLIC")
     .is("deleted_at", null)
     .neq("id", currentRecipeId)
     .order("updated_at", { ascending: false })
     .limit(10);
+
+  query = language ? query.eq("language", language) : query.is("language", null);
+
+  const { data, error } = await query;
 
   if (error || !data) return [];
   return data as RelatedRecipe[];
