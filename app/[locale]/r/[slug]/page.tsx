@@ -20,6 +20,7 @@ import RecipeHeroSection from "./components/RecipeHeroSection";
 import RecipeIngredientsSection from "./components/RecipeIngredientsSection";
 import RecipeNutritionSection from "./components/RecipeNutritionSection";
 import RecipeStepsSection from "./components/RecipeStepsSection";
+import RecipeCarouselSection from "./components/RecipeCarouselSection";
 
 type PageParams = { locale: string; slug: string };
 
@@ -112,6 +113,31 @@ async function getRecipeFromRouteSlug(routeSlug: string): Promise<Recipe | null>
   if (byExactSlug) return byExactSlug;
 
   return getRecipeBySlugSuffix(routeSlug);
+}
+
+type RelatedRecipe = {
+  id: string;
+  recipe_name: string;
+  description: string | null;
+  photo_url: string | null;
+  slug: string;
+};
+
+async function getRelatedPublicRecipes(currentRecipeId: string, language: Recipe["language"]): Promise<RelatedRecipe[]> {
+  if (!supabasePublic) return [];
+
+  const { data, error } = await supabasePublic
+    .from("recipes")
+    .select("id, recipe_name, description, photo_url, slug")
+    .eq("language", language)
+    .eq("share_visibility", "PUBLIC")
+    .is("deleted_at", null)
+    .neq("id", currentRecipeId)
+    .order("updated_at", { ascending: false })
+    .limit(10);
+
+  if (error || !data) return [];
+  return data as RelatedRecipe[];
 }
 
 export async function generateMetadata({
@@ -213,6 +239,7 @@ export default async function RecipePage({
   const tNav = await getTranslations({ locale, namespace: "Nav" });
   const tLanding = await getTranslations({ locale, namespace: "Landing" });
   const nonce = (await headers()).get("x-nonce") ?? undefined;
+  const relatedRecipes = await getRelatedPublicRecipes(recipe.id, recipe.language);
 
   const ingredients = (recipe.ingredients ?? []) as unknown as Ingredient[];
   const steps = (recipe.steps ?? []) as unknown as string[];
@@ -397,6 +424,20 @@ export default async function RecipePage({
               <RecipeIngredientsSection title={t("ingredients")} ingredients={ingredients} />
               <RecipeStepsSection title={t("cookingSteps")} steps={steps} />
             </section>
+          )}
+
+          {relatedRecipes.length > 0 && (
+            <RecipeCarouselSection
+              title={t("relatedRecipes")}
+              ctaLabel={t("viewRecipe")}
+              recipes={relatedRecipes.map((relatedRecipe) => ({
+                id: relatedRecipe.id,
+                recipeName: relatedRecipe.recipe_name,
+                description: relatedRecipe.description,
+                photoUrl: relatedRecipe.photo_url,
+                href: buildRecipePath(locale, relatedRecipe.id, relatedRecipe.slug),
+              }))}
+            />
           )}
         </div>
       </main>

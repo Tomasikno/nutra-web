@@ -20,6 +20,8 @@
     "per": "per",
     "ingredients": "Ingredients",
     "cookingSteps": "Cooking steps",
+    "relatedRecipes": "More public recipes",
+    "viewRecipe": "View recipe",
     "nutrition": {
       "kcal": "kcal",
       "protein": "protein",

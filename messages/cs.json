@@ -20,6 +20,8 @@
     "per": "na",
     "ingredients": "Ingredience",
     "cookingSteps": "Postup přípravy",
+    "relatedRecipes": "Další veřejné recepty",
+    "viewRecipe": "Zobrazit recept",
     "nutrition": {
       "kcal": "kcal",
       "protein": "bílkoviny",
